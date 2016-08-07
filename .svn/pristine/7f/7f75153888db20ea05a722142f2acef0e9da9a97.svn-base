@@ -1,0 +1,7 @@
+EnumExclude=
+package=org.sjtu.p615.entity
+databaseUrl=jdbc:mysql://192.168.1.111:3306/c919
+driver=com.mysql.jdbc.Driver
+EnumInclude=
+username=root
+ConfigurationFile=615Projectsrchibernate.cfg.xml

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-7-15 9:19:31 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.Plan" table="plan" catalog="testdb">
+        <id name="planKey" type="java.lang.Integer">
+            <column name="PlanKey" />
+            <generator class="identity" />
+        </id>
+        <property name="parentKey" type="java.lang.Integer">
+            <column name="ParentKey" />
+        </property>
+        <property name="parentPlanCode" type="string">
+            <column name="ParentPlanCode" />
+        </property>
+        <property name="projectId" type="string">
+            <column name="ProjectId" />
+        </property>
+        <property name="projectName" type="string">
+            <column name="ProjectName" />
+        </property>
+        <property name="planCode" type="string">
+            <column name="PlanCode" not-null="true" />
+        </property>
+        <property name="planSerialNumber" type="string">
+            <column name="PlanSerialNumber" />
+        </property>
+        <property name="planName" type="string">
+            <column name="PlanName" />
+        </property>
+        <property name="planIssuedDate" type="date">
+            <column name="PlanIssuedDate" length="10" />
+        </property>
+        <property name="planDeadlineDate" type="date">
+            <column name="PlanDeadlineDate" length="10" />
+        </property>
+        <property name="planStartDate" type="date">
+            <column name="PlanStartDate" length="10" />
+        </property>
+        <property name="planFinishDate" type="date">
+            <column name="PlanFinishDate" length="10" />
+        </property>
+        <property name="planSource" type="string">
+            <column name="PlanSource" />
+        </property>
+        <property name="employeeId" type="string">
+            <column name="EmployeeId" />
+        </property>
+        <property name="planController" type="string">
+            <column name="PlanController" />
+        </property>
+        <property name="planControllerId" type="string">
+            <column name="PlanControllerId" />
+        </property>
+        <property name="planCreatorId" type="string">
+            <column name="PlanCreatorId" />
+        </property>
+        <property name="planAuditorId" type="string">
+            <column name="PlanAuditorId" />
+        </property>
+        <property name="employeeName" type="string">
+            <column name="EmployeeName" />
+        </property>
+        <property name="planStateCode" type="java.lang.Integer">
+            <column name="PlanStateCode" />
+        </property>
+        <property name="back" type="java.lang.Boolean">
+            <column name="Back" />
+        </property>
+        <property name="reviewer" type="string">
+            <column name="Reviewer" />
+        </property>
+        <property name="leaf" type="java.lang.Boolean">
+            <column name="Leaf" />
+        </property>
+        <property name="level" type="java.lang.Integer">
+            <column name="Level" />
+        </property>
+        <property name="changeDetail" type="string">
+            <column name="ChangeDetail" />
+        </property>
+        <property name="complete" type="java.lang.Boolean">
+            <column name="Complete" />
+        </property>
+        <property name="accept" type="java.lang.Boolean">
+            <column name="Accept" />
+        </property>
+        <property name="issue" type="java.lang.Boolean">
+            <column name="Issue" />
+        </property>
+        <property name="deleteMark" type="java.lang.Boolean">
+            <column name="DeleteMark" />
+        </property>
+        <property name="planType" type="string">
+            <column name="PlanType" />
+        </property>
+        <property name="savic" type="java.lang.Double">
+            <column name="SAVIC" precision="64" scale="0" />
+        </property>
+        <property name="comac" type="java.lang.Double">
+            <column name="COMAC" precision="64" scale="0" />
+        </property>
+        <property name="spi" type="java.lang.Double">
+            <column name="SPI" precision="64" scale="0" />
+        </property>
+        <property name="completePercentage" type="java.lang.Double">
+            <column name="CompletePercentage" precision="64" scale="0" />
+        </property>
+        <property name="remainingDuration" type="string">
+            <column name="RemainingDuration" length="64" />
+        </property>
+        <property name="remainingHour" type="string">
+            <column name="RemainingHour" length="64" />
+        </property>
+        <property name="remainingPeriod" type="string">
+            <column name="RemainingPeriod" length="64" />
+        </property>
+        <property name="baselineFinishTime" type="date">
+            <column name="BaselineFinishTime" length="10" />
+        </property>
+        <property name="baselineStartTime" type="date">
+            <column name="BaselineStartTime" length="10" />
+        </property>
+        <property name="predecessor" type="string">
+            <column name="Predecessor" />
+        </property>
+        <property name="successor" type="string">
+            <column name="Successor" />
+        </property>
+        <property name="taskContent" type="string">
+            <column name="taskContent" />
+        </property>
+        <property name="taskWeight" type="java.lang.Double">
+            <column name="taskWeight" precision="32" scale="0" />
+        </property>
+        <property name="controlDepartmentId" type="string">
+            <column name="controlDepartmentId" />
+        </property>
+        <property name="controlDepartment" type="string">
+            <column name="controlDepartment" />
+        </property>
+        <property name="groupId" type="string">
+            <column name="groupId" />
+        </property>
+        <property name="groupName" type="string">
+            <column name="groupName" />
+        </property>
+        <property name="budget" type="java.lang.Double">
+            <column name="budget" precision="64" scale="0" />
+        </property>
+        <property name="cashFlow" type="string">
+            <column name="cashFlow" length="64" />
+        </property>
+        <property name="cashSource" type="string">
+            <column name="cashSource" />
+        </property>
+        <property name="cashSubject" type="string">
+            <column name="cashSubject" />
+        </property>
+        <property name="cashReal" type="java.lang.Double">
+            <column name="cashReal" precision="64" scale="0" />
+        </property>
+        <property name="isTask" type="java.lang.Boolean">
+            <column name="isTask" />
+        </property>
+        <property name="wbs" type="string">
+            <column name="wbs" length="256" />
+        </property>
+    </class>
+</hibernate-mapping>

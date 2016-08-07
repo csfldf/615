@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Custom css file -->
+    <link rel="stylesheet" href="css/failureReport.css"/>
+  </head>
+  <body>
+    <div ms-controller="projectManagement" style="max-width:90%;">
+      <table class="table table-bordered" id="failure-report-table">
+        <tbody>
+          <tr>
+            <td>项目</td>
+            <td>  
+            <!-- 
+            <select ms-widget="dropdown, $, projectOpts" ms-duplex="project"></select>  
+            -->
+            <!--  
+            <select ms-duplex="project" data-duplex-changed="selectProject" name="projectName" class="input-xlarge" required>
+            	<option ms-repeat="projectOpts" ms-value="el.projectName">{{el.projectName}}</option>
+            </select>
+            -->
+             <select ms-duplex="project" name="projectName" class="input-xlarge" required>
+            	<option ms-repeat="projectOpts" ms-value="el.projectName">{{el.projectName}}</option>
+            </select>
+            
+            </td>
+            <td>项目负责人</td>
+            <td>李四</td>
+          </tr>
+
+          <tr>
+            <td>技术负责人</td>
+            <td>
+            <select ms-duplex="projectLeader" name="employeeName" class="input-xlarge" required>
+            	<option ms-repeat="projectLeaderOpts" ms-value="el.employeeName">{{el.employeeName}}</option>
+            </select>
+            </td>
+            <td>质量负责人</td>
+            <td>
+            <select ms-duplex="qaManager" name="employeeName" class="input-xlarge" required>
+            	<option ms-repeat="qaManagerOpts" ms-value="el.employeeName">{{el.employeeName}}</option>
+            </select>
+            </td>
+          </tr>
+          
+          <tr>
+            <td>MRB</td>
+            <td><select ms-duplex="mrb" name="employeeName" class="input-xlarge" required>
+            	<option ms-repeat="mrbOpts" ms-value="el.employeeName">{{el.employeeName}}</option>
+            </select>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div ms-visible="editMode">
+        <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal"  ms-click="saveFr()">保存</a>
+        <a href="#myModal" role="button" class="btn btn-success" data-toggle="modal"  ms-click="commitFr()">提交</a>
+        <a href="#myModal" role="button" class="btn btn-danger" data-toggle="modal"  ms-click="cancelFr()">取消</a>
+      </div>
+
+      <!-- Modal -->
+      <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Fracas</h3>
+        </div>
+        <div class="modal-body">
+          <p>您的操作已完成</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true" ms-click="back()">确定</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </body>
+</html>

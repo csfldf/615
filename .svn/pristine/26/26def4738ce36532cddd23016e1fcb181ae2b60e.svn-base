@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.sjtu.p615.entity">
+	<class
+		name="Failureanalysisreport"
+		table="failureanalysisreport"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="integer"
+			column="FAR_ID"
+		>
+			<generator class="sequence"/>
+		</id>
+
+		<property
+			name="failureCause"
+			column="FailureCause"
+			type="string"
+			not-null="true"
+			length="256"
+		/>
+		<property
+			name="failureCategory"
+			column="FailureCategory"
+			type="string"
+			not-null="true"
+			length="256"
+		/>
+		<property
+			name="correctiveActionSuggestion"
+			column="CorrectiveActionSuggestion"
+			type="string"
+			not-null="true"
+			length="256"
+		/>
+		<property
+			name="failureCauseAnalysis"
+			column="FailureCauseAnalysis"
+			type="string"
+			not-null="true"
+		/>
+		<property
+			name="responsibleDepartment"
+			column="ResponsibleDepartment"
+			type="string"
+			not-null="true"
+			length="256"
+		/>
+		<property
+			name="technicalLeaderOpinion"
+			column="TechnicalLeaderOpinion"
+			type="string"
+			not-null="true"
+			length="1024"
+		/>
+		<property
+			name="mrb"
+			column="MRB"
+			type="string"
+			not-null="true"
+			length="1024"
+		/>
+		<property
+			name="committeeSign"
+			column="CommitteeSign"
+			type="string"
+			not-null="true"
+			length="128"
+		/>
+		<property
+			name="committeeSignDate"
+			column="CommitteeSignDate"
+			type="date"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="column11"
+			column="Column_11"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="column12"
+			column="Column_12"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<many-to-one
+			name="failureBasicInfo"
+			column="FailureInfo_ID"
+			class="Failurebasicinfo"
+			not-null="true"
+			unique="true"
+			cascade="all"
+		>
+		</many-to-one>
+
+
+	</class>	
+</hibernate-mapping>

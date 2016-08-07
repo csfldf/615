@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/panel.css"/>
+    <link href="css/base/fineuploader-5.0.7.min.css" rel="stylesheet">
+</head>
+
+<!--<div class="accordion" id="accordion-988086">-->
+<!--</div>-->
+
+
+<body>
+    <div ms-controller="homePage">
+        <!--<a href="javascript:void(0)" ms-click="messageSet"><img id="wheel" src="../img/wheel-1.png" /></a>-->
+        <!--<div class="accordion-group">
+            <div class="accordion-heading" style="background-color: #abc5cb">
+                已关闭<input type="radio" ms-duplex="showProcessed" ms-click="showOption('processed')"/>&nbsp;&nbsp;
+                未关闭<input type="radio" ms-duplex="showProcessing" ms-click="showOption('processing')"/>
+            </div>
+            <div class="accordion-group" style="height:120px;overflow:auto">
+                <ul contenteditable="true">
+                    <li ms-repeat="data['message']['processed']" ms-visible="showProcessed">{{el.messageContent}}</li>
+                </ul>
+            </div>
+        </div>-->
+
+        <div class="accordion-group">
+            <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgMessage')"
+                                                    data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                                    href="#accordion-element-146216">待办工作通知<img id="imgMessage" src="img/expand.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-146216" style="position:relative;bottom:0px;left:0px;height: auto;">
+                <div class="accordion-inner" id="xxx" contenteditable="false">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td style="width:5px"></td>
+                            <td>编号</td>
+                            <td>通知类型
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up"ms-click="orderByDict('message', 'messageType', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('message', 'messageType', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('message','messageType')" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                            <td>工作内容
+                                <!--<span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('wproject,'proDGrid, 'projectStartingDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectStartingDate', 0)"></i>
+                                </span>-->
+                            </td>
+                            <td>所属项目
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up"ms-click="orderByDict('message', 'prjShortName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('message', 'prjShortName', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('message','prjShortName')" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                            <td>工作来源
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up"ms-click="orderByDict('message', 'messageSource', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('message', 'messageSource', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('message','messageSource')" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                            <td>通知时间
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up"ms-click="orderByDict('message', 'messageDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('message', 'messageDate', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('message','messageDate')" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                            <td>
+                                状态
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-filter" ms-click="filterConfig('message','state')" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                            <td>操作
+                                <!--<span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 0)"></i>
+                                </span>-->
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-hover="one-row" ms-visible="el.visible" ms-click="loadWork(el)"
+                            ms-repeat="data['message']['curReports']">
+                            <td style="width:5px" ms-css-background-color="el.bg"></td>
+                            <td>{{$index+data['message']['indexPage']*data['message']['pageSize']+1}}</td>
+                            <td>{{el.messageType}}</td>
+                            <td ms-mouseover="showContent(el)" ms-mouseout="hideContent(el)">
+                                <div ms-class="{{el.messageId}}{{el.messageType}}" style="position: relative"
+                                     ms-mouseover="showContent(el)" ms-mouseout="hideContent(el)">
+                                {{el.messageContent2Show}}
+                                </div>
+                            </td>
+                            <td>{{el.projectName}}</td>
+                            <td>{{el.messageSource}}</td>
+                            <td>{{el.messageDate}}</td>
+                            <td>{{el.state}}</td>
+                            <td><a href="javascript:void(0)" ms-visible="!el.deleteMark"
+                                   ms-click="deleteMessage(el.messageId)">关闭</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height: 50px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页显示</span>
+                <select id="select-message" ms-change="setPage('message','accordion-element-146216')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 60px">
+                    <option value ="5"  selected="selected">5</option>
+                    <option value ="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+                <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                    <button ms-click="prePage('message')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['message']['indexPage']+1}} 页，共 {{data['message']['pageNum']}} 页
+                    <button ms-click="nextPage('message','accordion-element-146216')"><i class="icon-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-group">
+            <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgRemind')"
+                                              data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                              href="#accordion-element-338356">待办工作提醒<img id="imgRemind" src="img/expand.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-338356" style="position:relative;bottom:0px;left:0px;height: auto;">
+                <div class="accordion-inner" contenteditable="false" id="demo">
+            <!--<div id="test" class="container sidebar sidebar-left" data-status="opened" style="left:324px;top:300px">
+                <div class="row">-->
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td style="width:5px"></td>
+                            <td>编号</td>
+                            <td>提醒类型
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up"ms-click="orderByDict('remind', 'remindType', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('remind', 'remindType', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('remind','remindType')" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                            <td>工作内容
+                                <!--<span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up"ms-click="orderByDict('remind', 'remindContent', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('remind', 'remindContent', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('remind','remindContent')" style="position: relative;left: 20px"></i>
+                                </span>-->
+                            </td>
+                            <td>所属项目
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up"ms-click="orderByDict('remind', 'projectName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('remind', 'projectName', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('remind','projectName')" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                            <td>工作来源
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up"ms-click="orderByDict('remind', 'remindSource', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('remind', 'remindSource', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('remind','remindSource')" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                            <td>应完成时间
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up"ms-click="orderByDict('remind', 'deadline', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('remind', 'deadline', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('remind','deadline')" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                            <td>提醒时间
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up"ms-click="orderByDict('remind', 'remindDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('remind', 'remindDate', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('remind','remindDate')" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  ms-class="one-row" ms-repeat="data['remind']['curReports']" ms-click="loadWork(el)">
+                            <td style="width:5px" ms-css-background-color="el.bg"></td>
+                            <td>{{$index+data['remind']['indexPage']*data['remind']['pageSize']+1}}</td>
+                            <td>{{el.remindType}}</td>
+                            <td>{{el.remindContent}}</td>
+                            <td>{{el.projectName}}</td>
+                            <td>{{el.remindSource}}</td>
+                            <td>{{el.deadline}}</td>
+                            <td>{{el.remindDate}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height: 50px"></div>
+                    <span style="position:absolute;bottom: 20px;left: 20px">每页显示</span>
+                    <select id="select-remind" ms-change="setPage('remind','accordion-element-338356')"
+                            style="position: absolute;bottom: 5px;left: 80px;width: 60px">
+                        <option value ="5"  selected="selected">5</option>
+                        <option value ="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                    <div class="pager" style="position:absolute;bottom:0px;left:40%">
+                        <button ms-click="prePage('remind')"><i class="icon-chevron-left"></i></button>
+                        第 {{data['remind']['indexPage']+1}} 页，共 {{data['remind']['pageNum']}} 页
+                        <button ms-click="nextPage('remind','accordion-element-338356')"><i class="icon-chevron-right"></i></button>
+                    </div>
+                </div>
+                <!--<div class="toggler">
+                    <span class="glyphicon glyphicon-chevron-right" style="display:none;"></span>
+                    <span class="glyphicon glyphicon-chevron-left" style="display:block;"></span>
+                </div>-->
+            <!--</div>-->
+                </div>
+            </div>
+
+        <div class="modal fade" ms-attr-id="modalName" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">
+                            筛选内容
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel panel-default" ms-visible="true">
+                            <table class="table table-hover" >
+                                <thead>
+                                <tr>
+                                    <th><a class="btn-primary" ms-click="selALL(1)">全选</a></th>
+                                    <th>筛选内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ms-repeat="filter.org_values">
+                                    <td>
+                                        <input class="checkbox" type="checkbox" ms-duplex-radio="el.enabled">
+                                    </td>
+                                    <td>
+                                        {{el.name}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button style="float:right" type="button" ms-click="executeFilter()" class="btn btn-primary">
+                            确认
+                        </button>
+                        <button style="float:left" type="button" ms-attr-id="modalBtn" class="btn btn-default"
+                                data-dismiss="modal" >关闭
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

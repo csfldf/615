@@ -1,0 +1,12 @@
+1405688482032	Encapsulate field 'failureInfoId'
+1405688524615	Encapsulate field 'failureReportNum'
+1405688572859	Encapsulate field 'failureModel'
+1405688576764	Encapsulate field 'failureSN'
+1405688789403	Move compilation unit
+1405688799377	Delete element
+1405688818353	Move compilation unit
+1405688822321	Delete element
+1405689130149	Encapsulate field 'Id'
+1405689167584	Encapsulate field 'FailureSN'
+1405689262255	Encapsulate field 'FailureModel'
+1405689265718	Encapsulate field 'FailureReportNum'

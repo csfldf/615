@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-10-17 17:21:19 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping package="org.sjtu.p615.entity">
+    <class name="ContractRegist" table="contract_regist" catalog="testdb">
+        <id name="id" type="string">
+            <column name="id" length="45" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="45" />
+        </property>
+        <property name="moneyFlow" type="string">
+            <column name="money_flow" length="10" />
+        </property>
+        <property name="isOffshore" type="string">
+            <column name="is_offshore" length="10" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="500" />
+        </property>
+        <property name="contractContain" type="string">
+            <column name="contract_contain" length="100" />
+        </property>
+        <property name="moneyType" type="string">
+            <column name="money_type" length="100" />
+        </property>
+        <property name="department" type="string">
+            <column name="department" length="100" />
+        </property>
+        <property name="operator" type="string">
+            <column name="operator" length="45" />
+        </property>
+        <property name="project" type="string">
+            <column name="project" length="45" />
+        </property>
+        <property name="budgetCode" type="string">
+            <column name="budget_code" length="45" />
+        </property>
+        <property name="totalMoney" type="string">
+            <column name="total_money" length="45" />
+        </property>
+        <property name="currencyType" type="string">
+            <column name="currency_type" length="45" />
+        </property>
+        <property name="performStartDate" type="string">
+            <column name="perform_start_date" length="45" />
+        </property>
+        <property name="performEndDate" type="string">
+            <column name="perform_end_date" length="45" />
+        </property>
+        <property name="cooperation" type="string">
+            <column name="cooperation" length="100" />
+        </property>
+        <property name="contractArchive" type="string">
+            <column name="contract_archive" length="100" />
+        </property>
+        <property name="payNodeId1" type="string">
+            <column name="pay_node_id1" length="45" />
+        </property>
+        <property name="payNodeId2" type="string">
+            <column name="pay_node_id2" length="45" />
+        </property>
+        <property name="receiveNodeId1" type="string">
+            <column name="receive_node_id1" length="45" />
+        </property>
+        <property name="receiveNodeId2" type="string">
+            <column name="receive_node_id2" length="45" />
+        </property>
+        <property name="preregistRecordCm" type="string">
+            <column name="preregist_record_cm" length="500" />
+        </property>
+        <property name="preregistRecordPm" type="string">
+            <column name="preregist_record_pm" length="500" />
+        </property>
+        <property name="registRecordCm" type="string">
+            <column name="regist_record_cm" length="500" />
+        </property>
+        <property name="registRecordPm" type="string">
+            <column name="regist_record_pm" length="500" />
+        </property>
+        <property name="payRecord1Cm" type="string">
+            <column name="pay_record1_cm" length="500" />
+        </property>
+        <property name="payRecord1Pm" type="string">
+            <column name="pay_record1_pm" length="500" />
+        </property>
+        <property name="verifyRecordCm" type="string">
+            <column name="verify_record_cm" length="500" />
+        </property>
+        <property name="verifyRecordPm" type="string">
+            <column name="verify_record_pm" length="500" />
+        </property>
+        <property name="receiveRecord1Cm" type="string">
+            <column name="receive_record1_cm" length="500" />
+        </property>
+        <property name="receiveRecord1Pm" type="string">
+            <column name="receive_record1_pm" length="500" />
+        </property>
+    </class>
+</hibernate-mapping>

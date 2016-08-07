@@ -1,0 +1,25 @@
+package org.sjtu.p615.dept_mgmt.entity;
+
+public class Cdnfile {
+	
+	private String partName;
+	private String cdnNode;
+
+	public String getPartName() {
+		return partName;
+	}
+
+	public void setPartName(String partName) {
+		this.partName = partName;
+	}
+
+	public String getCdnNode() {
+		return cdnNode;
+	}
+
+	public void setCdnNode(String cdnNode) {
+		this.cdnNode = cdnNode;
+	}
+	
+	
+}

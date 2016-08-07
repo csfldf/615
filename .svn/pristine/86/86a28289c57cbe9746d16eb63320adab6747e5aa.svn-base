@@ -1,0 +1,77 @@
+package org.sjtu.p615.fracas.action;
+
+import java.sql.Date;
+import java.text.ParseException;
+import java.util.HashMap;
+
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+
+import org.sjtu.p615.entity.FailureBasicInfo;
+import org.sjtu.p615.entity.JSONDateValueProcessor;
+import org.sjtu.p615.entity.Test;
+
+public class TestAction {
+	private String result;
+	
+	private FailureBasicInfo failureBasicInfo;
+	private Test test;
+	private String failureReportNum;
+
+	public FailureBasicInfo getFailureBasicInfo() {
+		return failureBasicInfo;
+	}
+
+	public void setFailureBasicInfo(FailureBasicInfo failureBasicInfo) {
+		this.failureBasicInfo = failureBasicInfo;
+	}
+	
+	public String execute() {
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.registerJsonValueProcessor(Date.class, new JSONDateValueProcessor());
+		JSONObject jo = JSONObject.fromObject(test, jsonConfig);
+		result = jo.toString();
+		return "success";
+	}
+	
+	public String testget() {
+		Test test = new Test();
+		test.setContent(failureReportNum);
+		try {
+			test.setDateStandin("10/11/2013");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.registerJsonValueProcessor(Date.class, new JSONDateValueProcessor());
+		JSONObject jo = JSONObject.fromObject(test, jsonConfig);
+		result = jo.toString();
+		return "success";
+	}
+
+	public Test getTest() {
+		return test;
+	}
+
+	public void setTest(Test test) {
+		this.test = test;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String getFailureReportNum() {
+		return failureReportNum;
+	}
+
+	public void setFailureReportNum(String failureReportNum) {
+		this.failureReportNum = failureReportNum;
+	}
+}

@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+select {
+	width: 100%;
+}
+
+input {
+	width: 95%;
+}
+
+.text-500 {
+	width: 98%;
+	height: 150px;
+}
+
+.datepicker {
+	width: 98%;
+}
+
+.other {
+	width: 50%;
+}

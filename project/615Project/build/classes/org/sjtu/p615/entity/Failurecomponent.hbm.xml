@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+	
+	"classpath://org/hibernate/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.sjtu.p615.entity">
+	<class
+		name="FailureComponent"
+		table="failurecomponent"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="FailureComponentModel"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="failureComponentName"
+			column="FailureComponentName"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="failureComponentCode"
+			column="FailureComponentCode"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="failureComponentSruLot"
+			column="FailureComponentSruLot"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="deleteMark"
+			column="DeleteMark"
+			type="boolean"
+			not-null="false"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

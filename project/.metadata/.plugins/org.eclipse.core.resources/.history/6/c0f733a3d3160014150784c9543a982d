@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>故障报告录入</title>
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script></head>
+<body>
+	<form id="ff" method="post" action="../fracas/add.action">
+            <table cellpadding="5">
+                <tr>
+                    <td style="width:160px">故障报告编号:
+                    <br> (Failure Report N.O)</td>          
+                    <td><input class="easyui-textbox" type="text" id="failureReportNum" data-options="required:true" style="width:160px"></input></td>
+                    
+                     <td>机型:
+                     <br> (Type)</td>          
+                    <td><input class="easyui-textbox" type="text" id="type" data-options="required:true" style="width:160px"></input></td>
+                </tr>
+                <tr>
+                    <td>故障型号:
+                    <br>(Model)</td>
+                    <td><input class="easyui-textbox" type="text" id="failureModel" data-options="required:true" style="width:160px"></input></td>
+                    <td>所属系统型号:
+                    <br>(System Type and S.N.)</td>
+                    <td><input class="easyui-textbox" type="text" id="systemType" data-options="required:true" style="width:160px"></input></td>
+                </tr>
+                <tr>
+                    <td>故障发生时间:
+                    <br>(Time)</td>
+                    <td><input class="easyui-datetimebox" type="text" id="time" data-options="required:true" style="width:160px"></input></td>
+                    <td>故障件批次号:
+                    <br>(S.N)</td>
+                    <td><input class="easyui-textbox" type="text" id="failureSN" data-options="required:true" style="width:160px"></input></td>
+                </tr>
+                <tr>
+                    <td>故障环境条件:
+                    <br>(Environment)</td>
+                    <td><input class="easyui-textbox" id="environment" data-options="required:true" style="width:160px"></input></td>
+                     <td>故障发现人:
+                     <br>(Reporter)</td>
+                    <td><input class="easyui-textbox" id="reporter" data-options="required:true" style="width:160px"></input></td>
+                </tr>
+                <tr>
+                    <td>故障发生时机:
+                    <br>(In which Process)</td>
+                    <td>
+                    	<div class="easyui-panel" style="width:210px; padding:5px">
+                    				<input type="checkbox" name="process"></input>环境应力筛选(ESS)
+                    				<br>
+                    				<input type="checkbox" name="process"></input>交付试验(ATP)
+                    				<br>
+                    				<input type="checkbox" name="process"></input>可靠性增长试验(RGT)
+                    				<br>
+                    				<input type="checkbox" name="process"></input>试用/试飞(TF)
+                    				<br>
+                    				<input type="checkbox" name="process"></input>例行试验(CT)
+                    				<br>
+                    				<input type="checkbox" name="process"></input>可靠性鉴定试验(RQT)
+                    				<br>
+                    				<input type="checkbox" name="process"></input>电磁兼容试验(EMC)
+                    				<br>
+                    				<input type="checkbox" name="process"></input>电源特性试验(PPT)
+                    				<br>
+                    				<input type="checkbox" name="process"></input>返修产品(Repair)
+                    				<br>
+                    				<input type="checkbox" name="process"></input>其他(Other)
+                    				<br>
+                    				<input class="easyui-textbox" name="othercontent"></input></td>
+                    	</div>
+                    </td>
+                    <td>故障模式:
+                    <br>(Failure Mode)</td>
+                    <td>
+                    	<div class="easyui-panel" style="width:210px; padding:5px">
+                    				<input type="checkbox" name="failuremode"></input>不显示(Not Display)
+                    				<br>
+                    				<input type="checkbox" name="failuremode"></input>不自检(no self-test)
+                    				<br>
+                    				<input type="checkbox" name="failuremode"></input>显示不准确(Displayed incorrect)
+                    				<br>
+                    				<input type="checkbox" name="failuremode"></input>损坏(Damaged)
+                    				<br>
+                    				<input type="checkbox" name="failuremode"></input>绝缘电阻下降(IR)
+                    				<br>
+                    				<input type="checkbox" name="failuremode"></input>短路(short circuit)
+                    				<br>
+                    				<input type="checkbox" name="failuremode"></input>接触不良(Poor Contact))
+                    				<br>
+                    				<input type="checkbox" name="failuremode"></input>电磁敏感(EMS)
+                    				<br>
+                    				<input type="checkbox" name="failuremode"></input>击穿(breakdown)
+                    				<br>
+                    				<input type="checkbox" name="failuremode"></input>信号弱(Weak Signal)
+                    				<br>
+                    				<input type="checkbox" name="failuremode"></input>电磁发射超标(EMI)
+                    				<br>
+                    				<input type="checkbox" name="failuremode"></input>其他(Other)
+                    				<br>
+                    				<input class="easyui-textbox" name="othercontent"></input></td>
+                    	</div>
+                    </td>
+                </tr>
+                <tr>
+                	<td>
+                	故障现象:
+                	<br>
+                	(Description)
+                	</td>
+                	<td colspan="2"><input class="easyui-textbox" id="description" data-options="multiline:true,required:true" style="height:70px; width:400px" ></input></td>
+                	<td>
+                	填表人(Sign):<input class="easyui-textbox" id="operatorSign" data-options="required:true" style="width:120px"></input>
+                	<br>
+                	<br>
+                	日期(Date):<input class="easyui-datebox" type="text" id="operatorSignDate" data-options="required:true">
+                	</td>
+                </tr>
+                <tr>
+                	<td>
+                	项目/技术负责人:
+                	<br>
+                	(Technical Leader)
+                	</td>
+                	<td colspan="3"><input class="easyui-textbox" id="technicalLeaderOpinion" data-options="multiline:true,required:true" style="height:70px; width:400px" ></input></td>
+                </tr>
+                <tr>
+                    <td>质量问题性质:
+                    <br>(Quality Issue Category)</td>
+                    <td  colspan="3">
+                    	<div class="easyui-panel" style="padding:5px">
+                    				<input type="checkbox" name="qualityIssueCategory"></input>一般质量问题(General)
+                    				&nbsp
+                    				&nbsp
+                    				<input type="checkbox" name="qualityIssueCategory"></input>重复质量问题(Repetitive)
+                    				<br>
+                    				<input type="checkbox" name="qualityIssueCategory"></input>严重质量问题(Serious)
+                    				&nbsp
+                    				&nbsp
+                    				<input type="checkbox" name="qualityIssueCategory"></input>重大质量问题(Significant)
+                    				<br>
+                    				<input type="checkbox" name="qualityIssueCategory"></input>FRACAS
+                    				&nbsp
+                    				&nbsp
+                    				&nbsp
+                    				&nbsp
+                    				&nbsp
+                    				&nbsp
+                    				&nbsp
+                    				&nbsp
+                    				&nbsp
+                    				&nbsp
+                    				&nbsp
+                    				&nbsp
+                    				<input type="checkbox" name="qualityIssueCategory"></input>双五归零(Dou-5)
+                    	</div>
+                    </td>
+                </tr>
+                <tr>
+                	<td>
+                	故障审查委员会意见:
+                	<br>
+                	(MRB)
+                	</td>
+                	<td colspan="2"><input class="easyui-textbox" id="mrb" data-options="multiline:true,required:true" style="height:70px; width:400px" ></input></td>
+                	<td>
+                	签署(Sign):<input class="easyui-textbox" id="commtiteeSign" data-options="required:true"></input>
+                	<br>
+                	<br>
+                	日期(Date):<input class="easyui-datebox" id="committeeSignDate" data-options="required:true">
+                	</td>
+                </tr>
+            </table>
+            <input type="submit" value="value"/>
+        </form>
+        <div style="text-align:center;padding:5px">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">Submit</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
+        </div>
+    <script>
+        function submitForm(){
+        	alert($("#operatorSignDate").text());
+        	
+			$.post(
+				"../fracas/test",
+				{"test.dateStandin":$("#operatorSignDate").val(),
+					"test.content":$("#failureReportNum").val(),
+				},
+				function back(data) {
+					var json = eval("("+data+")");
+					alert(json.date);
+				},
+				"json"
+			);
+        	
+        }
+        function clearForm(){
+            $('#ff').form('clear');
+        }
+    </script>
+</body>
+</html>

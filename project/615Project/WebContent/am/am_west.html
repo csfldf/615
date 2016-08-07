@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>C919综合管理平台</title>
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+	<link rel="stylesheet" type="text/css" href="../css/fracas_frame.css">
+	<link rel="stylesheet" type="text/css" href="../css/sdmenu.css" />
+
+	<script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/zzsc.js"></script> 
+	<script type="text/javascript" src="../js/sdmenu.js"></script>
+	
+	<script charset="gb2312" type="text/javascript" src="fracas_util.js"></script>
+	<script charset="gb2312" type="text/javascript" src="fracas_west.js"></script>
+	<script type="text/javascript">
+
+		function importPlan() {
+			window.parent.document.getElementById("main-view").src="uploadmultfile.html?type=new";
+		}
+		function newPlan() {
+// 			window.parent.document.getElementById("main-view").src="plan_report.html?type=new";
+			window.parent.document.getElementById("main-view").src="script_list.html";
+		}
+		function searchPlan() {
+			window.parent.document.getElementById("main-view").src="plan_report.html?type=search";
+		}
+		function listPlans() {
+			window.parent.document.getElementById("main-view").src="plan_list.html";
+		}
+/* 		function listMyPlans() {
+			window.parent.document.getElementById("main-view").src="task_select.html";
+		} */
+		
+	</script>
+	<script type="text/javascript">
+		var amMenu;
+		window.onload = function() {
+			amMenu = new SDMenu("am_menu");
+			amMenu.init();
+		};
+	</script>
+	
+</head>
+<body style="margin:0px;padding:0px">
+	<div id="am_menu" class="sdmenu" style="width:100% margin:0px">
+		<div class="collapsed">
+			<span>部门运行数据管理</span>
+			<a href="javascript:void(0)" onclick="importPlan()">计划导入</a>
+			<a href="javascript:void(0)" onclick="newPlan()">新计划制订</a>
+			<a href="javascript:void(0)" onclick="searchPlan()">计划查询</a>
+			<a href="javascript:void(0)" onclick="listPlans()">计划下达</a>
+			<a href="javascript:void(0)" onclick="listMyPlans()">我的任务</a>
+		</div>
+	</div>
+</body>

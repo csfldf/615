@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+	
+	"classpath://org/hibernate/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.sjtu.p615.entity">
+	<class
+		name="Aircraft"
+		table="aircraft"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="AircraftType"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="deleteMark"
+			column="DeleteMark"
+			type="boolean"
+			not-null="false"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

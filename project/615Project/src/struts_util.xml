@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="util" namespace="/util" extends="struts-default,json-default">
+
+  		<action name="check_role" class="org.sjtu.p615.util.action.CheckinAction" method="checkRole">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="check_user" class="org.sjtu.p615.util.action.CheckinAction" method="checkUser">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="check_user_id" class="org.sjtu.p615.util.action.CheckinAction" method="checkUserId">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="get_time" class="org.sjtu.p615.util.action.TimeAction" method="takeServerTime">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="get_all_project" class="org.sjtu.p615.am.action.ProjectAction" method="getAllProject">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="get_role_by_employee" class="org.sjtu.p615.am.action.RoleAction" method="getRoleByEmployee">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="get_role_by_project" class="org.sjtu.p615.am.action.RoleAction" method="getRoleByProject">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="get_role_info" class="org.sjtu.p615.util.action.CheckinAction" method="getRoleInfo">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="save_role" class="org.sjtu.p615.am.action.RoleAction" method="changeFracasRole">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+    </package>
+
+
+    <!-- Add packages here -->
+
+</struts>

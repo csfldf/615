@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/panel.css"/>
+    <title>角色权限管理</title>
+</head>
+<body>
+<div ms-controller="privilegeMgr">
+    <div class="panel-heading">角色列表
+    </div>
+    <div class="panel panel-default">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th></th>
+                <th>角色名称</th>
+                <th>新建任务</th>
+                <th>新建计划</th>
+                <th>查看任务</th>
+                <th>审核任务</th>
+                <th>修改任务进本信息</th>
+                <th>删除任务</th>
+                <th>任务状态回退</th>
+                <th>接受、完成任务</th>
+                <th>计划导入</th>
+                <th>计划导出</th>
+                <th>项目创建、删除</th>
+                <th>小组创建、删除</th>
+                <th>增减组员</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="one-row" ms-hover="hover" ms-repeat="privileges">
+                <td><input class="radio" type="radio" name="privilegeRadio" ms-click="selectOne(el.roleId)" /></td>
+                <td>{{el.roleName}}</td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.addTask">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.addTask">×</label></td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.addPlan">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.addPlan">×</label></td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.readTask">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.readTask">×</label></td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.auditTask">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.auditTask">×</label></td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.modifyTask">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.modifyTask">×</label></td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.deleteTask">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.deleteTask">×</label></td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.rollbackTask">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.rollbackTask">×</label></td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.doTask">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.doTask">×</label></td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.importPlan">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.importPlan">×</label></td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.exportPlan">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.exportPlan">×</label></td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.addProject">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.addProject">×</label></td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.addGroup">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.addGroup">×</label></td>
+                <td><label type="text" style="font-size:x-large;color: #008000" ms-visible="el.addGroupMember">√</label><label type="text" style="font-size:xx-large;color:red" ms-visible="!el.addGroupMember">×</label></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="btnDiv">
+        <a role="button" class="btn btn-primary" ms-click="addOneRole">新建角色 </a>
+        <a ms-click="delOneRole()" role="button" class="btn btn-danger">删除角色</a>
+    </div>
+    <div class="modal fade" id="privilegeModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true"  style="display: none ">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="roleModalLabel">
+                        角色权限管理
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form ms-attr-id="$formId">
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <div class="control-group"><!-- Text input-->
+                                    <label class="control-label" style="font-weight: bold;font-size: larger;">角色名称</label>
+                                    <div class="controls">
+                                        <input type="text" name="roleName" ms-duplex="privilegeModify.roleName"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading">权限管理表
+                        </div>
+                        <div class="panel panel-default">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>权限内容</th>
+                                    <th>允许<label type="text" style="font-size:large;color: #008000">√</label></th>
+                                    <th>禁止<label type="text" style="font-size:large;color:red">×</label></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>新建任务</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.addTask" name="addTask"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.addTask" name="addTask" ms-value="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>新建计划</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.addPlan" name="addPlan"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.addPlan" name="addPlan" ms-value="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>查看任务</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.readTask" name="readTask"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.readTask" name="readTask" ms-value="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>审核任务</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.auditTask" name="auditTask"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.auditTask" name="auditTask" ms-value="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>修改任务基本信息</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.modifyTask" name="modifyTask"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.modifyTask" name="modifyTask" ms-value="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>删除任务</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.deleteTask" name="deleteTask"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.deleteTask" name="deleteTask" ms-value="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>任务状态回退</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.rollbackTask" name="rollbackTask"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.rollbackTask" name="rollbackTask" ms-value="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>接受、完成任务</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.doTask" name="doTask"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.doTask" name="doTask" ms-value="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>计划导入</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.importPlan" name="importPlan"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.importPlan" name="importPlan" ms-value="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>计划导出</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.exportPlan" name="exportPlan"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.exportPlan" name="exportPlan" ms-value="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>项目创建、删除</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.addProject" name="addProject"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.addProject" name="addProject" ms-value="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>小组创建、删除</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.addGroup" name="addGroup"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.addGroup" name="addGroup" ms-value="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>增减组员</td>
+                                    <td><input class="radio" type="radio" ms-duplex-bool="privilegeModify.addGroupMember" name="addGroupMember"  ms-value="true"></td>
+                                    <td><input class="radio" type="radio"  ms-duplex-bool="privilegeModify.addGroupMember" name="addGroupMember" ms-value="false"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                    <button type="button" ms-click="modifyOnePrivilege()" class="btn btn-primary">
+                        提交
+                    </button>
+                    <button type="button" id="emp_close_btn" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

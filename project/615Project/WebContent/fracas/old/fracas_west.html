@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>C919综合管理平台</title>
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+	<link rel="stylesheet" type="text/css" href="../css/fracas_frame.css">
+	<link rel="stylesheet" type="text/css" href="../css/sdmenu.css" />
+
+	<script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/zzsc.js"></script> 
+	<script type="text/javascript" src="../js/sdmenu.js"></script>
+	
+	<script charset="gb2312" type="text/javascript" src="fracas_util.js"></script>
+	<script charset="gb2312" type="text/javascript" src="fracas_west.js"></script>
+	  
+	<script type="text/javascript">
+		var myMenu;
+		window.onload = function() {
+			myMenu = new SDMenu("my_menu");
+			myMenu.init();
+		};
+	</script>
+	
+</head>
+<body style="margin:0px;padding:0px">
+	<div id="my_menu" class="sdmenu" style="width:100% margin:0px">
+		<div class="collapsed">
+			<span>故障报告</span>
+			<a href="javascript:void(0)" onclick="checkProject(newFailureReport)">录入</a>
+			<a href="javascript:void(0)" onclick="checkProject(listFailureReport)">查看</a>
+			<a>处理</a>
+			<a>追踪</a>
+			<a>统计</a>
+		</div>
+		<div class="collapsed">
+			<span>故障分析</span>
+			<a>查看</a>
+			<a>处理</a>
+		</div>
+		<div class="collapsed">
+			<span>故障纠正</span>
+			<a>查看</a>
+			<a>追踪</a>
+			<a>统计</a>
+		</div>
+		<div class="collapsed">
+			<span>管理</span>
+			<a href="javascript:void(0)" onclick="projectManage()">项目管理</a>
+			<a href="javascript:void(0)" onclick="metadataManage()">元数据管理</a>
+		</div>
+	</div>
+</body>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>纠正措施实施报告</title>
+    <link rel="stylesheet" href="css/failureReport.css"/>
+    <style type="text/css">
+      input {
+        width: 100% !important;
+      }
+
+      textarea {
+        height: 180px;
+        width: 98% !important;
+        resize: none;
+      }
+
+      .sign {
+        float: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="data"  ms-controller="aa">
+      <div class="modal-header">
+          <button class="btn" data-dismiss="modal" aria-hidden="true" ms-click="checkFr()">故障报告</button>
+          <button class="btn" data-dismiss="modal" aria-hidden="true" ms-click="checkFar()">故障分析报告</button>
+      </div>
+      <table class="table table-bordered" id="car-table1">
+        <tr>
+          <td><label>故障报告编号(Failure Report N.O.)</label></td>
+          <td><input ms-widget="textbox" ms-duplex="frNumber" ms-disabled="frNumberDisabled" type="textbox" /></td>
+          <td style=""><label>项目名称(Program ID)</label></td>
+          <td><input ms-widget="textbox" ms-duplex="project" ms-disabled="projectDisabled" type="textbox"/></td>
+        </tr>
+        <tr>
+          <td><label>故障件型号(Failed Item Part No.)</label></td>
+          <td><input ms-widget="textbox" ms-duplex="frComponentModel" ms-disabled="frComponentModelDisabled" type="textbox"/></td>
+          <td><label>故障件名称(Failed Item Name)</label></td>
+          <td><input ms-widget="textbox" ms-duplex="frComponentName" ms-disabled="frComponentNameDisabled" type="textbox"/></td>
+        </tr>
+        <tr>
+          <td><label>故障件批次号(Failed Item Batch No.)</label></td>
+          <td><input ms-widget="textbox" ms-duplex="frSruLot" ms-disabled="frSruLotDisabled" type="textbox"/></td>
+          <td><label>故障件编号(Failed Item Serial No.)</label></td>
+          <td><input ms-widget="textbox" ms-duplex="frSruSn" ms-disabled="frSruSnDisabled" type="textbox"/></td>
+        </tr>
+        <tr>
+          <td><label>实施部门/组(Implementation Group/Department)</label></td>
+          <td>
+            <select ms-duplex="ImpltGroup" ms-disabled="ImpltGroupDisabled" ms-change="selectGroup(ImpltGroup)">
+              <option ms-repeat="ImpltGroups" ms-attr-value="el.value" ms-attr-label="el.label" ms-click="selectProject(1)"></option>
+            </select>
+          </td>
+          <td><label>实施日期(Implementation Date)</label></td>
+          <td>
+            <input class="happenTime" ms-widget="textbox" ms-duplex="ImpltDate" ms-disabled="ImpltDateDisabled" type="textbox" />
+          </td>
+        </tr>
+        <tr>
+          <td><label>补加工单号(Shop Finding Report No.)</label></td>
+          <td colspan="3" id="description">
+            <select ms-duplex="ShopFindingReportNo" ms-disabled="ShopFindingReportNoDisabled" ms-change="selectShopFindingReportNo(ShopFindingReportNo)">
+              <option ms-repeat="ShopFindingReportNos" ms-attr-value="el.value" ms-attr-label="el.label" ms-click="selectShopFindingReportNo(1)"></option>
+            </select>
+          </td>
+        </tr>
+      </table>
+      <table class="table table-bordered" id="car-table2">
+        <tr>
+          <td>纠正方式(Correction)</td>
+          <td>名称(Unit Name)</td>
+          <td>件号(Part No.)</td>
+          <td>产品编号(Serial No.)</td>
+          <td>制造方(Manufacturer)</td>
+          <td>生产日期(Production Date)</td>
+        </tr>
+        <tr>
+          <td>拆除件(Unit Remove)</td>
+          <td><input ms-widget="textbox" ms-duplex="UnitRemoveName" ms-disabled="UnitRemoveNameDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="UniteRemovePartNo" ms-disabled="UniteRemovePartNoDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="UniteRemoveSerialNo" ms-disabled="UniteRemoveSerialNoDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="UnitRemoveManufct" ms-disabled="UnitRemoveManufctDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="UniteRemoveProdDate" ms-disabled="UniteRemoveProdDateDisabled" type="textbox"/></td>
+        </tr>
+        <tr>
+          <td>更换件(Unit Replace)</td>
+          <td><input ms-widget="textbox" ms-duplex="UnitReplaceName" ms-disabled="UnitReplaceNameDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="UnitReplacePartNo" ms-disabled="UnitReplacePartNoDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="UnitReplaceSerialNo" ms-disabled="UnitReplaceSerialNoDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="UnitReplaceManufct" ms-disabled="UnitReplaceManufctDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="UnitReplaceProdDate" ms-disabled="UnitReplaceProdDateDisabled" type="textbox"/></td>
+        </tr>
+        <tr>
+          <td>修理件(Unit Repair)</td>
+          <td><input ms-widget="textbox" ms-duplex="UnitRepairName" ms-disabled="UnitRepairNameDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="UnitRepairPartNo" ms-disabled="UnitRepairPartNoDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="UnitRepairSerialNo" ms-disabled="UnitRepairSerialNoDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="UnitRepairManufct" ms-disabled="UnitRepairManufctDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="UnitRepairProdDate" ms-disabled="UnitRepairProdDateDisabled" type="textbox"/></td>
+        </tr>
+      </table>
+      <table class="table table-bordered" id="car-table3">
+        <tr>
+          <td>软件更改(Software Change)</td>
+          <td>软件名称(Software Name)</td>
+          <td>软件配置项号(Software Party No.)</td>
+          <td>更改前软件版本(Revision before Change)</td>
+          <td>更改的后软件版本号(Revision after Change)</td>
+        </tr>
+        <tr>
+          <td><input ms-widget="textbox" ms-duplex="" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="SoftwareName" ms-disabled="SoftwareNameDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="SoftwarePartyNo" ms-disabled="SoftwarePartyNoDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="RevisionBfChange" ms-disabled="RevisionBfChangeDisabled" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="RevisionAftChange" ms-disabled="RevisionAftChangeDisabled" type="textbox"/></td>
+        </tr>
+        <tr>
+          <td><input ms-widget="textbox" ms-duplex="" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="" type="textbox"/></td>
+        </tr>
+        <tr>
+          <td><input ms-widget="textbox" ms-duplex="" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="" type="textbox"/></td>
+          <td><input ms-widget="textbox" ms-duplex="" type="textbox"/></td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <textarea ms-duplex="CaImpltSummary" ms-disabled="CaImpltSummaryDisabled" style="height:180px" >纠正措施实施概述（可用附表补充说明）</textarea>
+            <div class="sign">签署 (Sign) : <input ms-widget="textbox" ms-duplex="CaImpltSummarySigner" ms-disabled="CaImpltSummarySignerDisabled" type="textbox" />
+            日期 (Date) : <input ms-widget="textbox" ms-duplex="CaImpltSummarSignDate" ms-disabled="CaImpltSummarSignDateDisabled" type="textbox" /></div>
+          </td>
+        </tr>
+        <tr ms-visible="dlMode">
+          <td colspan="2"><label>责任部门(Action Validation)</label></td>
+          <td colspan="5">
+            <textarea ms-duplex="ActionValidation" ms-disabled="ActionValidationDisabled" style="height:180px" ></textarea>
+            <div class="sign">签署 (Sign) : <input ms-widget="textbox" ms-duplex="DepartmentManager" ms-disabled="DepartmentManagerDisabled" type="textbox" />
+            日期 (Date) : <input ms-widget="textbox" ms-duplex="ActionValidationDate" ms-disabled="ActionValidationDateDisabled" type="textbox" /></div>
+          </td>
+        </tr>
+        <tr ms-visible="tlMode">
+          <td colspan="2"><label>项目负责人/技术负责人(Technical Leader Verification)</label></td>
+          <td colspan="5">
+            <textarea ms-duplex="TechLeaderVerification" ms-disabled="TechLeaderVerificationDisabled" style="height:180px" ></textarea>
+            <div class="sign">签署 (Sign) : <input ms-widget="textbox" ms-duplex="TechLeader" ms-disabled="TechLeaderDisabled" type="textbox" />
+            日期 (Date) : <input ms-widget="textbox" ms-duplex="TechLeaderVerifyDate" ms-disabled="TechLeaderVerifyDateDisabled" type="textbox" /></div>
+          </td>
+        </tr>
+        <tr ms-visible="qaMode">
+          <td colspan="2"><label>质量经理/主管验证(QA Manager Action Verification)</label></td>
+          <td colspan="5">
+            <textarea ms-duplex="QaManagerVerification" ms-disabled="QaManagerVerificationDisabled" style="height:180px" ></textarea>
+            <div class="sign">签署 (Sign) : <input ms-widget="textbox" ms-duplex="QaManager" ms-disabled="QaManagerDisabled" type="textbox" />
+            日期 (Date) : <input ms-widget="textbox" ms-duplex="QaManagerVerifyDate" ms-disabled="QaManagerVerifyDateDisabled" type="textbox" /></div>
+          </td>
+        </tr>
+        <tr ms-visible="mrbMode">
+          <td colspan="2"><label>故障审查委员会意见(MRB)</label></td>
+          <td colspan="5">
+            <textarea ms-duplex="MrbVerification" ms-disabled="MrbVerificationDisabled" style="height:180px" ></textarea>
+            <div class="sign">签署 (Sign) : <input ms-widget="textbox" ms-duplex="MrbLeader" ms-disabled="MrbLeaderDisabled" type="textbox" />
+            日期 (Date) : <input ms-widget="textbox" ms-duplex="MrbVerifyDate" ms-disabled="MrbVerifyDateDisabled" type="textbox" /></div>
+          </td>
+        </tr>
+      </table>
+
+      <div ms-visible="editMode">
+        <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal"  ms-click="commitCar()">提交</a>
+        <a href="#myModal" role="button" class="btn btn-success" data-toggle="modal"  ms-click="saveCar()">保存</a>
+      </div>
+      <a href="#myModal" role="button" class="btn btn-danger" data-toggle="modal"  ms-click="cancelCar()">取消</a>
+
+      <!-- Modal -->
+      <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Fracas</h3>
+        </div>
+        <div class="modal-body">
+          <p>您的操作已完成</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true" ms-click="confirm()">确定</button>
+           <button class="btn" data-dismiss="modal" aria-hidden="true" ms-click="">取消</button>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

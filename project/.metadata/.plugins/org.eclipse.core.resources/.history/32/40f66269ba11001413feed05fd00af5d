@@ -1,0 +1,45 @@
+package org.sjtu.p615.dao;
+
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.sjtu.p615.entity.FailureBasicInfo;
+
+public class FailureBasicInfoDao implements IFailureBasicInfoDao{
+
+	private SessionFactory sessionFactory;
+	
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
+	@Override
+	public void add(FailureBasicInfo failureBasicInfo) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.save(failureBasicInfo);
+		tx.commit();
+		session.close();
+	}
+
+	@Override
+	public FailureBasicInfo get(String failureReportNum) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		FailureBasicInfo failureBasicInfo = (FailureBasicInfo) session.get(FailureBasicInfo.class,
+				failureReportNum);
+		tx.commit();
+		session.close();
+		return failureBasicInfo;
+	}
+
+	
+
+}

@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>项目选择</title>
+	<link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/demo.css">
+    
+    <script type="text/javascript"  src="../js/amScript.js"></script>
+    <script type="text/javascript"  src="../js/getUrlParam.js"></script>  
+    <script type="text/javascript"  src="../js/errorMessage.js"></script>
+    
+    <script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script> 
+    <script type="text/javascript" src="../js/datagrid-detailview.js"></script> 
+    <script type="text/javascript" src="../js/datagrid-filter.js"></script>
+ 	<script type="text/javascript" src="../js/datagrid-groupview.js"></script>
+ 	
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+	
+    <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
+    
+</head>
+<script>
+function initTable(tableId,url){
+	 var $t=$("#"+tableId);
+	 $t.datagrid({
+ 		url					:	url,
+		loadMsg				: 	'Processing, please wait …',
+// 		//定义Expand Row的详细视图
+		onLoadSuccess		:	function(data){	
+									//Load完成时每一行设置button的样式								
+									funcList.execute();
+									funcList.clear();
+									//合并同类项-未完成
+								}
+// 		onHeaderContextMenu	: 	function(e, field){
+// 									e.preventDefault();
+// 									if (!cmenu){
+// 										createColumnMenu();
+// 									}
+// 									cmenu.menu('show', {
+// 										left:e.pageX,
+// 										top:e.pageY
+// 									});
+// 								},		
+// 		idField				:	'planCode',
+// 		onBeforeLoad		: 	function () {  
+// 									$(this).datagrid('rejectChanges');  
+// 								},
+	 });
+
+}
+states="";
+$(document).ready(function(e) {
+   		var roleID = window.location.search;   //location.search是从当前URL的?号开始的字符串
+    if (roleID.indexOf("id")!=-1){
+		var pos_start = roleID.indexOf('id')+3;
+		var pos_end = roleID.indexOf("&",pos_start);
+		if (pos_end == -1){
+			roleID = roleID.substring(pos_start);
+//			var backdata = eval("("+selectInfo+")");
+//			var roleName = backdata[0];
+//			var groupName = backdata[1];
+//			var departmentName = backdata[2];
+		}else{
+			alert("something is wrong");
+		}
+    }
+
+   	//取roleID
+	var tmpdata = window.parent.document.cookie;
+	if(tmpdata.indexOf("<") != -1){
+		var pos_s = tmpdata.indexOf("<");
+		roleID = tmpdata.substring(0,pos_s);
+	}
+   	alert(roleID);
+   		
+   	$.get(C.URL_GET_ALL_PLAN_STATES,function(data){
+   		states=data;
+   	},
+   	"json"
+   	);
+	var urldone=buildUrl(C.URL_GET_PLANS_BY_ROLE,[C.URLPARAS_GET_PLANS_BY_ROLE[0],roleID],[C.URLPARAS_GET_PLANS_BY_ROLE[1],'1']);
+	var urldoing=buildUrl(C.URL_GET_PLANS_BY_ROLE,[C.URLPARAS_GET_PLANS_BY_ROLE[0],roleID],[C.URLPARAS_GET_PLANS_BY_ROLE[1],'0']);
+	initTable('donedg',urldone);
+	initTable('doingdg',urldoing);
+});
+// 	$.post(
+// 	    	'../am/getPlanByRoleId',
+// //	    	{'roleName':roleName,'groupName':groupName,'departmentName':departmentName},
+// 	    	{'roleId':roleID},
+// 	    	function back(data){
+// 	    		for(var i = 0; i < data.length; i++){
+// 	    			if(data[i].complete == true){
+// 		    			$("#donedg").datagrid('appendRow',
+// 							{	
+// 			    				'planSerialNumber':data[i].planSerialNumber,
+// 								'planCode':data[i].planCode,
+// 								'planName':data[i].planName,
+// 								'planIssuedDate':data[i].planIssuedDate,
+// 								'planDeadlineDate':data[i].planDeadlineDate,
+// 								'planRemainingDate':data[i].planRemainingDate,
+// 								'planStartDate':data[i].planStartDate,
+// 								'planSource':data[i].planSource,
+// 								'planState':data[i].planState	
+// 							});
+// 	    			}
+// 	    			else{
+// 		    			$("#doingdg").datagrid('appendRow',
+// 							{	
+// 			    				'planSerialNumber':data[i].planSerialNumber,
+// 								'planCode':data[i].planCode,
+// 								'planName':data[i].planName,
+// 								'planIssuedDate':data[i].planIssuedDate,
+// 								'planDeadlineDate':data[i].planDeadlineDate,
+// 								'planRemainingDate':data[i].planRemainingDate,
+// 								'planStartDate':data[i].planStartDate,
+// 								'planSource':data[i].planSource,
+// 								'planState':data[i].planState
+// 							});
+// 	    			}
+// 	    		}
+// 	    	});
+
+//创建上下文菜单
+// var cmenu;
+// function createColumnMenu(){
+// 	cmenu = $('<div/>').appendTo('body');
+// 	cmenu.menu({
+// 		onClick: function(item){
+// 			if (item.iconCls == 'icon-ok'){
+// 				$('#dg').datagrid('hideColumn', item.name);
+// 				cmenu.menu('setIcon', {
+// 					target: item.target,
+// 					iconCls: 'icon-empty'
+// 				});
+// 			} else {
+// 				$('#dg').datagrid('showColumn', item.name);
+// 				cmenu.menu('setIcon', {
+// 					target: item.target,
+// 					iconCls: 'icon-ok'
+// 				});
+// 			}
+// 		}
+// 	});
+// 	var fields = $('#dg').datagrid('getColumnFields');
+// 	for(var i=0; i<fields.length; i++){
+// 		var field = fields[i];
+// 		var col = $('#dg').datagrid('getColumnOption', field);
+// 		cmenu.menu('appendItem', {
+// 			text: col.title,
+// 			name: field,
+// 			iconCls: 'icon-ok'
+// 		});
+// 	}
+// }
+function formatPlanRemainingDate(val,row){
+	if (val == 0){
+		return '<span style="color:red;">'+val+'</span>';
+	} else if (val >0) {
+		return '<span style="color:green;">'+val+'</span>';
+	} else {
+		return '<span style="color:grey;">'+val+'</span>';
+	}
+}						
+function rowStyle(index,row){
+	if (row.planState == C.AFTER_AUDIT_PLAN.value){
+		return 'background-color:#6293BB;color:#fff;font-weight:bold;';
+	}
+}
+function cellStyler(value,row,index){
+	if (value == C.BEFORE_AUDIT_PLAN.value){
+		return 'background-color:#6293BB;color:#fff;';
+	}
+}
+function formatPlanAgreeT1(value,rowData,rowIndex){
+	var button;
+	var action=getPlanStateActionById(rowData.planStateCode);//返回对应PlanState的下一步可执行动作类
+	if(action!=undefined){
+		var result=getButtonHtml(action,'donedg',value,rowIndex,rowData,1);//返回基本的html代码和用于样式化的jquery函数供回调
+		button = result[0];
+		if(result.length>1)
+			funcList.add(result[1]);
+	}
+	return button;
+}
+function formatPlanAgreeT2(value,rowData,rowIndex){
+	var button;
+	var action=getPlanStateActionById(rowData.planStateCode);//返回对应PlanState的下一步可执行动作类
+	if(action!=undefined){
+		var result=getButtonHtml(action,'doingdg',value,rowIndex,rowData,1);//返回基本的html代码和用于样式化的jquery函数供回调
+		button = result[0];
+		if(result.length>1)
+			funcList.add(result[1]);
+	}
+	return button;
+}
+function formatDate(value,rowData,rowIndex){
+	return value.split(' ')[0];
+}
+function formatPlanState(value,rowData,rowIndex){
+	for(var i=0;i<states.length;i++){
+		if(states[i].stateCode==value)
+			return states[i].stateName;
+	}
+}
+</script>
+<body>
+		<table id="donedg"  title="已完成任务" style="width:auto;height:auto"
+	            data-options="
+		                                                                        pagination		:	true,
+		                                                                        nowrap			:	true,
+		                                                                        collapsible		:	true,
+		                                                                        striped			:	true,
+		                                                                        resizeHandle	:	'both',
+		                                                                        autoRowHeight	:	true,
+		                                                                        checkOnSelect	:	false,
+		                                                                        rownumbers		:	true,
+		                                                                        remoteSort		:	false,
+		                                                                        showHeader		:	true,
+		                                                                        showFooter		:	true,
+		                                                                        fitColumns		:	true,                
+		                                                                        multiSort		:	true,
+		                                                                        toolbar			:	'#tb',
+		                                                                        singleSelect	:	true">
+		    <thead>
+		    	<tr>
+		        	<th data-options="field:'planSerialNumber',sortable:true">综合任务编号</th>
+		            <th data-options="field:'planCode',sortable:true">综合任务代码</th>
+		            <th data-options="field:'planName'">工作名称</th>
+		        	<th data-options="field:'planIssuedDate',formatter:formatDate,sortable:true,sorter:dateCompartor">工作下达日期</th>
+		            <th data-options="field:'planDeadlineDate',formatter:formatDate,sortable:true,sorter:dateCompartor">工作截止日期</th>
+		            <th data-options="field:'planRemainingDate',formatter:formatPlanRemainingDate,sortable:true,sorter:numberCompartor">离完成日期</th>
+		            <th data-options="field:'planStartDate',formatter:formatDate,sortable:true,sorter:dateCompartor">工作启动日期</th>
+		            <th data-options="field:'planSource'">工作来源</th>
+		            <th data-options="field:'planStateCode',formatter:formatPlanState,styler:cellStyler">工作状态</th>
+		            <th data-options="field:'planAgreeButton',formatter:formatPlanAgreeT1" width="100px">操作</th>
+		        </tr>
+		    </thead>
+	    </table>
+	    <br><br>
+		<table id="doingdg"  title="未完成任务" style="width:auto;height:auto"
+	            data-options="
+		                                                                        pagination		:	true,
+		                                                                        nowrap			:	true,
+		                                                                        collapsible		:	true,
+		                                                                        striped			:	true,
+		                                                                        resizeHandle	:	'both',
+		                                                                        autoRowHeight	:	true,
+		                                                                        checkOnSelect	:	false,
+		                                                                        rownumbers		:	true,
+		                                                                        remoteSort		:	false,
+		                                                                        showHeader		:	true,
+		                                                                        showFooter		:	true,
+		                                                                        fitColumns		:	true,                
+		                                                                        multiSort		:	true,
+		                                                                        toolbar			:	'#tb',
+		                                                                        singleSelect	:	true">
+		    <thead>
+		    	<tr>
+		        	<th data-options="field:'planSerialNumber',sortable:true">综合任务编号</th>
+		            <th data-options="field:'planCode',sortable:true">综合任务代码</th>
+		            <th data-options="field:'planName'">工作名称</th>
+		        	<th data-options="field:'planIssuedDate',formatter:formatDate,sortable:true,sorter:dateCompartor">工作下达日期</th>
+		            <th data-options="field:'planDeadlineDate',formatter:formatDate,sortable:true,sorter:dateCompartor">工作截止日期</th>
+		            <th data-options="field:'planRemainingDate',formatter:formatPlanRemainingDate,sortable:true,sorter:numberCompartor">离完成日期</th>
+		            <th data-options="field:'planStartDate',formatter:formatDate,sortable:true,sorter:dateCompartor">工作启动日期</th>
+		            <th data-options="field:'planSource'">工作来源</th>
+		            <th data-options="field:'planStateCode',formatter:formatPlanState,styler:cellStyler">工作状态</th>
+		            <th data-options="field:'planAgreeButton',formatter:formatPlanAgreeT2" width="100px">操作</th>
+		        </tr>
+		    </thead>
+	    </table>
+</body>
+</html>

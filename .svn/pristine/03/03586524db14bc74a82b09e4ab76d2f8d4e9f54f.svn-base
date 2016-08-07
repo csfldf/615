@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+
+td {
+	
+}
+
+.easyui-textbox {
+	width:200px;
+}
+
+.easyui-combobox {
+	width:200px;
+}
+
+.multiline-textbox {
+	height: 200px;
+	width:500px;
+	
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-10-7 14:38:33 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.FailureReportMetadata" table="failure_report_metadata" catalog="testdb">
+        <composite-id name="id" class="org.sjtu.p615.entity.FailureReportMetadataId">
+            <key-property name="projectName" type="string">
+                <column name="projectName" length="100" />
+            </key-property>
+            <key-property name="type" type="string">
+                <column name="type" length="100" />
+            </key-property>
+        </composite-id>
+        <property name="value" type="string">
+            <column name="value" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

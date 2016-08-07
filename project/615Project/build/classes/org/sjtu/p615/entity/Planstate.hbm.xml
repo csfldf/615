@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-9-27 21:50:52 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.Planstate" table="planstate" catalog="testdb">
+        <id name="stateCode" type="int">
+            <column name="StateCode" />
+            <generator class="assigned" />
+        </id>
+        <property name="stateName" type="string">
+            <column name="StateName" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

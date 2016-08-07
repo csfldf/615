@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>登录</title>
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+	
+	<script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script> 
+    <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
+</head>
+
+	<script type="text/javascript">
+		function login(){
+			alert("login");
+			var username = $('#userName').val();
+			var password = $('#password').val();
+			alert(username);
+			alert(password);
+			
+			$.post('../fracas/login',
+					{
+						userName:username,
+						password:password
+					},
+					function back(data){
+						var backdata = eval("("+data+")");
+						alert(backdata);
+					});
+		}
+	</script>
+<body>
+	<div style="margin:20px 0;"></div>
+    <div class="easyui-panel" title="Login to system" style="width:400px;padding:30px 70px 20px 70px">
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" id="userName" style="width:100%;height:40px;padding:12px" data-options="prompt:'Username',iconCls:'icon-man',iconWidth:38">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" id="password" type="password" style="width:100%;height:40px;padding:12px" data-options="prompt:'Password',iconCls:'icon-lock',iconWidth:38">
+        </div>
+        <div style="margin-bottom:20px">
+            <input type="checkbox" checked="checked">
+            <span>Remember me</span>
+        </div>
+        <div>
+            <a href="javascript:void(0)" onclick="login()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="padding:5px 0px;width:100%;">
+                <span style="font-size:14px;">Login</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

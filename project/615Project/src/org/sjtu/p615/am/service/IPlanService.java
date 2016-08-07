@@ -1,0 +1,92 @@
+package org.sjtu.p615.am.service;
+
+import net.sf.json.JSONArray;
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.sjtu.p615.entity.Action;
+import org.sjtu.p615.entity.Message;
+import org.sjtu.p615.entity.Plan;
+import org.sjtu.p615.entity.Remind;
+
+import java.util.List;
+
+public interface IPlanService {
+    public void addPlan(Plan plan, String type);
+
+    public Plan getPlan(String plancode);
+
+    public Plan getPlan(String planCode, String projectId);
+
+    JSONArray getPlansWithApply(String checkApplyType, String userId);
+
+    public List<Plan> getallplan();
+
+    public int getplancount(String plancontroller);
+
+    int getChildrenCountByConditions(String parent, int stateCode);
+
+    public int updatestate(String plancode, int statecode);
+
+    public int updatePlan(Plan plan);
+    
+    public boolean updatePlan(List<Pair<String,String>> property);
+
+    public List<Plan> getstructure();
+
+    public boolean deletePlan(String plancode);
+
+    public List<Plan> getplanbytype(String key, String value);
+
+    public List<Plan> getByEmployeeId(String employeeId);
+
+    public List<Plan> getChildPlans(int rootId);
+
+    public List<Plan> getChildPlans(String planCode);
+
+    public List<Plan> getByProjectName(String projectName);
+
+    public List<Plan> getByProjectId(String projectId);
+
+    public List<Plan> getByEmployeeIdPorjectName(String employeeId, String projectName);
+
+    public List<Message> getMessage(String employeeId);
+
+    public List<Remind> getRemind(String employeeId);
+
+    public boolean delMessage(List<String> messageIds);
+
+    //*=====================homePage Part========================*//
+    public List<Action> getActionsByEmployeeId(String employeeId);
+
+    public boolean addMessage(Message message);
+
+    //*=====================Task Part========================*//
+    public void freezeCurrentMainPlan(String projectId);
+
+    public List<Plan> getTasksByParentCode(String parentCode, String projectId);
+
+    public Plan getPlanByPlanCodeProjectId(String planCode, String projectId);
+
+    void addPlan(Plan plan);
+
+    void addTask(Plan plan);
+
+    public boolean delTask(List<String> tasksIds);
+
+    public List<Plan> getWaitingTasks(String employeeId);
+
+    void importPlan(Plan plan);
+
+    List<Plan> getPlansByConditions(String projectid, String dateColumn, String date1, String date2,
+                                    String employeeId, String groupId, String departmentId);
+
+    List<Plan> getPlansByDateRange(String projectId, String dateColumn, String date1, String date2);
+
+    List<Plan> getPlansByEmployeeId(String projectId, String dateColumn, String date1, String date2, String employeeId);
+
+    List<Plan> getPlansByGroupId(String projectId, String dateColumn, String date1, String date2, String groupid);
+
+    List<Plan> getPlansByDepartmentId(String projectId, String dateColumn, String date1, String date2, String departmentId);
+
+    JSONArray getStatisticsByCondition(String statisticsType, String conditonString, String projectName, String id);
+}

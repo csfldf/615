@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- For Test : No Cache -->
+	<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+	<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+	<META HTTP-EQUIV="expires" CONTENT="0">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Tabs</title>
+     <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css"> 
+     <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>\
+    <script type="text/javascript"  src="../js/amScript.js"></script>
+    <script type="text/javascript"  src="../js/getUrlParam.js"></script>  
+</head>
+
+<body>
+
+    
+    
+    
+    <!--<script type="text/javascript" src="../js/js615.js"></script>-->
+    
+   
+    
+    
+   
+    
+<script>
+
+$(document).ready(function(e) {
+    $('#tt').tabs('add',{
+    title:'New Tab',
+    //href:'../am/plan_report.html',
+	content: '<iframe width="100%" height="100%" frameborder="0"  src="../am/plan_report.html" style="width:100%;height:100%;"></iframe>',
+    closable:true,
+    tools:[{
+        iconCls:'icon-mini-refresh',
+        handler:function(){
+            alert('refresh');
+        }
+    }]
+});
+});
+</script>
+<div id="tt" class="easyui-tabs" style="width:auto;height:auto;"></div>
+</body>
+</html>

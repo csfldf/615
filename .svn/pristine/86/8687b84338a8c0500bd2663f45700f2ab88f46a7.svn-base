@@ -1,0 +1,17 @@
+#description {
+	height: 100px;
+}
+
+#description .ui-textbox {
+	border: none; 
+	width: 100%;
+	height: 90px;
+}
+
+#failure-report-table td {
+	width: 25%;
+}
+
+li {
+	list-style: none;
+}

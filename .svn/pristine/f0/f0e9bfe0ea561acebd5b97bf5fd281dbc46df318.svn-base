@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/contractRegist.css"/>
+</head>
+<body>
+<div ms-controller="payNode">
+	<div ms-visible="part1">
+	<table class="table" border="1px" cellspacing="0px" style="border-collapse:collapse">
+		<tbody>
+			<tr>
+				<td rowspan="8">付款节点{{count}}</td>
+				<td>节点类型</td>
+				<td colspan="3">
+					<select class="select" ms-duplex="nodeType">
+		                <option ms-repeat='nodeTypeOpts' ms-attr-value="el.value" ms-attr-label="el.label"></option>
+		            </select>
+				</td>
+			</tr>
+			<tr>
+				<td>节点计划发生金额</td>
+				<td><input ms-duplex="planMoneyAmount" /></td>
+				<td>币种</td>
+				<td>
+					<select class="select" ms-duplex="planMoneyType">
+		                <option ms-repeat='planMoneyTypeOpts' ms-attr-value="el.value" ms-attr-label="el.label"></option>
+		            </select>
+				</td>
+			</tr>
+			<tr>
+				<td>付款条件</td>
+				<td><input ms-duplex="payCondition" /></td>
+				<td>计划付款日期</td>
+				<td><input class="datepicker" ms-widget="datepicker" data-datepicker-allow-blank="false" ms-duplex="planPayDate"/></td>
+			</tr>
+			<tr>
+				<td>付款依据</td>
+				<td colspan="3"><textarea class="text-500" ms-duplex="payBasis" type="textbox"></textarea></td>
+			</tr>
+			<tr>
+				<td>实际支付金额</td>
+				<td><input ms-duplex="actualMoneyAmount" /></td>
+				<td>币种</td>
+				<td>
+					<select class="select" ms-duplex="actualMoneyType">
+		                <option ms-repeat='actualMoneyTypeOpts' ms-attr-value="el.value" ms-attr-label="el.label"></option>
+		            </select>
+				</td>
+			</tr>
+			<tr>
+				<td>支付类型</td>
+				<td>
+					<select class="select" ms-duplex="payType">
+			        	<option ms-repeat='payTypeOpts' ms-attr-value="el.value" ms-attr-label="el.label"></option>
+			        </select>
+			    </td>
+		        <td>支付申请时间</td>
+		        <td><input ms-duplex="payApplyTime" /></td>
+			</tr>
+			<tr>
+				<td>付款依据是否归档</td>
+				<td colspan="3">
+					<select class="select" ms-duplex="isArchive">
+		                <option label='是' value='yes'></option>
+		                <option label='否' value='no'></option>
+		            </select>
+				</td>
+			</tr>
+			<tr>
+				<td>支付组成</td>
+				<td colspan="3"><textarea class="text-500" ms-duplex="payContain" type="textbox"></textarea></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<table class="table" border="1px" cellspacing="0px" style="border-collapse:collapse" ms-visible="payType === 'prepaid'">
+		<tbody>
+			<tr>
+				<td>核销对应付款节点</td>
+				<td>付款节点{{count}}</td>
+				<td>核销状态（仅预付款时）</td>
+				<td>
+					<select class="select" ms-duplex="isVerify">
+		                <option label='已核销' value='yes'></option>
+		                <option label='未核销' value='no'></option>
+		            </select>
+				</td>
+			</tr>
+			<tr>
+				<td>核销金额差值</td>
+				<td><input ms-duplex="verifyMoneyDiff" /></td>
+				<td>核销后实际总金额</td>
+				<td><input ms-duplex="verifyMoneyTotal" /></td>
+			</tr>
+			<tr>
+				<td>核销申请日期</td>
+		        <td><input ms-duplex="verifyApplyDate" /></td>
+		        <td>核销金额组成</td>
+		        <td><input ms-duplex="verifyMoneyContain" /></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	
+	<table class="table" border="1px" cellspacing="0px" style="border-collapse:collapse" ms-visible="part2">
+		<tbody>
+			<tr>
+				<td rowspan="2" width="15px">付款节点<br/>{{count}}<br/>审批记录</td>
+				<td width="30px">合同管理员</td>
+				<td><textarea class="text-500" ms-duplex="payNodeRecordCm" type="textbox" /></td>
+			</tr>
+			<tr>
+				<td>项目分管领导</td>
+				<td><textarea class="text-500" ms-duplex="payNodeRecordPm" type="textbox" ms-disabled="" /></td>
+			</tr>
+		</tbody>
+		<tbody ms-visible="payType === 'prepaid'">
+			<tr>
+				<td rowspan="2" width="15px">核销<br/>{{count}}<br/>审批记录</td>
+				<td width="30px">合同管理员</td>
+				<td><textarea class="text-500" ms-duplex="verifyRecordCm" type="textbox" /></td>
+			</tr>
+			<tr>
+				<td>项目分管领导</td>
+				<td><textarea class="text-500" ms-duplex="verifyRecordPm" type="textbox" ms-disabled="" /></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>

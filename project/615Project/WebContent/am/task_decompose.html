@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/panel.css"/>
+    <link href="css/base/fineuploader-5.0.7.min.css" rel="stylesheet">
+</head>
+<body>
+<div ms-important="taskSummary">
+    <div class="panel panel-default" id="taskDecompose">
+        <div class="panel-heading">任务分解</div>
+        <div class="accordion-body collapse" id="decomposeTask" style="position:relative;height: auto;">
+            <div class="accordion-inner" contenteditable="false">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <td>编号</td>
+                        <td>任务内容
+                                    <!--<span class="sort-icons" style="position:relative">
+                                        <i class="icon-chevron-up" ms-click="orderByDict('wproject',proDGrid, 'projectName', 1)"></i>
+                                        <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectName', 0)"></i>
+                                    </span>-->
+                        </td>
+                        <td>开始时间
+                                    <!--<span class="sort-icons" style="position:relative">
+                                        <i class="icon-chevron-up" ms-click="orderByDict('wproject,'proDGrid, 'projectStartingDate', 1)"></i>
+                                        <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectStartingDate', 0)"></i>
+                                    </span>-->
+                        </td>
+                        <td>完成时间
+                                    <!--<span class="sort-icons" style="position:relative">
+                                        <i class="icon-chevron-up" ms-click="orderByDict('wproject',proDGrid, 'projectDeadlineDate', 1)"></i>
+                                        <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectDeadlineDate', 0)"></i>
+                                    </span>-->
+                        </td>
+                        <td>责任人
+                                    <!--<span class="sort-icons" style="position:relative">
+                                        <i class="icon-chevron-up" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 1)"></i>
+                                        <i class="icon-chevron-down" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 0)"></i>
+                                    </span>-->
+                        </td>
+                        <td>权重(%)total:{{totalWeight}}
+                            <!--<span class="sort-icons" style="position:relative">
+                                <i class="icon-chevron-up" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 1)"></i>
+                                <i class="icon-chevron-down" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 0)"></i>
+                            </span>-->
+                        </td>
+                        <td>操作
+                            <!--<span class="sort-icons" style="position:relative">
+                                <i class="icon-chevron-up" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 1)"></i>
+                                <i class="icon-chevron-down" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 0)"></i>
+                            </span>-->
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-hover="hover" ms-repeat="curTaskReport">
+                        <td>{{$index+indexTaskReportPage*pageSize+1}}</td>
+                        <td><textarea ms-duplex="el.taskContent" type="text" style="width: 160px;height:20px"
+                                      ms-class="{{el.planCode}}" ms-change="taskContentLegalityJudge(el)"
+                                      ms-focus="expandContent(el.planCode)" ms-blur="shrinkContent(el.planCode)"></textarea>
+                        </td>
+                        <td><div class="controls">
+                            <input ms-duplex="el.planIssuedDate" type="date" class="input-xlarge span11"
+                                                         name="planIssuedDate"
+                                   ms-change="dateLegalityJudge('planIssuedDate',el)" required></div></td>
+                        <td><input ms-duplex="el.planDeadlineDate" type="date" class="input-xlarge span11"
+                                   ms-change="dateLegalityJudge('planDeadlineDate',el)"></td>
+                        <td><div class="controls">
+                            <div class="input-append">
+                                <input onfocus="this.blur()" style="width: 79px"
+                                       ms-duplex="el.planController" type="text" required>
+                                <a class="inline btn" ms-click="initEmployeeSelector('#selector',el)">选择员工</a>
+                            </div>
+                        </div></td>
+                        <td><input ms-duplex="el.taskWeight" type="text" style="width: 79px" class="input-xlarge span11"
+                                ms-change="weightLegalityJudge(el)"></td>
+                        <td><a href="javascript:void(0)" ms-click="deleteTask(el)">删除</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="height: 50px"></div>
+            </div>
+            <span style="position:absolute;bottom: 20px;left: 20px">每页显示</span>
+            <select id="select-task" ms-change="setPages"
+                    style="position: absolute;bottom: 5px;left: 80px;width: 60px">
+                <option value ="5"  selected="selected">5</option>
+                <option value ="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select><span style="position:absolute;bottom: 20px;left: 145px">共：{{taskReport.length}}项</span>
+            <div class="pager" style="position:absolute;bottom:0px;left:40%">
+                <button ms-click="preTaskReportPage"><i class="icon-chevron-left"></i></button>
+                第 {{indexTaskReportPage+1}} 页，共 {{pagesTask}} 页
+                <button ms-click="nextTaskReportPage"><i class="icon-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <input class="btn btn primary" type="button" value="新增任务"
+                   ms-click="addTask" style="display: inline-block;">&nbsp;&nbsp;
+            <input class="btn btn primary" type="button" value="任务提交"
+                   ms-click="releaseTask">&nbsp;&nbsp;
+            <input class="btn btn primary" type="button" value="查看工作包"
+                   ms-click="toPackageView()">
+            <input class="btn btn primary" type="button" value="退出"
+                   ms-click="closeTaskDecomposeTab($event)">
+    </div>
+</div>
+
+    <br><br>
+    <div class="panel panel-default">
+        <div class="panel-heading">工作包信息</div>
+        <br>
+        <div class="span2">
+            <div class="control-group"><!-- Text input-->
+                <div class="controls">
+                    <div >
+                        <label class="control-label ">开始时间:</label>
+                        <span>{{taskPackage.planIssuedDate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span2">
+            <div class="control-group"><!-- Text input-->
+                <div class="controls">
+                    <div >
+                        <label class="control-label ">完成时间:</label>
+                        <span>{{taskPackage.planDeadlineDate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span2">
+            <div class="control-group"><!-- Text input-->
+                <div class="controls">
+                    <div >
+                        <label class="control-label ">负责人:</label>
+                        <span>{{taskPackage.planController}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

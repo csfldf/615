@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+
+<hibernate-mapping package="org.sjtu.p615.entity">
+	<class name="FailureBasicInfo" table="failurebasicinfo">
+		<id
+			column="FailureInfo_ID"
+			name="Id"
+			type="integer"
+		>
+
+			<generator class="native" />
+
+		</id>
+		<property
+			column="FailureSN"
+			length="128"
+			name="FailureSN"
+			not-null="true"
+			type="string"
+		 />
+		<property
+			column="FailureModel"
+			length="128"
+			name="FailureModel"
+			not-null="true"
+			type="string"
+		 />
+		<property
+			column="FailureReportNum"
+			length="128"
+			name="FailureReportNum"
+			not-null="true"
+			type="string"
+		 />
+
+ 
+		<set inverse="true" name="FailurereportSet">
+			<key column="FailureInfo_ID" />
+			<one-to-many class="FailureReport" />
+		</set>
+<!-- 
+		<set inverse="true" name="FailureanalysisreportSet">
+			<key column="FailureInfo_ID" />
+			<one-to-many class="Failureanalysisreport" />
+		</set>
+-->
+
+	</class>
+</hibernate-mapping>

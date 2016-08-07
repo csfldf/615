@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/panel.css"/>
+    <link rel="stylesheet" href="js/base/bs-tagsinput/bootstrap-tagsinput.css"/>
+    <title >项目概览</title>
+</head>
+<body>
+<div ms-controller="prj_maintain">
+<div style="position: relative;left:0px;top:0px;">
+    <!--<a type="button" id="btn_all" ms-class="btn btn-default" ms-click="showPrj()">项目概览</a>-->
+    <!--<a type="button" id="btn_create" ms-class="btn btn-default" ms-click="crtPrj()">创建项目</a>-->
+    <!--<a type="button" id="btn_group" ms-class="btn btn-default" ms-click="maintainPrj()">项目团队维护</a>-->
+</div>
+
+<div ms-visible="grpMaintainSel" style="position: relative;left:0px;">
+<div id="first_grp" style="position: relative;left:0px;">
+    <div class="accordion-group">
+        <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeMessageImg_firstGrp"
+                                          data-parent="#accordion-300" data-toggle="collapse" style="color: darkred"
+                                          href="#accordion-element-firstGrp">一级团队成员<img id="imgMessage_firstGrp" src="img/shrink.png" /></a>
+        </div>
+        <div class="accordion-body in collapse" id="accordion-element-firstGrp" style="position:relative;bottom:0px;left:0px;height:auto;">
+            <div class="accordion-inner" id="firstGrp_inner" contenteditable="false">
+                <form ms-attr-id="firstGrp">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label ">所领导:</label>
+
+                                <div class="controls">
+                                    <div class="input-append">
+                                        <!--<input ms-duplex="createPrj.insLeader" ms-enabled="true" name="insLeader"-->
+                                        <!--type="text" class="input-xlarge span11" autofocus-->
+                                        <!--required><a class="inline btn" ms-click="pickman(1)">选择员工</a>-->
+                                        <div class="bootstrap-tagsinput" >
+                                            <span  ms-repeat="selectedPrj.insLeader" class="tag label label-info">{{el.employeeName}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">部门领导:</label>
+
+                                <div class="controls">
+                                    <div class="input-append">
+                                        <!--<input ms-duplex="createPrj.depLeader" ms-enabled="true" name="depLeader"-->
+                                        <!--type="text" class="input-xlarge span11" autofocus-->
+                                        <!--required><a class="inline btn"  ms-click="pickman(2)">选择员工</a>-->
+                                        <div class="bootstrap-tagsinput" >
+                                            <span  ms-repeat="selectedPrj.depLeader" class="tag label label-info">{{el.employeeName}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label ">项目领导:</label>
+
+                                <div class="controls">
+                                    <div class="input-append">
+                                        <div class="bootstrap-tagsinput" >
+                                            <span  ms-repeat="selectedPrj.prjLeader" class="tag label label-info">{{el.employeeName}}</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">项目经理:</label>
+
+                                <div class="controls">
+                                    <div class="input-append">
+                                        <!--<input ms-duplex="createPrj.manager" ms-enabled="true" name="manager"-->
+                                        <!--type="text" class="input-xlarge span11" autofocus-->
+                                        <!--required><a class="inline btn"  ms-click="pickman(4)">选择员工</a>-->
+                                        <div class="bootstrap-tagsinput" >
+                                            <span  ms-repeat="selectedPrj.manager" class="tag label label-info">{{el.employeeName}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<button type="button" class="btn btn-primary" ms-click="createAprj()" style="position:relative;top:25px">创建</button>-->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div ms-visible="grpSel" id="grpMemberList" style="position: relative;left:0px;width: 48%;float: left">
+    <div class="accordion-group">
+        <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeMessageImg_grpMember"
+                                          data-parent="#accordion-300" data-toggle="collapse" style="color: darkred"
+                                          href="#accordion-element-grpMember">{{selectedGroupName}}成员<img id="imgMessage_grpMember" src="img/shrink.png" /></a>
+        </div>
+        <div class="accordion-body in collapse" id="accordion-element-grpMember" style="position:relative;bottom:0px;left:0px;height:auto;">
+            <div class="accordion-inner" id="grpMember_inner" contenteditable="false">
+                <table class="table" id="groupMemberList">
+                    <!--<caption>{{groupName}}人员角色表</caption>-->
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>员工号
+                            <span class="sort-icons" style="position:relative">
+                                   <!--<i class="icon-chevron-up" ms-click="orderByDict('groupMembers', 'employeeId', 1)"></i>-->
+                                   <!--<i class="icon-chevron-down" ms-click="orderByDict('groupMembers', 'employeeId', 0)"></i>-->
+                                   </span>
+                        </th>
+                        <th>员工姓名
+                            <span class="sort-icons" style="position:relative">
+                                   <!--<i class="icon-chevron-up" ms-click="orderByDict('groupMembers', 'employeeName', 1)"></i>-->
+                                   <!--<i class="icon-chevron-down" ms-click="orderByDict('groupMembers', 'employeeName', 0)"></i>-->
+                                   </span>
+                        </th>
+                        <th>员工角色
+                            <span class="sort-icons" style="position:relative">
+                                   <!--<i class="icon-chevron-up" ms-click="orderByDict('groupMembers', 'roleName', 1)"></i>-->
+                                   <!--<i class="icon-chevron-down" ms-click="orderByDict('groupMembers', 'roleName', 0)"></i>-->
+                                   </span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-attr-id="'groupMember'+el.roleKey" class="one-row" ms-repeat="data.groupMembers.curReports">
+                        <td><input  class="radio" type="radio" name="grpMemberRadio" ms-click="selectGroupMember(el)"></td>
+                        <td>{{el.employeeId}}</td>
+                        <td>{{el.employeeName}}</td>
+                        <td>{{el.roleName}}</td>
+                        <!--<a ms-click="del(el.employeeId)">删除</a><br>-->
+                    </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <span style="position:relative;bottom: 3px;left: 1%">每页显示</span>
+                    <select ms-change="setPagesMessage('groupMembers')" ms-duplex="data.groupMembers.pageSize"
+                            style="position: relative;bottom: 0px;left: 2%;width: 60px">
+                        <option value ="5" selected="selected">5</option>
+                        <option value ="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                    <span style="position: relative;bottom:3px;left: 5%">从总共{{data.groupMembers.totalNum}}项中选择了{{data.groupMembers.filterNum}}项</span>
+                            <span style="position: relative;bottom:3px;left: 10%">
+                                <button ms-click="prePage('groupMembers')"><i class="icon-chevron-left" ></i></button>
+                                第 {{data.groupMembers.indexPage+1}} 页，共 {{data.groupMembers.pageNum}} 页
+                                <button ms-click="nextPage('groupMembers')"><i class="icon-chevron-right" ></i></button>
+                            </span>
+                    <!--<span style="position: relative;left:25%"><a ms-click="reset('groupMembers')">重置</a></span>-->
+                </div>
+                <a ms-click="showEmpList()" role="button" class="btn btn-primary">添加</a>
+                <a ms-click="modifyMemberINFO()" role="button" class="btn btn-warning">修改</a >
+                <a ms-click="delGmp()" role="button" class="btn btn-danger">删除</a></td>
+            </div>
+        </div>
+    </div>
+</div>
+<div ms-visible="emplistSel" id="empList" style="position: relative;width:48%;float:right">
+    <div class="accordion-group">
+        <div class="accordion-heading" style="background-color: #abc5cb">
+            <a class="accordion-toggle" contenteditable="false" ms-click="changeMessageImg_empListMaintain" data-parent="#accordion-100" data-toggle="collapse" style="color: darkred" href="#accordion-element-Maintain">员工列表<img id="imgMessage_empListMaintain" src="img/shrink.png" /></a>
+        </div>
+        <div class="accordion-body in collapse" id="accordion-element-Maintain" style="position:relative;bottom:0px;left:0px;height:auto;">
+            <div class="accordion-inner" id="Maintain_inner" contenteditable="false">
+                <table class="table" id="employeeListMaintain">
+                    <thead>
+                    <tr>
+                        <!--<th></th>-->
+
+                        <th>
+                            员工号
+                                    <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('employees', 'employeeNumber', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('employees', 'employeeNumber', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('employees','employeeNumber')" style="position: relative;left: 20px"></i>
+                                    </span>
+                        </th>
+                        <th>
+                            员工姓名
+                                    <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up"ms-click="orderByDict('employees', 'employeeName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('employees', 'employeeName', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('employees','employeeName')" style="position: relative;left: 20px"></i>
+                                    </span>
+                        </th>
+                        <th>
+                            所在部门
+                                    <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up"ms-click="orderByDict('employees', 'departmentName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('employees', 'departmentName', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('employees','departmentName')" style="position: relative;left: 20px"></i>
+                                    </span>
+                        </th>
+                        <!--<th>-->
+                        <!--行政组-->
+                        <!--<span class="sort-icons" style="position:relative">-->
+                        <!--<i class="icon-chevron-up" ms-click="orderByDictEmp(employees, 'groupName', 1)"></i>-->
+                        <!--<i class="icon-chevron-down" ms-click="orderByDictEmp(employees, 'groupName', 0)"></i>-->
+                        <!--</span>-->
+                        <!--</th>-->
+                        <th>
+                            专业
+                                    <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('employees', 'major', 1)"></i>
+                                    <i class="icon-chevron-down"ms-click="orderByDict('employees', 'major', 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('employees','major')" style="position: relative;left: 20px"></i>
+                                    </span>
+                        </th>
+                        <th>
+                            参加项目数
+                                    <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('employees','prjCount', 1)"></i>
+                                    <i class="icon-chevron-down"ms-click="orderByDict('employees', 'prjCount', 0)"></i></span>
+                            <i class="icon-filter" ms-click="filterConfig('employees','prjCount')" style="position: relative;left: 20px"></i>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="one-row" ms-repeat="data.employees.curReports" ms-click="addOneGrpMember(el)">
+                        <!--<td><input ms-attr-id="'employee'+el.employeeNumber" class="checkbox" type="checkbox" ms-click="select(el)" ms-duplex="employeeCheckArray" ms-attr-value="el.employeeNumber"></td>-->
+                        <td>{{el.employeeNumber}}</td>
+                        <td>{{el.employeeName}}</td>
+                        <td>{{el.departmentName}}</td>
+                        <!--<td>{{el.groupName}}</td>-->
+                        <td>{{el.major}}</td>
+                        <td>{{el.prjCount}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <span style="position:relative;bottom: 3px;left: 1%">每页显示</span>
+                    <select ms-change="setPagesMessage('employees')" ms-duplex="data.employees.pageSize"
+                            style="position: relative;bottom: 0px;left: 2%;width: 60px">
+                        <option value ="5" selected="selected">5</option>
+                        <option value ="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                    <span style="position: relative;bottom:3px;left: 5%">从总共{{data.employees.totalNum}}项中选择了{{data.employees.filterNum}}项</span>
+                            <span style="position: relative;bottom:3px;left: 10%">
+                                <button ms-click="prePage('employees')"><i class="icon-chevron-left" ></i></button>
+                                第 {{data.employees.indexPage+1}} 页，共 {{data.employees.pageNum}} 页
+                                <button ms-click="nextPage('employees')"><i class="icon-chevron-right" ></i></button>
+                            </span>
+                    <span style="position: relative;left:25%"><a ms-click="reset('employees')">重置</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="modal fade" id="groupMemberModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" style="display: none ">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="groupMemberModalLabel">
+                    修改组员信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid" >
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">员工姓名</label>
+
+                                <input ms-duplex="empInfo.employeeName" name="employeeName" class="input-xlarge" required ms-attr-disabled="true">
+                                </input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">员工角色</label>
+                                <select ms-duplex="empInfo.roleId" name="roleName" class="input-xlarge" required>
+                                    <option ms-repeat="roles" ms-attr-value="el.roleId">{{el.roleName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" ms-click="modifyGmpInfo()" class="btn btn-primary">
+                    修改
+                </button>
+                <button type="button" class="btn btn-default"
+                        id="groupMember_close_btn" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div class="modal fade" id="groupModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true"  style="display: none ">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="groupModalLabel">
+                    创建专业组
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form id="newGroupForm">
+
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <div class="control-group"><!-- Text input-->
+                                    <label class="control-label">组名</label>
+
+                                    <div class="controls">
+                                        <input ms-duplex="createGroup.groupName" name="groupName" type="text"
+                                               class="input-xlarge" autofocus required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <div class="control-group"><!-- Text input-->
+                                    <label class="control-label">组长</label>
+                                    <select ms-duplex="createGroup.leaderId" name="leaderId" class="input-xlarge"
+                                            required>
+                                        <option ms-repeat="data.employees.original_reports" ms-value="el.employeeNumber">{{el.employeeName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" ms-click="addOneGroup" class="btn btn-primary">
+                    创建
+                </button>
+                <button type="button" class="btn btn-default"
+                        id="group_close_btn" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+<div class="modal fade" ms-attr-id="modalName" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    筛选内容
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-default" ms-visible="true">
+                    <table class="table table-hover" >
+                        <thead>
+                        <tr>
+                            <th><a class="btn-primary" ms-click="selALL(1)">全选</a><br><a class="btn-danger" ms-click="selALL(0)">全不选</a></th>
+                            <th>筛选内容</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-repeat="filter.org_values">
+                            <td>
+                                <input class="checkbox" type="checkbox" ms-duplex-radio="el.enabled">
+                            </td>
+                            <td>
+                                {{el.name}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button style="float:right" type="button" ms-click="executeFilter()" class="btn btn-primary">
+                    确认
+                </button>
+                <button style="float:left" type="button" ms-attr-id="modalBtn" class="btn btn-default"
+                        data-dismiss="modal" >关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+</body>
+<script src="../js/avalon.js"></script>
+<link rel="stylesheet" href="../css/base/bootstrap.css">
+<script src="../js/globalConfig.js"></script>
+<script>
+    require(['am.prjMaintain','jquery','bootstrap'], function (data,$) {
+        avalon.scan();
+    } );
+
+</script>
+</html>

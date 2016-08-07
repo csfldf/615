@@ -1,0 +1,509 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<!-- For Test : No Cache -->
+	<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+	<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+	<META HTTP-EQUIV="expires" CONTENT="0">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>计划录入</title>
+   <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/demo.css">
+    
+    <script type="text/javascript"  src="../js/amScript.js"></script>
+    <script type="text/javascript"  src="../js/getUrlParam.js"></script>  
+    <!--<script type="text/javascript" src="../js/js615.js"></script>-->
+    
+    <script type="text/javascript" src="../js/jquery-1.6.1.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    
+    <!-- 导入uploadify -->
+    <link rel="stylesheet" type="text/css" href="../uploadify/uploadify.css">
+    <script type="text/javascript" src="../uploadify/jquery.uploadify.js"></script>
+</head>
+    
+    
+<body>
+ 
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+
+
+		$.ajaxSetup({   
+		            async : false  
+		        }); 
+
+
+		$('#dlg').dialog('close');
+			initTable('person_dg');
+		//test Combotree
+/* 		info=[{planCode:'s1',level:1,leaf:false,parentCode:null,planName:'s1name'},{planCode:'s2',level:3,leaf:false,parentCode:'s1',planName:'s2name'},{planCode:'s3',level:3,leaf:true,parentCode:'s2',planName:'s3name'},{planCode:'s11',level:1,leaf:false,parentCode:null,planName:'s11name'},{planCode:'s12',level:2,leaf:true,parentCode:'s11',planName:'s12name'}];
+		//var json=getPlanTree.getFinalData(info);
+		var json=Tree.getTree(info,'leaf','parentCode','level','planCode','planName');
+		$("#planCategory").combotree('loadData',json);
+		var tmp1=$("#planCategory").combotree('tree');
+		var node=tmp1.tree('getRoot');
+		tmp1.tree('select',node.target);
+		tmp1.tree('check',node.target); */
+		//初始化Combotree
+		$.get(C.URL_VIEW_PLAN_CATEGORY,null,function(data){
+												if(data instanceof Array)
+													$("#planCategory").combotree('loadData',
+																	Tree.getTree(data,'leaf','parentCode','level','planKey','planName'));
+													},'json');
+		//设置页面中所有easyui-datebox的解析格式
+		initAllDateboxFormat(["planIssuedDate","planStartDate","planDeadlineDate"]);
+		
+		//设置uploadify的属性---------------------XXX:需要增加已上传附件项的删除功能
+		$('#file_upload').uploadify({
+			'swf'  			: '../uploadify/uploadify.swf',
+			'uploader'		: C.URL_ADD_ONE_ATTACHMENT, 
+			'buttonText'	: 'Select..',
+			'auto'			: false,
+			'multi'			: true,
+			'fileObjName'  : 'file_upload',
+			'height'		: 18,
+			'width'			: 80,
+			'sizeLimit' 	: 10*1024*1024,
+			'queueID'		: 'fileQueue',
+			'displayData'	: 'speed',
+			'queueSizeLimit': 100, //可上传的文件个数
+			'preventCaching': true,
+			'rollover'		: true,//button是否变换
+			'removeCompleted': false,
+			'progressData'	: 'all',
+			'transparent'	: false,
+			'cancelImg'		: '../uploadify/uploadify-cancel.png',
+			'onUploadSuccess' : function(file, data, response) {alert('The file was saved to: ' + data);}
+		});
+		//根据Type隐藏一些元素,在所有元素渲染完成后进行
+		var type = UrlParm.parm("type");
+		if(type == "new") {
+			$("#button_div").hide();
+			groupHide('new');groupDisable('new');
+			$("#planState").combobox('select',C.BEFORE_AUDIT_PLAN.code);
+			$("#modifyType").attr('value','new');//new时默认设置modifyType为new
+		}
+		else if(type == "search"){
+			$("#data_div").hide();
+			//传入参数planCode时自动搜索
+			var planCodeToSearch = UrlParm.parm("planCode");
+			if(planCodeToSearch != null && planCodeToSearch != ''){
+				$("#planSearchBox").searchbox('setValue',planCodeToSearch);
+				doSearch(planCodeToSearch);
+			}
+			//根据传入的参数设置其他的modifyType类型
+			var modifyType = UrlParm.parm("modifyType");
+			switch(modifyType){
+				case "change" :
+					$("#planUpdateDescription").textbox('enable');
+					groupHide('change');groupDisable('change');
+					$("#modifyType").attr('value',modifyType);
+					$("#formSubmit").linkbutton({'text' : 'Change'});
+					break;
+				case "update":
+				default:
+					groupHide('update');groupDisable('update');
+					$("#modifyType").attr('value','update');//Search时默认设置modifyType为update
+					$("#formSubmit").linkbutton({'text' : 'Update'});
+			}		
+		}
+		else if(type=="script"){
+			$("#button_div").hide();
+			groupHide('new');groupDisable('new');
+			$("#planState").combobox('select',C.BEFORE_AUDIT_PLAN.code);
+			$("#modifyType").attr('value','script');//script时默认设置modifyType为script
+			var plan;
+			var scriptKey=UrlParm.parm("scriptKey");
+				$.post(
+						'../am/getOneScript',
+						{
+							'scriptKey':scriptKey
+						},
+						function back(data){
+							plan=data;
+							$("#planSerialNumber").textbox('setValue',data.planSerialNumber),
+							$("#planCode").textbox('setValue',data.planCode),
+							$("#planName").textbox('setValue',data.planName),
+							$("#planDeadlineDate").textbox('setValue',data.planDeadlineDate),
+							$("#planSource").textbox('setValue',data.planSource),
+							$("#employeName").textbox('setValue',data.employeName)
+						},
+						'json'
+				);
+				var node = $("#planCategory").combotree('tree').tree('find',plan.planCategory);
+				var state = $("#planCategoryState");
+				if(node == null)
+					state.text('Can not find the valid node displayed');
+				else if($("#planCategory").combotree('getValue') != node.text)
+					state.text('The Text of this node has changed'); 
+				if(node!=null){
+					$("#planCategory").combotree('tree').tree('select',node.target);
+					$("#planCategory").combotree('setValue',node.id);
+				}
+		}
+		//设置form提交
+		$("#ff").form({
+			url		:	C.URL_ADD_ONE_PLAN,
+			//提交前检查数据有效性：是否为空，日期的大小关系
+			onSubmit: function(){
+						if($("#ff").form('validate')==false){
+							alert("请将表单填写完整");
+							return false;
+						}
+// 						var compare1 = dateCompartor($("#planIssuedDate").datebox('getValue'),$("#planStartDate").datebox('getValue'));
+// 						var compare2 = dateCompartor($("#planStartDate").datebox('getValue'),$("#planDeadlineDate").datebox('getValue'));
+// 						if(compare1 <= -2 || compare2 <= -2){
+// 							alert("请填写采用 年-月-日 格式填写正确的日期");
+// 							return false;
+// 						}
+// 						else if(compare1 > 0){
+// 							alert("请填写正确的工作启动日期，确保工作启动日期不早于工作下达日期");
+// 							$("#planStartDate").datebox('setValue','');
+// 							return false;
+// 						}
+// 						else if(compare2 > 0){
+// 							alert("请填写正确的工作要求完成日期，确保工作启动日期不早于工作要求完成日期");
+// 							$("#planDeadlineDate").datebox('setValue','');
+// 							return false;
+// 						}
+						return true;
+					},
+			success:function(data){
+				if(data == 1){
+					$("#submitState").text("已成功提交");
+					$('#ff').form('clear');
+				}
+				else
+					$("#submitState").text("提交失败，请稍后重试");
+			}
+		});
+	});
+	
+	//doSearch()
+	function doSearch(value){
+		$("#data_div").show();
+		$.post(
+			buildUrl(C.URL_GET_ONE_PLAN,[C.URLPARAS_GET_ONE_PLAN[0],value]),
+			function back(data) {
+				var plan = data;
+				$("#ff").form('load',plan);
+				if(plan.planRemainingDate>0){
+					$("#planRemainingDate").textbox("setValue", '还有'+plan.planRemainingDate+'天到期');}
+				else if(plan.planRemainingDate==0){
+					$("#planRemainingDate").textbox("setValue", '今日到期');}
+				else {
+					$("#planRemainingDate").textbox("setValue", '已超期'+-plan.planRemainingDate+'天');}
+				//显示附件列表,增加附件cancel单击事件
+				initExistedAttachmentList('fileExisted',plan.planCode,plan.planOutput);
+				//combobox选中相应的行
+				$("#planState").combobox('select',plan.planStateCode);
+				if(plan.planStateCode==6){
+					$('#accept').linkbutton('disable');
+					$('#complete').linkbutton('disable');
+				}
+				if(plan.planStateCode==2){
+					$('#complete').linkbutton('disable');
+				}
+				if(plan.planStateCode==4){
+					$('#accept').linkbutton('disable');
+				}
+// 				$("#planController").combobox('select',plan.planControllerId);
+				//选中相应的combotree并显示,增加数据库的值非法时的提示
+				var node = $("#planCategory").combotree('tree').tree('find',plan.planKey);
+				node=$("#planCategory").combotree('tree').tree('getParent',node.target);
+				var state = $("#planCategoryState");
+				if(node == null)
+					state.text('Can not find the valid node displayed');
+				else if($("#planCategory").combotree('getValue') != node.text)
+					state.text('The Text of this node has changed'); 
+				if(node!=null){
+					$("#planCategory").combotree('tree').tree('select',node.target);
+					$("#planCategory").combotree('setValue',node.id);
+				}
+				$("#employeName").textbox('setValue',plan.employeeName);
+				//planController
+				
+			});
+	}
+	function submitForm(){
+		var $tmp=$("#planState");
+		var $tmp1=$("#modifyType");
+		var $tmp2=$("#planCode");
+		var formParams=$("#ff").form('options').queryParams;
+		//当comboobox Disable时，form不会自动上传combobox，手动上传
+		if($tmp.combobox('options').disabled==true)
+			formParams.planState = $tmp.combobox('getValue');
+		formParams.modifyType = $tmp1.attr('value');
+		if($tmp1.attr('value')=='update')
+			formParams.planCode=$tmp2.textbox('getValue');
+// 		var tmpdata = window.parent.document.cookie;
+// 		var roleID="";
+// 		if(tmpdata.indexOf("<") != -1){
+// 			var pos_s = tmpdata.indexOf("<");
+// 			roleID = tmpdata.substring(0,pos_s);
+// 		}
+// 		if($tmp1.attr('value')=='script'){
+// 			formParams.scriptKey=$("#scriptKey").textbox('getValue');
+// 		}
+		$('#ff').submit();
+	}
+	function clearForm(){
+		$('#ff').form('clear');
+	}
+	function saveScript(){
+		var employeeId=window.parent.document.getElementById("user").innerHTML;
+		$.post(
+				'../am/addScript.action',
+				{
+					"employeeId":employeeId,
+					"planSerialNumber":$("#planSerialNumber").textbox('getValue'),
+					"planCode":$("#planCode").textbox('getValue'),
+					"planName":$("#planName").textbox('getValue'),
+					"planDeadlineDate":$("#planDeadlineDate").datebox('getValue'),
+					"planSource":$("#planSource").textbox('getValue'),
+					"employeName":$("#employeName").textbox('getValue'),
+					"planCategory":$("#planCategory").combotree('getValue')
+				},
+				function back(data){
+					if(data.msg=="success"){
+						alert("保存成功");
+					}else{
+						alert("保存失败");
+					}
+				},
+				'json'
+		)
+	}
+	function uploadFile(){
+		if($("#planCode").val()!=""){
+			$('#file_upload').uploadify(
+				'settings','formData',{'planCode':$("#planCode").val()});
+			$('#file_upload').uploadify('upload','*');
+		}
+		else 
+			alert("planCode is null");
+	}
+	function cancelAllUpload(){
+		$('#file_upload').uploadify('cancel','*');
+	}
+	function combotreeFormatter(node){
+		var s = node.text;
+		if (node.children){
+			s += '&nbsp;<span style=\'color:blue\'>(' + node.children.length + ')</span>';
+		}
+		return s;
+	}
+	function workleaderFormatter(row){
+            var s = '<span style="font-weight:bold">' + row.text + '</span><br/>' +
+                    '<span style="font-weight:lighter,color:#888">' + row.desc + '</span>';
+            return s;
+        }
+	function planDelete(){
+		var plancode = $("#planCode").textbox('getValue');
+		var submitstate = $("#submitState");
+		if(plancode != null && plancode != ''){
+			$.get(buildUrl(C.URL_DEL_ONE_PLAN,[C.URLPARAS_DEL_ONE_PLAN[0],plancode]),function(data){
+				if(data == 1)
+					clearForm();
+				else
+					submitstate.text('删除计划 '+plancode+' 失败');},'text');
+		}
+		else
+			submitstate.text('PlanCode不能为空');
+	}
+	function acceptMission(){
+		$.post(
+				'../am/updatestate.action',
+				{
+					"planCode":$("#planCode").textbox('getValue'),
+					"planState":'4'
+				},
+				function back(data){
+					if(data==1){
+						alert("接受成功");
+						doSearch($("#planCode").textbox('getValue'));
+					}else{
+						alert("接受失败");
+					}
+				}
+		)
+		
+	}
+	function completeMission(){
+		$.post(
+				'../am/updatestate.action',
+				{
+					"planCode":$("#planCode").textbox('getValue'),
+					"planState":'6'
+				},
+				function back(data){
+					if(data==1){
+						alert("任务完成");
+						doSearch($("#planCode").textbox('getValue'));
+					}else{
+						alert("完成失败");
+					}
+				}
+		)
+	}
+	function test(){
+		$.get(
+			'../am/getChildPlans.action',
+			{
+				'rootId':12
+			},
+			function back(data){
+				alert("data back!");
+			},
+			'json'
+		)
+	}
+
+</script>
+    
+<div id="button_div">
+	<input id="planSearchBox" class="easyui-searchbox" data-options="prompt:'Please Input Value',searcher:doSearch,menu:'#searchboxMenu'" style="width:500px"></input>
+</div>
+<div id="searchboxMenu" style="width:120px">
+    <div data-options="name:'PlanCode',iconCls:'icon-ok'">综合任务代码</div>
+</div>
+<div id="data_div">
+	<form id="ff" method="post" name="plan">
+            <table cellpadding="5">
+            	<div id="hiddenArea"><!-- 全局隐藏表单域，放置全局变量 -->
+                	<input id="modifyType" type="hidden" value=""></input>
+                </div>
+            	<tr>
+                <td style="width:160px">工作所属:<br>(PlanCategory)</td>
+                <td colspan="3"><input class="easyui-combotree" name="planCategory" id="planCategory" disablewhen="update change" data-options="required:true,formatter:combotreeFormatter" style="width:240px"></input><span id="planCategoryState" style="display:none"></span></td>
+                </tr>
+                <tr>
+                    <td>综合任务编号:<br>(Plan N.O)</td>          
+                    <td><input class="easyui-textbox" name="planSerialNumber" id="planSerialNumber" disablewhen="update" data-options="required:true" style="width:160px"></input></td>
+                    
+                     <td>综合任务代码:<br>(PlanCode)</td>          
+                    <td><input class="easyui-textbox" name="planCode" id="planCode" disablewhen="update" data-options="required:true" style="width:160px"></input>
+                    <div style="display:none"><input id="scriptKey" name="scriptKey" class="easyui-textbox" value=""></input></div></td>
+                </tr>
+                <tr>
+                    <td>工作名称: <br>(PlanName)</td>
+                    <td  colspan="3"><input class="easyui-textbox" name="planName" id="planName" disablewhen="update" data-options="required:true" style="width:450px"></input></td>
+                </tr>
+                <tr hidewhen="new">
+                    <td>工作下达日期:<br>(IssuedDate)</td>
+                    <td><input class="easyui-datebox" name="planIssuedDate" id="planIssuedDate" disablewhen="new update" data-options="editable:false" style="width:160px"></input></td>
+                  <td>工作启动日期:<br>(StartDate)</td>
+                    <td><input class="easyui-datebox" name="planStartDate" id="planStartDate" disablewhen="new update" data-options="editable:false" style="width:160px"></input></td>
+                </tr>
+                <tr>
+                  <td>工作要求完成日期:<br>(Deadline)</td>
+                    <td><input class="easyui-datebox" name="planDeadlineDate" id="planDeadlineDate" disablewhen="update" data-options="required:true,editable:false" style="width:160px"></input></td>
+                     <td hidewhen="new">距离完成日期:<br>(RemainingDate)</td>
+                    <td hidewhen="new"><input class="easyui-textbox" name="planRemainingDate" id="planRemainingDate" disablewhen="new update change" data-options="editable:false" style="width:160px"></input></td>
+               </tr>
+               <tr>
+                    <td>工作来源:<br>(PlanSource)</td>
+                    <td><input class="easyui-textbox" name="planSource" id="planSource" disablewhen="update" data-options="required:true" style="width:160px"></input></td>
+               </tr>
+               <tr>
+                    <td hidewhen="new">工作输出物:<br>(PlanOutput)</td>
+                    <td id="td_planoutput" hidewhen="new" colspan="3">
+                    <input type="file" name="file_upload" id="file_upload" style="width:160px"/>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="uploadFile();">Upload</a>
+            		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="ancelAllUpload();">Cancel</a><br>
+                    <div id="fileExisted"> </div>
+                    <div id="fileQueue"></div>
+                    </td>
+               </tr>
+			   <tr>
+                    <td>工作责任人:<br>(WorkLeader)</td>
+                    <td><input class="easyui-textbox" name="employeName" id="employeName" disablewhen="update" data-options="required:true" style="width:160px"></input>
+                    <a href="javascript:void(0)" id="personSelect" class="easyui-linkbutton" onclick="$('#dlg').dialog('open');">Select</a>
+                    <div style="display:none"><input id="roleId" name="roleId" class="easyui-textbox" value=""></input></div></td>
+                    <td>工作状态:<br>(PlanState)</td>
+                    <td><select class="easyui-combobox" name="planState" id="planState" disablewhen="new update" 
+                    											data-options=		"required:true,editable:false,
+                                                                                     url		:	C.URL_GET_ALL_PLAN_STATES,
+                                                                                     method		:	'get', 
+                                                                                     valueField	:	C.URLPARAS_GET_ALL_PLAN_STATES[0], 
+                                                                                     textField	:	C.URLPARAS_GET_ALL_PLAN_STATES[1], 
+                                                                                     panelHeight:	'auto'" 
+                                                                                    								style="width:160px" ></select></td>
+                </tr>
+                <tr id="descriptionArea" hidewhen="new update">
+                	<td>更新说明:<br>(UpdateDescription)</td>
+                	<td colspan="3"><input class="easyui-textbox" name="updateDescription" id="planUpdateDescription" disabled="disabled" data-options="required:true,multiline:true,height:160,prompt:'Please input some Description for this Update...'" style="width:450px"></input></td>
+                </tr>
+			   <tr>
+                   <td colspan="4">
+                        <div id="submitArea" style="text-align:center;padding:5px">
+                            <a href="javascript:void(0)" id="formSubmit" class="easyui-linkbutton" onclick="submitForm()">提交</a>
+                            <a href="javascript:void(0)" id="scriptSave" class="easyui-linkbutton" onclick="saveScript()">保存</a>
+                            <a href="javascript:void(0)" id="planDelete" hidewhen="new update" class="easyui-linkbutton" onclick="planDelete()">删除</a>
+                            <a href="javascript:void(0)" id="formClear" hidewhen="update" class="easyui-linkbutton" onclick="clearForm()">清除表单</a>
+                            <a href="javascript:void(0)" id="accept" hidewhen="new "class="easyui-linkbutton" onclick="acceptMission()">接受任务</a>
+                            <a href="javascript:void(0)" id="complete" hidewhen="new " class="easyui-linkbutton" onclick="completeMission()">完成任务</a>
+                            <a href="javascript:void(0)" id="test" class="easyui-linkbutton" onclick="test()">测试</a>
+                            <span id="submitState"></span>
+                        </div>
+                    </td>
+			   </tr>
+            </table>
+        </form>      
+</div>
+<div id="dlg" class="easyui-dialog" title="人员选择" style="width:400px;height:200px;padding:10px"
+                                                                                data-options="
+                                                                                    iconCls: 'icon-save',   
+                                                                                    buttons: '#dlg-buttons'
+                                                                                ">
+<table id="person_dg" style="width:auto;height:auto" data-options="
+                                                                        pagination		:	true,
+                                                                        nowrap			:	true,
+                                                                        collapsible		:	true,
+                                                                        striped			:	true,
+                                                                        resizeHandle	:	'both',
+                                                                        autoRowHeight	:	true,
+                                                                        checkOnSelect	:	false,
+                                                                        rownumbers		:	true,
+                                                                        remoteSort		:	false,
+                                                                        showHeader		:	false,
+                                                                        showFooter		:	false,
+                                                                        fitColumns		:	true,                
+                                                                        multiSort		:	false,
+                                                                        singleSelect	:	true"
+                                                                        >
+    <thead>
+    	<tr>
+        	<th data-options="field:'employeeName'">姓名</th>
+<!--             <th data-options="field:'role[0].roleKey'">key</th> -->
+<!--             <th data-options="field:'role.roleName'">角色名</th> -->
+<!--         	<th data-options="field:'planIssuedDate'">未完成任务</th> -->
+        </tr>
+    </thead>
+</table>
+</div>
+<div id="dlg-buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:getSelectedPerson();$('#dlg').dialog('close')">Save</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlg').dialog('close')">Close</a>
+</div>
+<script>
+function getSelectedPerson(){
+	var result = $("#person_dg").datagrid('getSelected').employeeName;
+	var res=$("#person_dg").datagrid('getSelected').role[0].roleKey;
+	$("#employeName").textbox('setValue',result);
+	$("#roleId").textbox('setValue',res);
+	$("#scriptKey").textbox('setValue',UrlParm.parm("scriptKey"));
+	
+}
+function initTable(tableId){
+	 var $t=$("#"+tableId);
+	 $t.datagrid({
+		url					:	C.URL_GET_PLAN_CONTROLLERS,
+		loadMsg				: 	'Processing, please wait …'
+})}
+</script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <link rel="stylesheet" href="css/panel.css"/>
+    <link href="css/base/fineuploader-5.0.7.min.css" rel="stylesheet">
+</head>
+<body>
+    <div ms-controller="actionSummary">
+        <div class="accordion-group">
+        <div class="accordion-heading"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgActionProject')"
+                                          data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred;background-color: #f5f5f5"
+                                          href="#accordion-element-actionProjectSum">我的项目<img id="imgActionProject" src="img/shrink.png" /></a></div>
+        <div class="accordion-body in collapse" id="accordion-element-actionProjectSum" style="position:relative;bottom:0px;left:0px;height: auto;">
+            <div class="accordion-inner" contenteditable="false">
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <td>编号</td>
+                            <td>项目名称
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('project', 'projectName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('project', 'projectName', 0)"></i>
+                                </span>
+                            </td>
+                            <td>项目开始时间
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('project', 'projectStartingDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('project', 'projectStartingDate', 0)"></i>
+                                </span>
+                            </td>
+                            <td>项目截止时间
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('project', 'projectDeadlineDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('project', 'projectDeadlineDate', 0)"></i>
+                                </span>
+                            </td>
+                            <td>待办事务数
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('project', 'projectWaitingTrans', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('project', 'projectWaitingTrans', 0)"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ms-hover="hover" ms-repeat="data['project']['curReports']">
+                            <th><input type="radio" ms-duplex="el.text" ms-click="loadActionDirs(el)" /></th>
+                            <td>{{$index+data['project']['indexPage']*data['project']['pageSize']+1}}</td>
+                            <td>{{el.projectName}}</td>
+                            <td>{{el.projectStartingDate}}</td>
+                            <td>{{el.projectDeadlineDate}}</td>
+                            <td>{{el.projectWaitingTrans}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="height: 0px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页显示</span>
+                <select id="select-actionProject"
+                        ms-change="setPages('select-actionProject','accordion-element-actionProjectSum','project')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 60px">
+                    <option value ="5" selected="selected">5</option>
+                    <option value ="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">共：{{data['project']['reports'].length}}项</span>
+                <div class="pager">
+                    <button ms-click="prePage('project')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['project']['indexPage']+1}} 页，共 {{data['project']['pageNum']}} 页
+                    <button ms-click="nextPage('project')"><i class="icon-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+            </div>
+
+        <div class="accordion-group">
+        <div class="accordion-heading"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgWActionList')"
+                                          data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred;background-color: #f5f5f5"
+                                          href="#accordion-element-actionWaitingList">待办事项<img id="imgWActionList" src="img/shrink.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-actionWaitingList" style="position:relative;bottom:0px;left:0px;height: auto;">
+                <div class="accordion-inner" contenteditable="false">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <td style="width:9px"></td>
+                        <td>编号</td>
+                        <td>综合任务代码
+                        </td>
+                        <td ms-repeat="title['actionWaitingTitle']" ms-visible="el.value">{{el.name}}
+                            <span class="sort-icons" style="position:relative">
+                                <i class="icon-filter" ms-click="filterConfig('actionWaiting',el.key)" style="position: relative;left: 20px"></i>
+                            </span>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-repeat-el="data['actionWaiting']['curReports']" ms-click="loadAction(el)" ms-class="one-row"
+                        ms-visible="el.visible">
+                            <td style="width:9px" ms-css-background-color="el.bg"></td>
+                            <td>{{$index+data['actionWaiting']['indexPage']*data['actionWaiting']['pageSize']+1}}</td>
+                            <td>{{el.actionId}}</td>
+                            <td ms-repeat-iter="title['actionWaitingTitle']" ms-visible="iter.value">{{el[iter.key]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="height: 0px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页显示</span>
+                <select id="select-actionWaitingList"
+                        ms-change="setPages('select-actionWaitingList','accordion-element-actionWaitingList','actionWaiting')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 60px">
+                    <option value ="5"  selected="selected">5</option>
+                    <option value ="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">共：{{data['actionWaiting']['reports'].length}}项</span>
+                <div class="pager">
+                    <button ms-click="prePage('actionWaiting')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['actionWaiting']['indexPage']+1}} 页，共 {{data['actionWaiting']['pageNum']}} 页
+                    <button ms-click="nextPage('actionWaiting')"><i class="icon-chevron-right"></i></button>
+                </div>
+                <a href="javascript:void(0)" role="button" style="position: absolute;bottom: 20px;left: 90%"
+                   data-toggle="modal" ms-click="openUsrSetWindow('actionWaiting')">设置</a>
+            </div>
+            </div>
+
+        <div style="float: left;width: 100%">
+        <div class="accordion-group" style="float:left;width: 50%">
+        <div class="accordion-heading"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgActionDirList')"
+                                          data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred;background-color: #f5f5f5"
+                                          href="#accordion-element-actionDirList">行动项目录列表<img id="imgActionDirList" src="img/shrink.png" /></a></div>
+        <div class="accordion-body in collapse" id="accordion-element-actionDirList" style="position:relative;bottom:0px;left:0px;height: auto;">
+            <div class="accordion-inner" contenteditable="false">
+                <table class="table table-hover" id="slideDownTest">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <td style="width:9px"></td>
+                            <td>编号</td>
+                            <td>综合任务代码
+                            </td>
+                            <td ms-repeat="title['actionDirTitle']" ms-visible="el.value">{{el.name}}
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-filter" ms-click="filterConfig('actionDir',el.key)" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ms-repeat-el="data['actionDir']['curReports']" style="position: relative;left: 0px;top: 0px"
+                            ms-dblclick="loadActionDir(el)" ms-visible="el.visible">
+                            <th><input type="radio" ms-duplex="el.text"
+                                       ms-click="loadActions(el)" /></th>
+                            <td style="width:9px" ms-css-background-color="el.bg"></td>
+                            <!--<td>{{el.wbs}}</td>-->
+                            <td>{{$index+data['actionDir']['indexPage']*data['actionDir']['pageSize']+1}}</td>
+                            <td><!--<span ms-html="el.space"></span>
+                                <span style="position: relative">
+                                <a href="javascript:void(0)" style="position: absolute;left: -13px"
+                                   ms-click="changeActionExpandShrink('actionDir'+el.actionId,el)">
+                                    <img ms-class="action{{el.actionId}}" ms-src="el.imgSrc"/></a>
+                                </span>
+                                <span  style="position:absolute;height: 90%">{{el.actionId}}</span>-->
+                                {{el.actionId}}
+                            </td>
+                            <td ms-repeat-iter="title['actionDirTitle']" ms-visible="iter.value">{{el[iter.key]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="height: 50px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页显示</span>
+                <select id="select-actionDirList"
+                        ms-change="setPages('select-actionDirList','accordion-element-actionDirList','actionDir')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 60px">
+                    <option value ="5" id="option-actionDirList"  selected="selected">5</option>
+                    <option value ="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">共：{{data['actionDir']['reports'].length}}项</span>
+                <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                    <button ms-click="prePage('actionDir')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['actionDir']['indexPage']+1}} 页，共 {{data['actionDir']['pageNum']}} 页
+                    <button ms-click="nextPage('actionDir')"><i class="icon-chevron-right"></i></button>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 70%">我的项目</span>
+                <select id="select-shortcuts-actionProject" ms-each="data['project']['reports']" ms-change="loadActionDirs('null')"
+                        style="position: absolute;bottom: 5px;left: 76%;width: 90px;height: 30px">
+                    <option ms-selected="el.text">{{el.projectName}}</option>
+                </select>
+                <a href="javascript:void(0)" role="button" style="position: absolute;bottom: 20px;left: 90%"
+                    data-toggle="modal" ms-click="openUsrSetWindow('actionDir')">设置</a>
+            <!--<a href="#UsrOpt" role="button" style="position: absolute;bottom: 20px;left: 90%"
+               data-target="#UsrOpt"
+                data-toggle="modal" ms-click="openUsrSetWindow('action')">设置</a>-->
+            </div>
+        </div>
+        <div class="accordion-group" style="float:right;width: 49.5%">
+            <div class="accordion-heading"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgActionList')"
+                                              data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred;background-color: #f5f5f5"
+                                              href="#accordion-element-actionList">行动项列表<img id="imgActionList" src="img/shrink.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-actionList" style="position:relative;bottom:0px;left:0px;height: auto;">
+                <div class="accordion-inner" contenteditable="false">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td style="width:9px"></td>
+                            <td>编号</td>
+                            <td>综合任务代码
+                            </td>
+                            <td ms-repeat="title['actionTitle']" ms-visible="el.value">{{el.name}}
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('action', el.key, 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('action', el.key, 0)"></i>
+                                    <i class="icon-filter" ms-click="filterConfig('action',el.key)" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-repeat-el="data['action']['curReports']" style="position: relative;left: 0px;top: 0px" ms-class="one-row"
+                            ms-click="loadAction(el)" ms-visible="el.visible">
+                            <td style="width:9px" ms-css-background-color="el.bg"></td>
+                            <!--<td>{{el.wbs}}</td>-->
+                            <td>{{$index+data['action']['indexPage']*data['action']['pageSize']+1}}</td>
+                            <td>{{el.actionId}}</span>
+                            </td>
+                            <td ms-repeat-iter="title['actionTitle']" ms-visible="iter.value">{{el[iter.key]}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height: 50px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页显示</span>
+                <select id="select-actionDetailList"
+                        ms-change="setPages('select-actionList','accordion-element-actionList','action')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 60px">
+                    <option value ="5" id="option-actionList"  selected="selected">5</option>
+                    <option value ="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">共：{{data['action']['reports'].length}}项</span>
+                <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                    <button ms-click="prePage('action')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['action']['indexPage']+1}} 页，共 {{data['action']['pageNum']}} 页
+                    <button ms-click="nextPage('action')"><i class="icon-chevron-right"></i></button>
+                </div>
+                <a href="javascript:void(0)" role="button" style="position: absolute;bottom: 20px;left: 90%"
+                   data-toggle="modal" ms-click="openUsrSetWindow('action')">设置</a>
+                <!--<a href="#UsrOpt" role="button" style="position: absolute;bottom: 20px;left: 90%"
+                   data-target="#UsrOpt"
+                    data-toggle="modal" ms-click="openUsrSetWindow('action')">设置</a>-->
+            </div>
+        </div>
+        <div style="clear:both"></div><!--这个层很有用，必须要，否则可能不兼容。-->
+        </div>
+
+        <div class="modal fade" ms-attr-id="modalName" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">
+                            筛选内容
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel panel-default" ms-visible="true">
+                            <table class="table table-hover" >
+                                <thead>
+                                <tr>
+                                    <th><a class="btn-primary" ms-click="selALL(1)">全选</a><br><a class="btn-danger" ms-click="selALL(0)">全不选</a></th>
+                                    <th>筛选内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ms-repeat="filter.org_values">
+                                    <td>
+                                        <input class="checkbox" type="checkbox" ms-duplex-radio="el.enabled">
+                                    </td>
+                                    <td>
+                                        {{el.name}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button style="float:right" type="button" ms-click="executeFilter()" class="btn btn-primary">
+                            确认
+                        </button>
+                        <button style="float:left" type="button" ms-attr-id="modalBtn" class="btn btn-default"
+                                data-dismiss="modal" >关闭
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

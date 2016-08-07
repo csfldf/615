@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-9-27 21:50:52 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.Employee" table="employee" catalog="testdb" dynamic-insert="true" dynamic-update="true">
+        <id name="employeeNumber" type="string">
+            <column name="EmployeeNumber" />
+            <generator class="assigned" />
+        </id>
+        <property name="employeeName" type="string">
+            <column name="EmployeeName" />
+        </property>
+        <property name="employeeEmail" type="string">
+            <column name="EmployeeEmail" />
+        </property>
+        <property name="roleId" type="java.lang.Integer">
+        	<column name="RoleId"/>
+        </property>
+        <property name="deleteMark" type="java.lang.Boolean">
+            <column name="DeleteMark" />
+        </property>
+        <property name="loginPassword" type="string">
+            <column name="LoginPassword" />
+        </property>
+<!--         <property name="departmentId" type="java.lang.Integer"> -->
+<!--             <column name="DepartmentId" /> -->
+<!--         </property> -->
+        <property name="departmentName" type="string">
+            <column name="DepartmentName" />
+        </property>
+        <property name="major" type="string">
+            <column name="Major" />
+        </property>
+        <property name="actionDirListOpt" type="string">
+            <column name="ActionDirListOpt"  not-null="false"/>
+        </property>
+        <property name="actionListOpt" type="string">
+            <column name="ActionListOpt"  not-null="false"/>
+        </property>
+        <property name="actionWaitingListOpt" type="string">
+            <column name="ActionWaitingListOpt"  not-null="false"/>
+        </property>
+        <property name="planListOpt" type="string">
+            <column name="PlanListOpt"  not-null="false"/>
+        </property>
+        <property name="taskListOpt" type="string">
+            <column name="TaskListOpt"  not-null="false"/>
+        </property>
+        <property name="planWaitingListOpt" type="string">
+            <column name="PlanWaitingListOpt"  not-null="false"/>
+        </property>
+<!--         <set name="roles" inverse="true" cascade="all">
+        <key column="EmployeeNumber"></key>
+        <one-to-many class="org.sjtu.p615.entity.Role"></one-to-many>
+        </set> -->
+    </class>
+</hibernate-mapping>

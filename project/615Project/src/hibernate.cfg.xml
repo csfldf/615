@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+<!-- 		<property name="hibernate.connection.driver_class"> -->
+<!-- 			com.mysql.jdbc.Driver -->
+<!-- 		</property> -->
+		<property name="hibernate.dialect">
+			org.hibernate.dialect.MySQLDialect
+		</property>
+<!-- 		<property name="hibernate.show_sql">false</property> -->
+<!-- 		<property name="hibernate.transaction.factory_class"> -->
+<!-- 			org.hibernate.transaction.JDBCTransactionFactory -->
+<!-- 		</property> -->
+<!-- 		<property name="c3p0.acquire_increment">1</property> -->
+<!--         <property name="c3p0.idle_test_period">100</property> -->
+<!--         <property name="c3p0.max_size">5</property> -->
+<!-- 		<property name="c3p0.max_statements">0</property> -->
+<!--         <property name="c3p0.min_size">2</property> -->
+<!--         <property name="c3p0.timeout">90</property> -->
+<!--         <property name="c3p0.preferredTestQuery ">select 1 from employee where EmployeeNumber="010"</property> -->
+<!--         <property name="c3p0.idleConnectionTestPeriod ">18000</property>            -->
+<!-- 		<property name="c3p0.maxIdleTime">25000</property>         -->
+<!--        	<property name="c3p0.testConnectionOnCheckout">true</property> -->
+<!-- 		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property> -->
+<!-- 		<property name="hibernate.c3p0.min_size">3</property> -->
+<!-- 		<property name="hibernate.c3p0.max_size">5</property> -->
+<!-- 		<property name="hibernate.c3p0.timeout">1800</property> -->
+<!-- 		<property name="hibernate.c3p0.idle_test_period">100</property> -->
+		<mapping resource="org/sjtu/p615/entity/Employee.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/Plan.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/Planoutput.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/Planstate.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/Role.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/Roleinfo.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/Project.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/Group.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/Script.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/Failurereport.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/Failureanalysisreport.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/Failuredescriptionattachments.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/Correctiveactionreport.hbm.xml" />
+		<mapping resource="org/sjtu/p615/entity/ContractRegist.hbm.xml" />
+		<!-- <mapping resource="org/sjtu/p615/entity/Fracasprivilege.hbm.xml"/> -->
+		<mapping resource="org/sjtu/p615/entity/Amprivilege.hbm.xml"/>
+		<mapping resource="org/sjtu/p615/entity/Fracasmetadata.hbm.xml"/>
+		<mapping resource="org/sjtu/p615/entity/Message.hbm.xml"/>
+		<mapping resource="org/sjtu/p615/entity/Remind.hbm.xml"/>
+		<mapping resource="org/sjtu/p615/entity/DocLibrary.hbm.xml"/>
+		<mapping resource="org/sjtu/p615/entity/Action.hbm.xml"/>
+		<mapping resource="org/sjtu/p615/entity/Notice.hbm.xml"/>
+		<mapping resource="org/sjtu/p615/entity/Department.hbm.xml"/>
+	</session-factory>
+		
+</hibernate-configuration>

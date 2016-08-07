@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/panel.css"/>
+    <link rel="stylesheet" href="js/base/bs-tagsinput/bootstrap-tagsinput.css"/>
+    <title >沟通管理</title>
+</head>
+<body>
+<div ms-controller="commMgr">
+    <div  style="position: relative;left:0px;top:0px">
+        <div style="position: relative;">
+        <button class="btn-primary" ms-click="createMsgClk()" >创建消息</button>
+    </div>
+        <div class="panel panel-default" style="position:relative;" ms-visible="true">
+            <div class="panel-heading">查看消息</div>
+            <table class="table" id="msgReadList">
+                <thead>
+                <tr>
+                    <th>类型
+                        <span class="sort-icons" style="position:relative">
+	        		        <i class="icon-chevron-up" ms-click="orderByDictReadMsg(msgReadList, 'type', 1)"></i>
+	        		        <i class="icon-chevron-down" ms-click="orderByDictReadMsg(msgReadList, 'type', 0)"></i>
+                        </span>
+                    </th>
+                    <th>所属项目
+            <span class="sort-icons" style="position:relative">
+	        		<i class="icon-chevron-up" ms-click="orderByDictReadMsg(msgReadList, 'prjName', 1)"></i>
+	        		<i class="icon-chevron-down" ms-click="orderByDictReadMsg(msgReadList, 'prjName', 0)"></i>
+	        	    </span>
+                    </th>
+                    <th>标题
+                    </th>
+                    <th>内容
+                    </th>
+                    <th>发布人
+                     <span class="sort-icons" style="position:relative">
+	        		<i class="icon-chevron-up" ms-click="orderByDictReadMsg(msgReadList, 'empName', 1)"></i>
+	        		<i class="icon-chevron-down" ms-click="orderByDictReadMsg(msgReadList, 'empName', 0)"></i>
+	        	    </span></th>
+                    <th>操作
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ms-attr-id="'msg'+el.id" class="one-row" ms-repeat="curReadMsgs">
+                    <td>{{el.type}}</td>
+                    <td>{{el.prjName}}</td>
+                    <td>{{el.title}}</td>
+                    <td>{{el.content}}</td>
+                    <td>{{el.empName}}</td>
+                    <td>
+                        <a  type="button" ms-visible="el.path" class="btn-success" ms-href="el.downloadHref">下载</a>
+                        <!--<button ms-visible="el.state" class="btn-danger" ms-click="recall(el.id)">撤回</button>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="pager">
+                <button ms-click="preReadMsgPage"><i class="icon-chevron-left" ></i></button>
+                第 {{indexReadMsg+1}} 页，共 {{pagesReadMsg}} 页
+                <button ms-click="nextReadMsgPage"><i class="icon-chevron-right" ></i></button>
+            </div>
+            <!--<a  ms-click="modifyMemberINFO()" role="button" class="btn btn-warning">修改</a >-->
+            <!--<a ms-click="del()" role="button" class="btn btn-danger">删除</a></td>-->
+        </div>
+        <div class="panel panel-default" style="position:relative;" ms-visible="true">
+            <div class="panel-heading">我的消息</div>
+            <table class="table" id="msgList">
+                <thead>
+                <tr>
+
+                    <th>类型
+            <span class="sort-icons" style="position:relative">
+	        		<i class="icon-chevron-up" ms-click="orderByDictMsg(msgList, 'type', 1)"></i>
+	        		<i class="icon-chevron-down" ms-click="orderByDictMsg(msgList, 'type', 0)"></i>
+	        	    </span>
+                    </th>
+                    <th>所属项目
+            <span class="sort-icons" style="position:relative">
+	        		<i class="icon-chevron-up" ms-click="orderByDictMsg(msgList, 'prjName', 1)"></i>
+	        		<i class="icon-chevron-down" ms-click="orderByDictMsg(msgList, 'prjName', 0)"></i>
+	        	    </span>
+                    </th>
+                    <th>标题
+                    </th>
+                    <th>内容</th>
+                    <th>状态
+                    </th>
+                    <th>操作
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ms-attr-id="'msg'+el.id" class="one-row" ms-repeat="curMsgs" ms-click="detail(el.id)">
+                    <td>{{el.type}}</td>
+                    <td>{{el.prjName}}</td>
+                    <td>{{el.title}}</td>
+                    <td>{{el.content}}</td>
+                    <td>{{el.state==0?"未发布":"已发布"}}</td>
+                    <td>
+                        <button ms-visible="!el.state" class="btn-success" ms-click="publish(el)">发布</button>
+                        <button ms-visible="el.state" class="btn-danger" ms-click="recall(el)">撤回</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="pager">
+                <button ms-click="nextMsgPage"><i class="icon-chevron-left" ></i></button>
+                第 {{indexMsg+1}} 页，共 {{pagesMsg}} 页
+                <button ms-click="nextMsgPage"><i class="icon-chevron-right" ></i></button>
+            </div>
+            <!--<a  ms-click="modifyMemberINFO()" role="button" class="btn btn-warning">修改</a >-->
+            <!--<a ms-click="del()" role="button" class="btn btn-danger">删除</a></td>-->
+        </div>
+        <div ms-visible="false" style="position: relative;left:0px;">
+            <!--<h2>-->
+            <!--消息内容-->
+            <!--</h2>-->
+            <div class="accordion-group">
+                <div class="accordion-heading"><a class="accordion-toggle" contenteditable="false" ms-click="changeMessageImg_msgDetail"
+                                                  data-parent="#accordion-msg" data-toggle="collapse" style="color: darkred"
+                                                  href="#accordion-element-msgDetail">消息详情<img id="imgMessage_msgDetail" src="img/shrink.png" /></a>
+                </div>
+                <div class="accordion-body in collapse" id="accordion-element-msgDetail" style="position:relative;bottom:0px;left:0px;height:auto;">
+                    <div class="accordion-inner" id="msgDetail" contenteditable="false">
+                        <form ms-attr-id="msgDetail">
+                            <!--<legend style="text-align: center;vertical-align: 50%"></legend>-->
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <div class="control-group"><!-- Text input-->
+                                        <label class="control-label">所属项目:</label>
+
+                                        <div class="controls">
+                                            <input ms-duplex="msgDetail.prjName" ms-enabled="true"
+                                                   name="prjName" type="text"
+                                                   class="input-xlarge span11" autofocus required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="control-group"><!-- Text input-->
+                                        <label class="control-label ">类型:</label>
+
+                                        <div class="controls">
+                                            <input ms-duplex="msgDetail.type" ms-enabled="true" name="type"
+                                                   type="text" class="input-xlarge span11" autofocus
+                                                   required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <div class="control-group"><!-- Text input-->
+                                        <label class="control-label">标题:</label>
+
+                                        <div class="controls">
+                                            <input  ms-duplex="msgDetail.title" ms-enabled="true"
+                                                   name="title" type="text"
+                                                   class="input-xlarge span11" autofocus required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="control-group"><!-- Text input-->
+                                        <label class="control-label ">内容:</label>
+
+                                        <div class="controls">
+                                            <textarea ms-duplex="msgDetail.content" ms-enabled="true" name="content"
+                                                   type="text" class="input-xlarge span11" autofocus
+                                                   required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <div class="control-group"><!-- Text input-->
+                                        <label class="control-label">附件:</label>
+
+                                        <div class="controls">
+                                            <!-- 已有工作输出物 -->
+                                            <div class="span6">
+                                                <ul class="qq-upload-list"
+                                                    ms-if="msgDetail.fileName"
+                                                    style="text-align: center;">
+                                                    <li>
+                                                        <span class="qq-upload-file" ms-attr-title="msgDetail.fileName">{{msgDetail.fileName|truncate(25,"...")}}</span>
+                                                        <!--<span class="qq-upload-cancel"> 上传于:{{el.uploadDate}} </span>-->
+                                                        <a class="qq-upload-cancel" target="_blank" ms-href="msgDetail.downloadHref">下载</a>
+                                                        <a class="qq-upload-cancel" href="javascript:void(0)"
+                                                           ms-click="deleteOutput(el.deleteHref,$remove)">删除</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- Fine Uploader DOM Element-->
+                                            <!--<div class="span4" id="bootstrapped-fine-uploader"-->
+                                                 <!--ms-visible="uiDisplay.areaUploader"></div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <button class="btn-success" ms-click="saveChanges()">保存修改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ms-visible="msgCreateSel" style="position: relative;left:0px;">
+            <div class="accordion-group">
+                <div class="accordion-heading"><a class="accordion-toggle" contenteditable="false" ms-click="changeMessageImg_msgCreate"
+                                                  data-parent="#accordion-msg" data-toggle="collapse" style="color: darkred"
+                                                  href="#accordion-element-msgCreate">创建消息<img id="imgMessage_msgCreate" src="img/shrink.png" /></a>
+                </div>
+                <div class="accordion-body in collapse" id="accordion-element-msgCreate" style="position:relative;bottom:0px;left:0px;height:auto;">
+                    <div class="accordion-inner" id="msgCreate" contenteditable="false">
+                        <form ms-attr-id="msgCreate">
+                            <!--<legend style="text-align: center;vertical-align: 50%"></legend>-->
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <div class="control-group"><!-- Text input-->
+                                        <label class="control-label">所属项目:</label>
+
+                                        <div class="controls">
+                                            <select id=prjSel ms-duplex="createMsg.prjId" name="prjId"
+                                                    maxlength="30" class="input-xlarge" required>
+                                                <option ms-repeat="prjList" ms-value="el.projectId">
+                                                    {{el.projectName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="control-group"><!-- Text input-->
+                                        <label class="control-label ">类型:</label>
+
+                                        <div class="controls">
+                                            <select id=typeSel ms-duplex="createMsg.type" name="type"
+                                                    maxlength="30" class="input-xlarge" required>
+                                                <option ms-repeat="msgTypes" ms-value="el.name">
+                                                    {{el.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <div class="control-group"><!-- Text input-->
+                                        <label class="control-label">标题:</label>
+
+                                        <div class="controls">
+                                            <input  ms-duplex="createMsg.title" ms-enabled="true"
+                                                    name="title" type="text"
+                                                    class="input-xlarge span11" autofocus required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="control-group"><!-- Text input-->
+                                        <label class="control-label ">内容:</label>
+
+                                        <div class="controls">
+                                            <textarea ms-duplex="createMsg.content" ms-enabled="true" name="content"
+                                                      type="text" class="input-xlarge span11" autofocus
+                                                      required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <div class="control-group"><!-- Text input-->
+                                        <label class="control-label">附件:</label>
+
+                                        <div class="controls">
+                                            <!-- 已有工作输出物 -->
+                                            <div class="span6">
+                                                <ul class="qq-upload-list"
+                                                    ms-if="createMsg.fileName"
+                                                    style="text-align: center;">
+                                                    <li>
+                                                        <span class="qq-upload-file" ms-attr-title="createMsg.fileName">{{createMsg.fileName|truncate(25,"...")}}</span>
+                                                        <!--<span class="qq-upload-cancel"> 上传于:{{el.uploadDate}} </span>-->
+                                                        <a class="qq-upload-cancel" target="_blank" ms-href="el.downloadHref">下载</a>
+                                                        <a class="qq-upload-cancel" href="javascript:void(0)"
+                                                           ms-click="deleteOutput(el.deleteHref,$remove)">删除</a>
+                                                    </li>
+                                                </ul>
+                                                <div class="span12" id="bootstrapped-fine-uploader"
+                                                     ms-visible="uiDisplay.areaUploader"></div>
+                                            </div>
+                                            <!-- Fine Uploader DOM Element-->
+                                            <!--<div class="span4" id="bootstrapped-fine-uploader"-->
+                                            <!--ms-visible="uiDisplay.areaUploader"></div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <button class="btn-success" ms-click="createOneMsg()">创建</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function delDoc(href){
+        avalon.getJSON(href,function(res){
+            if(res.success)
+                alert("删除成功")
+            else
+                alert("删除失败")
+        })
+    }
+</script>
+<script type="text/template" id="qq-template-bootstrap">
+    <div class="qq-uploader-selector qq-uploader span12">
+        <div class="qq-upload-drop-area-selector qq-upload-drop-area span12" qq-hide-dropzone>
+            <span>Drop files here to upload</span>
+        </div>
+        <div class="qq-upload-button-selector qq-upload-button btn btn-inverse btn-small" style="width: auto;">
+            <div><i class="icon-upload icon-white"></i> 添加新文件</div>
+        </div>
+        <div id="triggerUpload" class="btn btn-inverse btn-small">
+            <i class="icon-upload icon-white"></i> 现在上传
+        </div>
+
+    <span class="qq-drop-processing-selector qq-drop-processing">
+      <span>Processing dropped files...</span>
+      <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+    </span>
+        <ul class="qq-upload-list-selector qq-upload-list" style="margin-top: 10px; text-align: center;">
+            <li>
+                <div class="qq-progress-bar-container-selector">
+                    <div class="qq-progress-bar-selector qq-progress-bar"></div>
+                </div>
+                <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                <span class="qq-edit-filename-icon-selector qq-edit-filename-icon"></span>
+                <span class="qq-upload-file-selector qq-upload-file"></span>
+                <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
+                <span class="qq-upload-size-selector qq-upload-size"></span>
+                <a class="qq-upload-cancel-selector qq-upload-cancel" href="#">Cancel</a>
+                <a class="qq-upload-retry-selector qq-upload-retry" href="#">Retry</a>
+                <a class="qq-upload-delete-selector qq-upload-delete" href="#">Delete</a>
+                <span class="qq-upload-status-text-selector qq-upload-status-text"></span>
+            </li>
+        </ul>
+    </div>
+</script>
+
+<script src="../js/avalon.js"></script>
+<link rel="stylesheet" href="../css/base/bootstrap.css">
+<script src="../js/globalConfig.js"></script>
+<script>
+    require(['am.commMgr','jquery','bootstrap'], function (data,$) {
+        avalon.scan();
+    } );
+
+</script>
+<script>
+    require(['fineuploader','am.commMgr'], function ($,comm) {
+        /**
+         * 保证id在MainFrame上的唯一性
+         */
+        var random = (new Date()).getTime() + '';
+        $("#bootstrapped-fine-uploader").attr('id', "bootstrapped-fine-uploader" + random);//fineuploader
+        $("#qq-template-bootstrap").html($("#qq-template-bootstrap").text().replace('triggerUpload', 'triggerUpload' + random));//fineuploader-tmpl
+        $("#qq-template-bootstrap").attr('id', "qq-template-bootstrap" + random);
+
+
+        var uploader = $("#bootstrapped-fine-uploader" + random).fineUploader({
+            element: $('#bootstrapped-fine-uploader' + random),
+            request: {
+                endpoint: 'am/addOneNoticeFile.action',
+                filenameParam:'fileName',
+                inputName:'file',
+                uuidName:'uuid'
+//                totalFileSizeName:'totalfilesize'
+            },
+            deleteFile: {
+                enabled: true, // defaults to false
+                endpoint: 'am/delOneDoc.action',
+                method: 'POST',
+                forceConfirm: true
+
+            },
+            autoUpload: false,
+            template: $('#qq-template-bootstrap' + random),
+            classes: {
+                success: 'alert alert-success',
+                fail: 'alert alert-error'
+            },
+            validation: {
+                //allowedExtensions: ['jpeg', 'jpg', 'txt'],
+                itemLimit: 50,
+                sizeLimit: 50 * 1024 * 1024 // 50 kB = 50 * 1024 bytes
+            },
+            showMessage: function (message) {
+                // Using Bootstrap's classes
+                $('#bootstrapped-fine-uploader' + random).append('<div class="alert alert-error">' + message + '</div>');
+            },
+            debug: true,
+            editFilename: {                                            //编辑名字
+                enable: true
+            }
+
+        }).on('delete',function(id){
+            // uploader.fineUploader('setDeleteFileParams',{planCode:$("#planReportContainer"+random+" [name=planCode]").val()})
+        }).on('complete', function (event, id, fileName, responseJSON) {
+            comm.addId(responseJSON)
+//         if (responseJSON.success) {
+////         $(this).append('<img src="img/success.jpg" alt="' + fileName + '">');
+//
+//         }
+         });
+
+
+        $('#triggerUpload' + random).click(function () {
+            //传递planCode
+//            uploader.fineUploader('setParams',{ownerId:$("#docOwnerId").val(),
+//                ownerName:$("#docOwnerName").val()});
+            uploader.fineUploader('uploadStoredFiles');
+        })
+
+    })
+
+</script>
+</html>

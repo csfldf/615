@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-5-25 12:29:28 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.Remind" table="remind" catalog="testdb">
+        <id name="remindId" type="java.lang.Integer">
+            <column name="RemindId" />
+            <generator class="identity" />
+        </id>
+        <property name="remindType" type="string">
+            <column name="RemindType" />
+        </property>
+        <property name="remindContent" type="string">
+            <column name="RemindContent" />
+        </property>
+        <property name="remindSource" type="string">
+            <column name="RemindSource" />
+        </property>
+        <property name="deadline" type="date">
+            <column name="Deadline" length="10" />
+        </property>
+        <property name="remindDate" type="date">
+            <column name="RemindDate" length="10" />
+        </property>
+        <property name="employeeId" type="string">
+            <column name="EmployeeId" />
+        </property>
+    </class>
+</hibernate-mapping>

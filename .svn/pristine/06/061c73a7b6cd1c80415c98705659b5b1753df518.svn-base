@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+                                         "classpath://org/hibernate/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory >
+  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.connection.password">1234</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/testdb</property>
+  <property name="hibernate.connection.username">root</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+  <property name="hibernate.show_sql">false</property>
+  <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+  <mapping resource="org/sjtu/p615/entity/Employee.hbm.xml"/>
+  <mapping resource="org/sjtu/p615/entity/Plan.hbm.xml"/>
+  <mapping resource="org/sjtu/p615/entity/Planoutput.hbm.xml"/>
+  <mapping resource="org/sjtu/p615/entity/Planstate.hbm.xml"/>
+  <mapping resource="org/sjtu/p615/entity/Role.hbm.xml"/>
+  <mapping resource="org/sjtu/p615/entity/Roleinfo.hbm.xml"/>
+  <mapping resource="org/sjtu/p615/entity/Department.hbm.xml"/>
+  <mapping resource="org/sjtu/p615/entity/Group.hbm.xml"/>
+  <mapping resource="org/sjtu/p615/entity/Script.hbm.xml"/>
+ </session-factory>
+</hibernate-configuration>

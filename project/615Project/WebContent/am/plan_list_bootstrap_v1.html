@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <link rel="stylesheet" href="css/panel.css"/>
+    <link href="css/base/fineuploader-5.0.7.min.css" rel="stylesheet">
+</head>
+<body>
+    <div ms-controller="planSummary">
+        <div class="panel panel-default" style="position: relative">
+            <div class="panel-heading">项目汇总
+                <!--<div ms-visible="importView" id="fine-uploader" style="position:absolute;top:0;right:0"></div>&nbsp;&nbsp;-->
+                <a href="#exportPro" ms-click="checkAllPlan" role="button" ms-visible="importView"
+                   data-toggle="modal" data-target="#exportPro" style="position:absolute;top:0;right:110px" >
+                    <div class="qq-upload-button-selector qq-upload-button" style="height: 17px;float:right;background: black">
+                    <div>主计划导出</div>
+                    </div>
+                </a>
+               <!-- <a href="javascript:void(0)" role="button" ms-click="importProject"
+                   ms-visible="importView" style="position:absolute;top:0;right:0" >
+                    <div class="qq-upload-button-selector qq-upload-button" style="height: 17px;float:right;background: darkred">
+                        <div>主计划导入</div>
+                    </div>
+                </a>-->
+                <a href="#importPro" role="button" ms-visible="importView" ms-click="initImportDlg"
+                          data-toggle="modal" data-target="#importPro" style="position:absolute;top:0;right:0" >
+                    <div class="qq-upload-button-selector qq-upload-button" style="height: 17px;float:right;background: darkred">
+                        <div>主计划导入</div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <table class="table table-hover" id="prol">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <td>编号</td>
+                            <td>项目名称
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('wproject',proDGrid, 'projectName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectName', 0)"></i>
+                                </span>
+                            </td>
+                            <td>项目开始时间
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('wproject,'proDGrid, 'projectStartingDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectStartingDate', 0)"></i>
+                                </span>
+                            </td>
+                            <td>项目截止时间
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('wproject',proDGrid, 'projectDeadlineDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectDeadlineDate', 0)"></i>
+                                </span>
+                            </td>
+                            <td>待办事务数
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 0)"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ms-hover="hover" ms-repeat="curProjectReports">
+                            <th><input type="radio" ms-duplex="el.text" ms-click="loadATree(el)" /></th>
+                            <td>{{$index+(indexProjectReports)*5+1}}</td>
+                            <td>{{el.projectName}}</td>
+                            <td>{{el.projectStartingDate}}</td>
+                            <td>{{el.projectDeadlineDate}}</td>
+                            <td>{{el.projectWaitingTrans}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pager">
+                    <button ms-click="preProjectPage"><i class="icon-chevron-left"></i></button>
+                    第 {{indexProjectReports+1}} 页，共 {{pagesProjectReports}} 页
+                    <button ms-click="nextProjectPage"><i class="icon-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+        <a class="btn" href="#!/am/planStatistics">行动项统计</a>
+        <br><br><br>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">待办事项列表
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <!--<a href="javascript:void(0)" ms-click="planCheck"><img src="img/man.png"  ms-visible="CDVisible" id="imgPlanCheck"/></a>
+                <a href="javascript:void(0)" ms-click="PDelete('plan')"><img src="img/delete.png"  ms-visible="CDVisible" id="imgPlanDel"/></a>
+                <a href="javascript:void(0)" ms-click="planNew"><img src="img/new.png"  ms-visible="CDVisible" id="imgPlanNew"/></a>-->
+                <!--<a href="javascript:void(0)" ms-click="PDelete('plan')" id="imgPlanDelete">删除</a>-->
+                <!--<a href="javascript:void(0)" ms-click="planNew" id="imgPlanNew">新建</a>-->
+            </div>
+            <div ms-mouseenter="dCallback('in','imgPlan')" ms-mouseleave="dCallback('out','imgPlan')">
+                <table class="table table-hover" id="wpl">
+                    <thead>
+                    <tr>
+                        <!--<th><input type="checkbox" ms-duplex-radio="planCheckAll" /></th>-->
+                        <td>编号</td>
+                        <td>综合任务编号
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('wplan',wPlanDGrid, 'planSerialNumber', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('wplan',wPlanDGrid, 'planSerialNumber', 0)"></i>
+                                </span>
+                        </td>
+                        <td>综合任务代码
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('wplan',wPlanDGrid, 'planCode', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('wplan',wPlanDGrid, 'planCode', 0)"></i>
+                                </span>
+                        </td>
+                        <td>工作名称
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('wplan',wPlanDGrid, 'planName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('wplan',wPlanDGrid, 'planName', 0)"></i>
+                                </span>
+                        </td>
+                        <td>工作截止日期
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('wplan',wPlanDGrid, 'planDeadlineDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('wplan',wPlanDGrid, 'planDeadlineDate', 0)"></i>
+                                </span>
+                        </td>
+                        <td>离完成日期
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('wplan',wPlanDGrid, 'planRemainingDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('wplan',wPlanDGrid, 'planRemainingDate', 0)"></i>
+                                </span>
+                        </td>
+                        <td>工作来源
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('wplan',wPlanDGrid, 'planSource', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('wplan',wPlanDGrid, 'planSource', 0)"></i>
+                                </span>
+                        </td>
+                        <td>工作责任人
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('wplan',wPlanDGrid, 'employeeName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('wplan',wPlanDGrid, 'employeeName', 0)"></i>
+                                </span>
+                        </td>
+                        <td style="width:3px">
+                        <td>工作状态
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('wplan',wPlanDGrid, 'planStateCode', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('wplan',wPlanDGrid, 'planStateCode', 0)"></i>
+                                </span>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-class="one-row" ms-repeat="curWPListReports" ms-click="loadPlan(el)" ms-visible="el.visible">
+                        <!--<th><input type="checkbox" ms-duplex-radio="el.text" /></th>-->
+                        <td>{{$index+1}}</td>
+                        <td>{{el.planSerialNumber}}</td>
+                        <td>{{el.planCode}}</td>
+                        <td>{{el.planName}}</td>
+                        <td>{{el.planDeadlineDate}}</td>
+                        <td>{{el.planRemainingDate}}</td>
+                        <td>{{el.planSource}}</td>
+                        <td>{{el.employeeName}}</td>
+                        <td style="width:3px" ms-css-background-color="el.bg"></td>
+                        <td>{{el.planStateCode}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pager">
+                    <button ms-click="preWPListPage"><i class="icon-chevron-left"></i></button>
+                    第 {{indexWPListReports+1}} 页，共 {{pagesWPListReports}} 页
+                    <button ms-click="nextWPListPage"><i class="icon-chevron-right"></i></button>
+                </div>
+            </div>
+        </div><br><br><br>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">计划列表
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <!--<a href="javascript:void(0)" ms-click="planCheck"><img src="img/man.png"  ms-visible="CDVisible" id="imgPlanCheck"/></a>
+                <a href="javascript:void(0)" ms-click="PDelete('plan')"><img src="img/delete.png"  ms-visible="CDVisible" id="imgPlanDel"/></a>
+                <a href="javascript:void(0)" ms-click="planNew"><img src="img/new.png"  ms-visible="CDVisible" id="imgPlanNew"/></a>-->
+                <!--<a href="javascript:void(0)" ms-click="PDelete('plan')" id="imgPlanDelete">删除</a>-->
+                <!--<a href="javascript:void(0)" ms-click="planNew" id="imgPlanNew">新建</a>-->
+            </div>
+            <div ms-mouseenter="dCallback('in','imgPlan')" ms-mouseleave="dCallback('out','imgPlan')">
+                <table class="table table-hover" id="pl">
+                    <thead>
+                        <tr>
+                            <!--<th><input type="checkbox" ms-duplex-radio="planCheckAll" /></th>-->
+                            <td>编号</td>
+                            <td>综合任务编号
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planSerialNumber', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planSerialNumber', 0)"></i>
+                                </span>
+                            </td>
+                            <td>综合任务代码
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planCode', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planCode', 0)"></i>
+                                </span>
+                            </td>
+                            <td>工作名称
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planName', 0)"></i>
+                                </span>
+                            </td>
+                            <td>工作截止日期
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planDeadlineDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planDeadlineDate', 0)"></i>
+                                </span>
+                            </td>
+                            <td>离完成日期
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planRemainingDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planRemainingDate', 0)"></i>
+                                </span>
+                            </td>
+                            <td>工作来源
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planSource', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planSource', 0)"></i>
+                                </span>
+                            </td>
+                            <td>工作责任人
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'employeeName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'employeeName', 0)"></i>
+                                </span>
+                            </td>
+                            <td style="width:3px"></td>
+                            <td>工作状态
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planStateCode', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planStateCode', 0)"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ms-class="one-row" ms-repeat="curPListReports" ms-click="loadPlan(el)" ms-visible="el.visible">
+                            <!--<th><input type="checkbox" ms-duplex-radio="el.text" /></th>-->
+                            <td>{{$index+1}}</td>
+                            <td>{{el.planSerialNumber}}</td>
+                            <td>{{el.planCode}}</td>
+                            <td>{{el.planName}}</td>
+                            <td>{{el.planDeadlineDate}}</td>
+                            <td>{{el.planRemainingDate}}</td>
+                            <td>{{el.planSource}}</td>
+                            <td>{{el.employeeName}}</td>
+                            <td style="width:3px" ms-css-background-color="el.bg"></td>
+                            <td>{{el.planStateCode}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pager">
+                    <button ms-click="prePListPage"><i class="icon-chevron-left"></i></button>
+                    第 {{indexPListReports+1}} 页，共 {{pagesPListReports}} 页
+                    <button ms-click="nextPListPage"><i class="icon-chevron-right"></i></button>
+                </div>
+            </div>
+        </div><br><br><br>
+
+        <!--<div ms-visible="CDVisible">-->
+        <!--</div>-->
+        <div class="panel panel-default">
+            <div class="panel-heading">草稿箱
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <!--<a href="javascript:void(0)" ms-click="draftCheck"><img src="img/man.png"  ms-visible="CDVisible" id="imgDraftCheck"/></a>
+                <a href="javascript:void(0)" ms-click="PDelete('draft')"><img src="img/delete.png"  ms-visible="CDVisible" id="imgDraftDel"/></a>
+                <a href="javascript:void(0)" ms-click="planNew"><img src="img/new.png"  ms-visible="CDVisible" id="imgDraftNew"/></a>-->
+                <!--<a href="javascript:void(0)" ms-click="PDelete('draft')" id="imgDraftDelete">删除</a>-->
+                <!--<a href="javascript:void(0)" ms-click="planNew" id="imgDraftNew">新建</a>-->
+            </div>
+            <div ms-mouseenter="dCallback('in','imgDraft')" ms-mouseleave="dCallback('out','imgDraft')">
+                <table class="table table-hover" id="dl" >
+                    <thead>
+                        <tr>
+                            <!--<th><input type="checkbox" ms-duplex-radio="draftCheckAll" /></th>-->
+                            <td>编号</td>
+                            <td>综合任务编号
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('draft',draftDGrid, 'planSerialNumber', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('draft',draftDGrid, 'planSerialNumber', 0)"></i>
+                                </span>
+                            </td>
+                            <td>综合任务代码
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('draft',draftDGrid, 'planCode', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('draft',draftDGrid, 'planCode', 0)"></i>
+                                </span>
+                            </td>
+                            <!--<td>工作名称
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('draft',draftDGrid, 'planName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('draft',draftDGrid, 'planName', 0)"></i>
+                                </span>
+                            </td>-->
+                            <td>工作下达日期
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('draft',draftDGrid, 'planIssuedDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('draft',draftDGrid, 'planIssuedDate', 0)"></i>
+                                </span>
+                            </td>
+                            <td>工作截止日期
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('draft',draftDGrid, 'planDeadlineDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('draft',draftDGrid, 'planDeadlineDate', 0)"></i>
+                                </span>
+                            </td>
+                            <td>离完成日期
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('draft',draftDGrid, 'planRemainingDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('draft',draftDGrid, 'planRemainingDate', 0)"></i>
+                                </span>
+                            </td>
+                            <!--<td>工作来源
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('draft',draftDGrid, 'planSource', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('draft',draftDGrid, 'planSource', 0)"></i>
+                                </span>
+                            </td>-->
+                            <td>工作责任人
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('draft',draftDGrid, 'employeeName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('draft',draftDGrid, 'employeeName', 0)"></i>
+                                </span>
+                            </td>
+                            <td>工作状态
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('draft',draftDGrid, 'planStateCode', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('draft',draftDGrid, 'planStateCode', 0)"></i>
+                                </span>
+                            </td>
+                            <td>备注
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('draft',draftDGrid, 'remark', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('draft',draftDGrid, 'remark', 0)"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ms-class="one-row" ms-repeat="curDraftReports" ms-click="loadPlan(el)" ms-visible="el.visible">
+                            <!--<th><input type="checkbox" ms-duplex-radio="el.text" ></th>-->
+                            <td>{{$index+1}}</td>
+                            <td>{{el.planSerialNumber}}</td>
+                            <td>{{el.planCode}}</td>
+                            <!--<td>{{el.planName}}</td>-->
+                            <td>{{el.planIssuedDate}}</td>
+                            <td>{{el.planDeadlineDate}}</td>
+                            <td>{{el.planRemainingDate}}</td>
+                            <!--<td>{{el.planSource}}</td>-->
+                            <td>{{el.employeeName}}</td>
+                            <td>{{el.planStateCode}}</td>
+                            <td>{{el.remark}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pager">
+                    <button ms-click="preDraftPage"><i class="icon-chevron-left"></i></button>
+                    第 {{indexDraftReports+1}} 页，共 {{pagesDraftReports}} 页
+                    <button ms-click="nextDraftPage"><i class="icon-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="exportPro" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;width:700px" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">
+                            选择导出计划
+                        </h3>
+                    </div>
+                    <!--<div class="modal-body">-->
+                        <!--<div class="container-fluid">-->
+                            <table class="table table-hover" id="importTable">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" ms-duplex-radio="importCheckAll" /></th>
+                                    <td>编号</td>
+                                    <td>名称
+                                        <span class="sort-icons" style="position:relative">
+                                            <i class="icon-chevron-up" ms-click="orderByDict('allPlans',allProDGrid, 'projectName', 1)"></i>
+                                            <i class="icon-chevron-down" ms-click="orderByDict('allPlans',allProDGrid, 'projectName', 0)"></i>
+                                        </span>
+                                    </td>
+                                    <td>开始时间
+                                        <span class="sort-icons" style="position:relative">
+                                            <i class="icon-chevron-up" ms-click="orderByDict('allPlans',allProDGrid, 'projectStartingDate', 1)"></i>
+                                            <i class="icon-chevron-down" ms-click="orderByDict('allPlans',allProDGrid, 'projectStartingDate', 0)"></i>
+                                        </span>
+                                    </td>
+                                    <td>截止时间
+                                        <span class="sort-icons" style="position:relative">
+                                            <i class="icon-chevron-up" ms-click="orderByDict('allPlans',allProDGrid, 'projectDeadlineDate', 1)"></i>
+                                            <i class="icon-chevron-down" ms-click="orderByDict('allPlans',allProDGrid, 'projectDeadlineDate', 0)"></i>
+                                        </span>
+                                    </td>
+                                    <td>待办事务数
+                                        <span class="sort-icons" style="position:relative">
+                                            <i class="icon-chevron-up" ms-click="orderByNumber('allPlans',allProDGrid, 'projectWaitingTrans', 1)"></i>
+                                            <i class="icon-chevron-down" ms-click="orderByNumber('allPlans',allProDGrid, 'projectWaitingTrans', 0)"></i>
+                                        </span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ms-hover="hover" ms-repeat="curAllPlanReports">
+                                    <th><input type="checkbox" ms-duplex-radio="el.import" /></th>
+                                    <td>{{$index+(indexAllPlanReports)*5+1}}</td>
+                                    <td>{{el.projectName}}</td>
+                                    <td>{{el.projectStartingDate}}</td>
+                                    <td>{{el.projectDeadlineDate}}</td>
+                                    <td>{{el.projectWaitingTrans}}</td>
+                                    <td><input id="file" type="file" style="display: none"/>
+                                        <!--<div class="alert alert-info">
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                        <h4>
+                                            提示!
+                                        </h4> <strong>警告!</strong> 请注意你的个人隐私安全.
+                                        </div>-->
+                                        <input type="text" ms-duplex="el.exportPath" style="width:80px;margin-top:9px"/>
+                                        <input class="btn btn-primary" type="button" value=".." ms-click="selectPath(el,$index)"/>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="pager">
+                                <button ms-click="preAllPlanPage"><i class="icon-chevron-left"></i></button>
+                                第 {{indexAllPlanReports+1}} 页，共 {{pagesAllPlanReports}} 页
+                                <button ms-click="nextAllPlanPage"><i class="icon-chevron-right"></i></button>
+                            </div>
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<iframe src="" width="0" height="0" id="myIframe" name="myIframe" visible="false">-->
+                    <!--</iframe>-->
+                    <!--<textarea id="content" rows="6" cols="50"></textarea>-->
+                    <!--<P><button ms-click="saveAs">保存</button></P>-->
+                    <!--导出为一个文件或者多个文件-->
+                  <!--  <div class="controls">
+                        <select ms-duplex="capitalOption" ms-click="saveOption(capitalOption)" name="planState" class="input-xlarge span11" style="width: 140px" required>
+                            <option ms-repeat="saveOptions" ms-value="el.value">{{el.text}}</option>
+                        </select>
+                    </div>-->
+                    <div class="modal-footer">
+                        <!--<a href="am/exportMainProject">testSaveAs</a>-->
+                        <button type="button" ms-click="exportProject" class="btn btn-primary">
+                            导出
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal -->
+        </div>
+
+        <div class="modal fade" id="importPro" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true" style="display: none " >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">
+                            导入计划
+                        </h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="control-group">
+                                <label class="control-label ">项目名称:</label>
+
+                                <div class="controls">
+                                    <input type="text" ms-duplex="importProjectName" style="width:80px" id="importProjectName"/>
+                                    &nbsp;&nbsp;注:若没有填写项目名称，则自动使用文件名作为项目名称
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="container-fluid">
+                            <div class="control-group">
+                                &lt;!&ndash;<table class="table">
+                                    <thead>
+                                        <td>编号</td>
+                                        <td>综合任务代码</td>
+                                        <td>文档责任人</td>
+                                    </thead>
+                                    <tbody>
+                                        <tr ms-repeat="mainReports">
+                                            <td>{{$index+1}}</td>
+                                            <td>el.planCode</td>
+                                            <td>el.planController</td>
+                                        </tr>
+                                    </tbody>
+                                </table>&ndash;&gt;
+                                <label class="control-label ">项目责任人:</label>
+
+                                <div class="controls">
+                                    <div class="input-append">
+                                        <input ms-duplex="projectControllerName" name="planController" type="text" required>
+                                        <a class="inline btn" ms-click="initEmployeeSelector('#selector')">选择员工</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="modal-footer">
+                            <div ms-visible="importView" id="bootstrapped-fine-uploader"></div>
+                        <!--<div ms-visible="importView" id="fine-uploader"></div></a>-->
+                        <!--<button type="button" ms-click="exportProject" class="btn btn-primary">
+                            选择文件并导入
+                        </button>-->
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal -->
+        </div>
+    </div>
+<!--fine upload template-->
+<script type="text/template" id="qq-template-bootstrap">
+    <div class="qq-uploader-selector qq-uploader span12">
+        <div class="qq-upload-drop-area-selector qq-upload-drop-area span12" qq-hide-dropzone>
+            <span>Drop files here to upload</span>
+        </div>
+        <div class="qq-upload-button-selector qq-upload-button btn btn-inverse btn-small" style="width: 109px;height: 14px;
+                        margin-left: 419px">
+            <div><i class="icon-upload icon-white"></i> 添加主计划文件</div>
+        </div>
+        <div id="triggerUpload" class="btn btn-inverse btn-small" style="width:90px">
+            <i class="icon-upload icon-white"></i> 导入数据库
+        </div>
+
+        <span class="qq-drop-processing-selector qq-drop-processing">
+          <span>Processing dropped files...</span>
+          <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+        </span>
+        <ul class="qq-upload-list-selector qq-upload-list" style="margin-top: 10px; text-align: center;">
+            <li>
+                <div class="qq-progress-bar-container-selector">
+                    <div class="qq-progress-bar-selector qq-progress-bar"></div>
+                </div>
+                <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                <span class="qq-edit-filename-icon-selector qq-edit-filename-icon"></span>
+                <span class="qq-upload-file-selector qq-upload-file"></span>
+                <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
+                <span class="qq-upload-size-selector qq-upload-size"></span>
+                <a class="qq-upload-cancel-selector qq-upload-cancel" href="#">Cancel</a>
+                <a class="qq-upload-retry-selector qq-upload-retry" href="#">Retry</a>
+                <a class="qq-upload-delete-selector qq-upload-delete" href="#">Delete</a>
+                <span class="qq-upload-status-text-selector qq-upload-status-text"></span>
+            </li>
+        </ul>
+    </div>
+</script>
+<!--<script type="text/template" id="qq-template">
+    <div class="qq-uploader-selector qq-uploader" style="color: darkgray">
+        <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
+            <span>Drop files here to upload</span>
+        </div>
+        <div class="qq-upload-button-selector qq-upload-button" style="height: 17px">
+            <div>主计划导入</div>
+        </div>
+        <span class="qq-drop-processing-selector qq-drop-processing">
+          <span>Processing dropped files...</span>
+          <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+        </span>
+        <ul class="qq-upload-list-selector qq-upload-list">
+            <li style="display: none">
+                <div class="qq-progress-bar-container-selector">
+                    <div class="qq-progress-bar-selector qq-progress-bar"></div>
+                </div>
+                <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
+                <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                <span class="qq-edit-filename-icon-selector qq-edit-filename-icon"></span>
+                <span class="qq-upload-file-selector qq-upload-file"></span>
+                <span class="qq-upload-size-selector qq-upload-size"></span>
+                <a class="qq-upload-cancel-selector qq-upload-cancel" href="#">Cancel</a>
+                <a class="qq-upload-retry-selector qq-upload-retry" href="#">Retry</a>
+                <a class="qq-upload-delete-selector qq-upload-delete" href="#">Delete</a>
+                <span class="qq-upload-status-text-selector qq-upload-status-text"></span>
+            </li>
+        </ul>
+    </div>
+</script>-->
+<script>
+    require(['fineuploader','am.sessionUtil','Login'], function ($,sessionUtil,login) {
+        /**
+         * 保证id在MainFrame上的唯一性
+         */
+        var random = (new Date()).getTime() + '';
+        var uploadFileIndex = 1;
+        $("#bootstrapped-fine-uploader").attr('id', "bootstrapped-fine-uploader" + random);//fineuploader
+        $("#qq-template-bootstrap").html($("#qq-template-bootstrap").text().replace('triggerUpload', 'triggerUpload' + random));//fineuploader-tmpl
+        $("#qq-template-bootstrap").attr('id', "qq-template-bootstrap" + random);
+        $("#personModal").attr('id', "personModal" + random);//personModal
+        $("[href=#personModal]").attr('href', "#personModal" + random);
+        $("#planReportContainer").attr('id',"planReportContainer"+random);
+
+        var uploader = $("#bootstrapped-fine-uploader" + random).fineUploader({
+            element: $('#bootstrapped-fine-uploader' + random),
+            request: {
+                endpoint: 'am/fileUploads.action'
+                /*params:{projectControllerId:avalon.vmodels["planSummary"].projectControllerId,
+                    projectControllerName:avalon.vmodels["planSummary"].projectControllerName},
+                paramsInBody:true*/
+//                filenameParam:'filename',
+//                inputName:'file',
+//                uuidName:'uuid',
+//                totalFileSizeName:'totalfilesize'
+            },
+            deleteFile: {
+                enabled: true, // defaults to false
+                endpoint: 'am/delOutput.action',
+                method: 'POST',
+                forceConfirm: true
+
+            },
+            autoUpload: false,
+            template: $('#qq-template-bootstrap' + random),
+            classes: {
+                success: 'alert alert-success',
+                fail: 'alert alert-error'
+            },
+            validation: {
+                //allowedExtensions: ['jpeg', 'jpg', 'txt'],
+                itemLimit: 50,
+                sizeLimit: 50 * 1024 * 1024 // 50 kB = 50 * 1024 bytes
+            },
+            showMessage: function (message) {
+                // Using Bootstrap's classes
+//                $('#bootstrapped-fine-uploader' + random).append('<div class="alert alert-error">' + message + '</div>');
+                alert("请添加上传文件!");
+            },
+            debug: true,
+            editFilename: {                                            //编辑名字
+                enable: true
+            }
+        }).on('delete',function(id){
+//            uploader.fineUploader('setDeleteFileParams',{planCode:$("#planReportContainer"+random+" [name=planCode]").val()})
+        }).on('complete', function (event,id, fileName, responseJSON) {
+            //获取项目
+            if(responseJSON.success) {
+                sessionUtil.getProjects(usrId, function (data) {
+                    var proGrids = eval('(' + data + ')');
+                    for (var u in proGrids) {
+                        proGrids[u].text = false;
+                    }
+                    avalon.vmodels["planSummary"].proDGrid = proGrids;
+                });
+                //获取所有项目
+                sessionUtil.getAllProjects(function (data) {
+                    var proGrids = eval('(' + data + ')');
+                    for (var u in proGrids) {
+                        proGrids[u].import = false;
+                        proGrids[u].exportPath = "";
+                    }
+                    avalon.vmodels["planSummary"].allProDGrid = proGrids;
+                    alert("导入成功！");
+                });
+            }
+            else {
+                alert("导入失败！\n\n错误信息：\n" + responseJSON.error);
+            }
+        }).on('error',function(event,id,name,errorReason){
+            $("ul[class='qq-upload-list-selector qq-upload-list'] li:lt("+uploadFileIndex+")").hide();
+            uploadFileIndex ++;
+        });
+        $('#triggerUpload' + random).click(function () {
+            //传递planCode
+            /*uploader.fineUploader('setParams',{projectControllerId:avalon.vmodels["planSummary"].projectControllerId,
+                projectControllerName:avalon.vmodels["planSummary"].projectControllerName,
+                projectName:$('#importProjectName').val()});
+            if(avalon.vmodels["planSummary"].projectControllerId=='' ||
+                    avalon.vmodels["planSummary"].projectControllerName=='')
+                alert("请选择项目负责人！");
+            else
+                uploader.fineUploader('uploadStoredFiles');*/
+            uploader.fineUploader('setParams',{projectName:$('#importProjectName').val()});
+            uploader.fineUploader('uploadStoredFiles');
+        });
+        /*var usrId = login.loginId;
+        usrId = "111";
+        $('#fine-uploader').fineUploader({
+            request: {
+                endpoint: 'am/fileUploads.action'
+            },
+            classes: {
+                success: 'alert alert-success',
+                fail: 'alert alert-error'
+            }
+        }).on('complete', function (event,id, fileName, responseJSON) {
+            //获取项目
+            if(responseJSON.success) {
+                sessionUtil.getProjects(usrId, function (data) {
+                    var proGrids = eval('(' + data + ')');
+                    for (var u in proGrids) {
+                        //                planSummaryMode.proDGrid[u].text = '';
+                        proGrids[u].text = false;
+                    }
+                    avalon.vmodels["planSummary"].proDGrid = proGrids;
+                });
+                //获取所有项目
+                sessionUtil.getAllProjects(function (data) {
+                    var proGrids = eval('(' + data + ')');
+                    for (var u in proGrids) {
+                        proGrids[u].import = false;
+                        proGrids[u].exportPath = "";
+                    }
+                    avalon.vmodels["planSummary"].allProDGrid = proGrids;
+                });
+                alert("导入成功！");
+            }
+            else
+                alert("导入失败！\n\n错误信息：\n"+responseJSON.error);
+         });*/
+    })
+
+</script>
+</body>
+</html>

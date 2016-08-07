@@ -1,0 +1,49 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="s" uri="/struts-tags" %> 
+   
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#submit").click(function() {
+			
+			var param = {
+				"test.dateStandin":$("#date").val(),
+				"test.content":$("#content").val(),
+			}
+			alert("before1");
+			$.post(
+				"fracas/test",
+				param,
+				function back(data) {
+					var test = eval("("+data+")");
+					alert(test.date);
+				},
+				"json"
+			);
+		});
+	});
+</script>
+<title>Insert title here</title>
+</head>
+<body>
+<p><a href="<s:url action="fracas/add"/>">add</a></p>
+
+<form action="fracas/get.action" method="post">
+	<input type="text" name="FailureReportNum"/>
+	<input type="submit" value="submit"/>
+</form>
+
+<form id="ff" action="fracas/test" method="post">
+	<input id="date" type="text" name="test.dateStandin"/>
+	<input id="content" type="text" name="test.content"/>
+	<input id="submit" type="button" value="submit"/>
+</form>
+
+<s:property value="failureBasicInfo.FailureReportNum" />
+</body>
+</html>

@@ -1,0 +1,59 @@
+package org.sjtu.p615.dao;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.sjtu.p615.entity.ContractRegist;
+import org.sjtu.p615.entity.FailureReport;
+
+public class ContractRegistDao implements IContractRegistDao {
+	private SessionFactory sessionFactory;
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	@Override
+	public void add(ContractRegist contractRegist) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		ContractRegist cr = (ContractRegist) session.get(ContractRegist.class, contractRegist.getId());	
+		if (cr == null) {
+			session.save(contractRegist);
+		}
+		else {
+			session.clear();
+			session.update(contractRegist);
+		}
+		//session.saveOrUpdate(failureReport);
+		tx.commit();
+		session.close();
+	}
+
+	@Override
+	public void update(ContractRegist contractRegist) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.update(contractRegist);
+		tx.commit();
+		session.close();
+	}
+
+	@Override
+	public ContractRegist get(String id) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		ContractRegist cr = (ContractRegist) session.get(ContractRegist.class, id);
+		tx.commit();
+		session.close();
+		return cr;
+	}
+
+}

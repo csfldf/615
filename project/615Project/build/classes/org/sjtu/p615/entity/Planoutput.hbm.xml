@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-10-9 13:34:53 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.Planoutput" table="planoutput" catalog="testdb">
+        <id name="planOutputCode" type="java.lang.Integer">
+            <column name="PlanOutputCode" />
+            <generator class="identity" />
+        </id>
+        <property name="filePath" type="string">
+            <column name="FilePath" length="512" not-null="true" />
+        </property> 
+        <property name="uploadDate"  generated="insert" type="timestamp">  
+            <column name="UploadDate" sql-type="timestamp" length="19" default="CURRENT_TIMESTAMP"/>  
+        </property>
+        <property name="UUID" type="string">
+            <column name="UUID" length="64" not-null="true" />
+        </property>
+        <property name="deleteMark" type="boolean">
+            <column name="DeleteMark" not-null="true" />
+        </property>
+        <property name="taskCode" type="string">
+            <column name="TaskCode" not-null="true" />
+        </property>
+        <property name="fileName" type="string">
+            <column name="FileName" length="512" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

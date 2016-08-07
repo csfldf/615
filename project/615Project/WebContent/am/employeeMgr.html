@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/panel.css"/>
+    <title>人员管理</title>
+</head>
+<body>
+<div style="position: relative;" ms-controller="empMgr">
+    <div class="panel panel-default" style="position:relative;">
+    <div class="panel-heading">员工列表</div>
+        <table class="table" id="employeeListMaintain">
+            <thead>
+            <tr>
+                <th></th>
+                <th>
+                    员工号
+                                        <span class="sort-icons" style="position:relative">
+                                        <i class="icon-chevron-up" ms-click="orderByDict('employees', 'employeeNumber', 1)"></i>
+                                        <i class="icon-chevron-down" ms-click="orderByDict('employees', 'employeeNumber', 0)"></i>
+                                        <i class="icon-filter" ms-click="filterConfig('employees','employeeNumber')" style="position: relative;left: 20px"></i>
+                                        </span>
+                </th>
+                <th>
+                    员工姓名
+                                        <span class="sort-icons" style="position:relative">
+                                        <i class="icon-chevron-up"ms-click="orderByDict('employees', 'employeeName', 1)"></i>
+                                        <i class="icon-chevron-down" ms-click="orderByDict('employees', 'employeeName', 0)"></i>
+                                        <i class="icon-filter" ms-click="filterConfig('employees','employeeName')" style="position: relative;left: 20px"></i>
+                                        </span>
+                </th>
+                <th>
+                    所在部门
+                                        <span class="sort-icons" style="position:relative">
+                                        <i class="icon-chevron-up"ms-click="orderByDict('employees', 'departmentName', 1)"></i>
+                                        <i class="icon-chevron-down" ms-click="orderByDict('employees', 'departmentName', 0)"></i>
+                                        <i class="icon-filter" ms-click="filterConfig('employees','departmentName')" style="position: relative;left: 20px"></i>
+                                        </span>
+                </th>
+                <!--<th>-->
+                <!--行政组-->
+                <!--<span class="sort-icons" style="position:relative">-->
+                <!--<i class="icon-chevron-up" ms-click="orderByDictEmp(employees, 'groupName', 1)"></i>-->
+                <!--<i class="icon-chevron-down" ms-click="orderByDictEmp(employees, 'groupName', 0)"></i>-->
+                <!--</span>-->
+                <!--</th>-->
+                <th>
+                    专业
+                                        <span class="sort-icons" style="position:relative">
+                                        <i class="icon-chevron-up" ms-click="orderByDict('employees', 'major', 1)"></i>
+                                        <i class="icon-chevron-down"ms-click="orderByDict('employees', 'major', 0)"></i>
+                                        <i class="icon-filter" ms-click="filterConfig('employees','major')" style="position: relative;left: 20px"></i>
+                                        </span>
+                </th>
+                <th>
+                    邮箱
+                                        <span class="sort-icons" style="position:relative">
+                                        <i class="icon-chevron-up" ms-click="orderByDict('employees','employeeEmail', 1)"></i>
+                                        <i class="icon-chevron-down"ms-click="orderByDict('employees', 'employeeEmail', 0)"></i></span>
+                    <i class="icon-filter" ms-click="filterConfig('employees','employeeEmail')" style="position: relative;left: 20px"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="one-row" ms-hover="hover" ms-repeat="data.employees.curReports" ms-dblclick="selectOneEmp(el)">
+                <td><input class="radio" type="radio" name="empRadio" ms-click="selectOne(el.employeeNumber)" /></td>
+                <td>{{el.employeeNumber}}</td>
+                <td>{{el.employeeName}}</td>
+                <td>{{el.departmentName}}</td>
+                <td>{{el.major}}</td>
+                <td>{{el.employeeEmail}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <span style="position:relative;bottom: 3px;left: 1%">每页显示</span>
+            <select ms-change="setPagesMessage('employees')" ms-duplex="data.employees.pageSize"
+                    style="position: relative;bottom: 0px;left: 2%;width: 60px">
+                <option value ="5" selected="selected">5</option>
+                <option value ="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
+            <span style="position: relative;bottom:3px;left: 5%">从总共{{data.employees.totalNum}}项中选择了{{data.employees.filterNum}}项</span>
+                                <span style="position: relative;bottom:3px;left: 30%">
+                                    <button ms-click="prePage('employees')"><i class="icon-chevron-left" ></i></button>
+                                    第 {{data.employees.indexPage+1}} 页，共 {{data.employees.pageNum}} 页
+                                    <button ms-click="nextPage('employees')"><i class="icon-chevron-right" ></i></button>
+                                </span>
+            <span style="position: relative;left:60%"><a ms-click="reset('employees')">重置</a></span>
+        </div>
+        <div id="btnDiv">
+            <a role="button" class="btn btn-primary" ms-click="addOneEmp">添加人员 </a>
+            <a ms-click="delOneEmp()" role="button" class="btn btn-danger">删除人员</a>
+        </div>
+    </div>
+</div>
+<div class="modal fade" ms-attr-id="modalName" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;" ms-controller="empMgr">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    筛选内容
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-default" ms-visible="true">
+                    <table class="table table-hover" >
+                        <thead>
+                        <tr>
+                            <th><a class="btn-primary" ms-click="selALL()">全选</a></th>
+                            <th>筛选内容</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-repeat="filter.org_values">
+                            <td>
+                                <input class="checkbox" type="checkbox" ms-duplex-radio="el.enabled">
+                            </td>
+                            <td>
+                                {{el.name}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button style="float:right" type="button" ms-click="executeFilter()" class="btn btn-primary">
+                    确认
+                </button>
+                <button style="float:left" type="button" ms-attr-id="modalBtn" class="btn btn-default"
+                        data-dismiss="modal" >关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="empModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" ms-controller="empMgr" style="display: none " >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="empModalLabel">
+                    人员管理
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form ms-attr-id="$formId">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">员工号</label>
+                                <div class="controls">
+                                    <input type="text" name="employeeNumber" ms-duplex="empModify.employeeNumber" ms-disabled="isModify"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">员工姓名</label>
+
+                                <div class="controls">
+                                    <input type="text" name="employeeName" ms-duplex="empModify.employeeName"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">所在部门</label>
+                                <div class="controls">
+                                    <!--<input type="text" name="departmentName" ms-duplex="empModify.departmentName"/>-->
+                                    <select ms-duplex="empModify.departmentId">
+                                        <option ms-repeat="depList" ms-value="el.id">
+                                            {{el.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">专业</label>
+                                <div class="controls">
+                                    <input type="text" name="major" ms-duplex="empModify.major"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">邮箱地址</label>
+                                <div class="controls">
+                                    <input type="text" name="employeeEmail" ms-duplex="empModify.employeeEmail"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <button type="button" ms-click="modifyOneEmployee()" class="btn btn-primary" style="position: relative;float: right">
+                    提交
+                </button>
+                <button type="button" id="emp_close_btn" class="btn btn-default"
+                        data-dismiss="modal" style="position: relative;float: left">关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

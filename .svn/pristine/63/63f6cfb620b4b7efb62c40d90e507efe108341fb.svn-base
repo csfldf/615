@@ -1,0 +1,393 @@
+/**
+ * Created by jiadongy on 2014/12/6.
+ */
+"use strict";
+define(['mmRequest','jquery','text!./selector.html','bootstrap','datatables.bootstrap'],function(avalon,$,modalHtml){
+    var data = {
+        project:{
+            id:"",
+            name:""
+        }
+    }
+    var selectorElement,tableElement,table,
+        types={
+            /****************计划统计部分***********************************************/
+            projectSelectForPlanStatistics: {
+                title: '选择项目',
+                queryString: 'am/getAllProjectsInStatistics',
+                tableInit: {
+                    columns: [
+                        {data: "projectName", title: "项目", class: "center"},
+                        {data: "prjType", title: "项目类型", class: "center"},
+                        {data: "startDate", title: "开始日期", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            },
+            employeeSelectForPlanStatistics:{
+                title:'选择员工',
+                queryString:'am/getalluser',
+                tableInit: {
+                    columns: [
+                        {data: "employeeName", title: "员工", class: "center"},
+                        {data: "employeeNumber", title: "员工ID", class: "center"},
+                        {data: "departmentName", title: "部门", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data:[],
+                onSelect:avalon.noop
+            },
+            departmentSelectForPlanStatistics:{
+                title:'选择部门',
+                queryString: 'am/getAllDep',
+                tableInit: {
+                    columns: [
+                        {data: "id", title: "部门ID", class: "center"},
+                        {data: "name", title: "部门", class: "center"},
+                        //{data: "leader", title: "部门领导", class: "center"},
+                    ],
+                    columnDefs: []
+                },
+                data:[],
+                onSelect:avalon.noop
+            },
+            groupSelectForPlanStatistics: {
+                title: '选择专业组',
+                queryString: 'am/getAllGroup',
+                tableInit: {
+                    columns: [
+                        {data: "groupName", title: "专业组", class: "center"},
+                        {data: "groupLeaderName", title: "专业组组长", class: "center"},
+                        {data: "projectName", title: "所属项目", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data:[],
+                onSelect:avalon.noop
+            },
+            /***************************************PlanView************************************************/
+            groupSelectForPlanView: {
+                title: '选择专业组',
+                queryString: 'am/getAllGroup',
+                tableInit: {
+                    columns: [
+                        {data: "groupName", title: "专业组", class: "center"},
+                        {data: "groupLeaderName", title: "专业组组长", class: "center"},
+                        {data: "projectName", title: "所属项目", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            },
+            employeeSelectForPlanView: {
+                title: '选择员工',
+                queryString: 'am/getalluser',
+                queryStringFunction: function (queryString, report) {
+                    return 'am/getEmployeesByProject?projectId=' + report.projectId
+                },
+                tableInit: {
+                    columns: [
+                        {data: "employeeName", title: "员工", class: "center"},
+                        {data: "departmentName", title: "部门", class: "center"},
+                        {data: "taskCount", title: "待完成项", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            },
+            departmentSelectForPlanView: {
+                title: '选择部门',
+                queryString: 'am/getAllDep',
+                tableInit: {
+                    columns: [
+                        {data: "id", title: "部门ID", class: "center"},
+                        {data: "name", title: "部门", class: "center"},
+                        {data: "leader", title: "部门领导", class: "center"},
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            },
+            /***************************************PackageView*********************************/
+            employeeSelectForPackageView: {
+                title: '选择员工',
+                queryString: 'am/getalluser',
+                queryStringFunction: function (queryString, report) {
+                    return 'am/getEmployeesByProject?projectId=' + report.projectId
+                },
+                tableInit: {
+                    columns: [
+                        {data: "employeeName", title: "员工", class: "center"},
+                        {data: "departmentName", title: "部门", class: "center"},
+                        {data: "taskCount", title: "待完成项", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            },
+            groupSelectForPackageView: {
+                title: '选择专业组',
+                queryString: 'am/getAllGroup',
+                tableInit: {
+                    columns: [
+                        {data: "groupName", title: "专业组", class: "center"},
+                        {data: "groupLeaderName", title: "专业组组长", class: "center"},
+                        {data: "projectName", title: "所属项目", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            },
+            departmentSelectForPackageView: {
+                title: '选择部门',
+                queryString: 'am/getAllDep',
+                tableInit: {
+                    columns: [
+                        {data: "id", title: "部门ID", class: "center"},
+                        {data: "name", title: "部门", class: "center"},
+                        {data: "leader", title: "部门领导", class: "center"},
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            },
+            /***************************************TaskView************************************************/
+            employeeSelectForTaskView: {
+                title:'选择员工',
+                queryString:'am/getalluser',
+                tableInit: {
+                    columns: [
+                        {data: "employeeName", title: "员工", class: "center"},
+                        {data: "departmentName", title: "部门", class: "center"},
+                        {data: "taskCount", title: "待完成项", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data:[],
+                onSelect:avalon.noop
+            },
+            /***************************************Action Dir View************************************************/
+            auditorSelectForActionDir: {
+                title: '选择行动项目录负责人',
+                queryString: 'am/getalluser',
+                queryStringFunction: function (queryString, report) {
+                    return 'am/getEmployeesByProject?projectId=' + report.projectId
+                },
+                tableInit: {
+                    columns: [
+                        {data: "employeeName", title: "员工", class: "center"},
+                        {data: "groupName", title: "组名", class: "center"},
+                        {data: "taskCount", title: "待完成事项", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data:[],
+                onSelect:avalon.noop
+            },
+            approverSelectForActionDir: {
+                title: '选择行动项目录批准人',
+                queryString: 'am/getalluser',
+                queryStringFunction: function (queryString, report) {
+                    return 'am/getEmployeesByProject?projectId=' + report.projectId
+                },
+                tableInit: {
+                    columns: [
+                        {data: "employeeName", title: "员工", class: "center"},
+                        {data: "groupName", title: "组名", class: "center"},
+                        {data: "taskCount", title: "待完成事项", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            },
+            projectSelectForActionDir:{
+                title: '选择项目',
+                queryString: 'am/getAllProjectsInStatistics',
+                queryStringFunction: function (queryString, employeeId) {
+                    return 'am/getUsrActionProjects?employeeId=' + employeeId
+                },
+                tableInit: {
+                    columns: [
+                        {data: "projectId", title: "项目ID", class: "center"},
+                        {data: "projectName", title: "项目", class: "center"},
+                        {data: "projectStartingDate", title: "开始日期", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            },
+            /***************************************Action Dir View************************************************/
+            controllerSelectForAction: {
+                title: '选择行动项负责人',
+                queryString: 'am/getalluser',
+                queryStringFunction: function (queryString, report) {
+                    return 'am/getEmployeesByProject?projectId=' + report.projectId
+                },
+                tableInit: {
+                    columns: [
+                        {data: "employeeName", title: "员工", class: "center"},
+                        {data: "groupName", title: "组名", class: "center"},
+                        {data: "taskCount", title: "待完成事项", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            },
+            /**********************模板库*******************************************/
+            projectSelectForDocLibrary: {
+                title: '选择项目',
+                queryString: 'am/getAllProjectsInStatistics',
+                tableInit: {
+                    columns: [
+                        {data: "projectName", title: "项目", class: "center"},
+                        {data: "prjType", title: "项目类型", class: "center"},
+                        {data: "startDate", title: "开始日期", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            },
+            /***************************************task Decompose************************************************/
+            employeeSelectForTaskDecompose: {
+                title: '选择员工',
+                queryString: 'am/getalluser',
+                queryStringFunction: function (queryString, report) {
+                    return 'am/getEmployeesByProject?projectId=' + report.projectId
+                },
+                tableInit: {
+                    columns: [
+                        {data: "employeeName", title: "员工", class: "center"},
+                        {data: "departmentName", title: "部门", class: "center"},
+                        {data: "taskCount", title: "待完成项", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            },
+            /***************************************Action create************************************************/
+            employeeSelectForActionCreate: {
+                title: '选择员工',
+                queryString: 'am/getalluser',
+                queryStringFunction: function (queryString, report) {
+                    return 'am/getEmployeesByProject?projectId=' + report.projectId
+                },
+                tableInit: {
+                    columns: [
+                        {data: "employeeName", title: "员工", class: "center"},
+                        {data: "departmentName", title: "部门", class: "center"},
+                        {data: "taskCount", title: "待完成项", class: "center"}
+                    ],
+                    columnDefs: []
+                },
+                data: [],
+                onSelect: avalon.noop
+            }
+        }
+
+    var selector=avalon.define('selector',function(vm){
+        vm.selectType=''
+        vm.queryString=''
+        vm.queryStringFunction = avalon.noop
+        vm.title=''
+        vm.data=[]
+        vm.onSelect=[]
+        vm.$skipArray=['data','queryString','onSelect']
+
+        vm.initData = function (success, args) {
+            if(types[vm.selectType].data.length>0){
+                refreshDataTable(types[vm.selectType].data)
+            }else{
+                var address = args == null ? vm.queryString : vm.queryStringFunction(vm.queryString, args)
+                avalon.getJSON(
+                    address,
+                    function (data) {
+                        data = eval(data)
+                        vm.data.length = 0
+                        vm.data.push.apply(vm.data, data)
+                        types[vm.selectType].data = data
+                        refreshDataTable(vm.data)
+                        if (typeof success == "function")
+                            success()
+                })
+            }
+
+        }
+
+        vm.registerSelector = function (selectorName, selector) {
+            if (!types[selectorName])
+                types[selectorName] = selector;
+        }
+
+        vm.selectClick=function(){
+            var result=getSelected()
+            if(result && typeof vm.onSelect == "function"){
+                vm.onSelect(result)
+            }
+            $(selectorElement).modal('hide')
+        }
+    })
+    selector.$watch('selectType',function(newValue,oldValue){
+        if(types[newValue]){
+            avalon.mix(selector,{
+                queryString:types[newValue].queryString,
+                title:types[newValue].title,
+                onSelect: types[newValue].onSelect,
+                queryStringFunction: types[newValue].queryStringFunction
+            })
+        }
+    })
+
+    var modalInited = false
+
+    function init(selectType, success, args) {
+        if(modalInited==false){
+            $(document.body).append($(modalHtml))
+            selectorElement=document.getElementById('selector')
+            tableElement=document.getElementById('selectorTable')
+            $(tableElement).on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    $(tableElement).DataTable().$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            } );
+            avalon.scan(selectorElement)
+            modalInited=true
+        }
+        if(modalInited && types[selectType] && selectType != selector.selectType){
+            selector.selectType=selectType
+            if($.fn.dataTable.isDataTable(tableElement))
+                $(tableElement).DataTable().clear().draw()
+            $(tableElement).dataTable(avalon.mix({destroy:true},types[selectType].tableInit))
+            selector.initData(success/**, args**/)
+        }
+
+    }
+    function getSelected(){
+        return $(tableElement).DataTable().row('.selected').data()
+    }
+    function refreshDataTable(dataSource){
+        if(avalon.isPlainObject(tableElement)==false){
+            $(tableElement).DataTable().clear().draw()
+            $(tableElement).DataTable().rows.add(dataSource).draw()
+        }
+    }
+    init()
+    return {init:init,types:types,data:data}
+})

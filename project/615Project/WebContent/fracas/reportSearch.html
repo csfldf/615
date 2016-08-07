@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="UTF-8"/>
+    <link rel="stylesheet" href="css/panel.css"/>
+  </head>
+<body>
+  <div ms-controller="reportSearch">
+
+  <div class="btn-group" data-toggle="buttons-radio" style="display:block;">
+    <button type="button" class="btn" ms-click="setReport(1)">故障报告</button>
+    <button type="button" class="btn" ms-click="setReport(2)">分析报告</button>
+    <button type="button" class="btn" ms-click="setReport(3)">CAR报告</button>
+  </div>
+
+  <form ms-repeat="conditions" style="margin-bottom:0px;">
+    <div class="btn-group" style="padding-top:0px;">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        {{el.text}}
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="#" ms-repeat-item="el.columns" ms-click="setCondition(el, item)">{{item.text}}</a></li>
+      </ul>
+    </div>
+    <input type="text" class="span2" style="margin-top: 10px; width: 300px;" ms-duplex="el.value">
+    <button type="submit" class="btn" ms-click="addCondition()">添加</button>
+    <button type="submit" class="btn" ms-click="removeCondition($index)">删除</button>
+  </form>
+
+  <div class="btn-group" style="float: right;">
+	  <button class="btn">{{charType}}</button>
+	  <button class="btn dropdown-toggle" data-toggle="dropdown">
+	    <span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu">
+	    <li class="dropdown-submenu">
+	    	<li><a tabindex="-1" ms-click="setDisplayList(0)">柱状图</a></li>
+	    	<li><a tabindex="-1" ms-click="setDisplayList(1)">曲线图</a></li>
+	    	<li><a tabindex="-1" ms-click="setDisplayList(2)">拼图</a></li>
+	    	<li><a tabindex="-1" ms-click="setDisplayList(3)">隐藏</a></li>
+	  	</li>
+	  </ul>
+  </div>
+  <div ms-widget="daterangepicker" data-daterangepicker-label="请选择起始日期和结束日期"></div>
+  <div><button class="btn" style="margin-top: 10px" ms-click="search()">搜索</button></div>
+
+  <canvas id="myChart1" ms-visible="displayList[0]"></canvas>
+  <canvas id="myChart2" ms-visible="displayList[1]"></canvas>
+  <canvas id="myChart3" ms-visible="displayList[2]"></canvas>
+
+  <div class="panel panel-default" style="display:block;margin-top: 10px">
+    <div class="panel-heading">故障报告待处理列表</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>故障报告编号
+	        </th>
+	        <th>项目名称
+	        </th>
+	        <th>创建人
+	        </th>
+	        <th>创建日期
+	        </th>
+	        <th>故障发现人
+	        </th>
+	        <th>发现日期
+	        </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ms-class="one-row {{el.mark}}2" ms-repeat="frReports" ms-click="loadReport()">
+          <td>{{el.frNumber}}</td>
+          <td>{{el.project}}</td>
+          <td>{{el.frCreater}}</td>
+          <td>{{el.frCreateDate}}</td>
+          <td>{{el.reporter}}</td>
+          <td>{{el.happenTime}}</td>
+          <td>{{el.status}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel panel-default" style="display:block;">
+    <div class="panel-heading">分析报告待处理列表</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>分析报告编号
+	        </th>
+	        <th>项目名称
+	        </th>
+	        <th>故障报告编号
+	        </th>
+	        <th>分析工程师
+	        </th>
+	        <th>创建日期
+	        </th>
+	        <th>状态
+	        </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ms-class="one-row {{el.status}}2" ms-repeat="aReports" ms-click="loadReport()">
+          <td>{{el.farNumber}}</td>
+          <td>{{el.project}}</td>
+          <td>{{el.frNumberRefer}}</td>
+          <td>{{el.farAnalyst}}</td>
+          <td>{{el.farCreateDate}}</td>
+          <td>{{el.status}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel panel-default" style="display:block;">
+    <div class="panel-heading">CAR报告待处理列表</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>CAR报告编号
+	        </th>
+	        <th>项目名称
+	        </th>
+	        <th>CAR来源
+	        </th>
+	        <th>创建日期
+	        </th>
+	        <th>状态
+	        </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ms-class="one-row {{el.status}}2" ms-repeat="carReports" ms-click="loadReport()">
+            <td>{{el.carNumber}}</td>
+            <td>{{el.project}}</td>
+            <td>{{el.carSource}}</td>
+            <td>{{el.carCreateDate}}</td>
+            <td>{{el.status}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+</body>
+</html>

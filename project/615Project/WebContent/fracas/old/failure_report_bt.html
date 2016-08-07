@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="../js/avalon.js"></script>
+<link rel="stylesheet" href="../css/base/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../css/mystyle.css">
+<script src="../js/globalConfig.js"></script> 
+<title>615项目</title>
+</head>
+<body>
+	<div id="data_div" style="width:1020px;margin:0 auto;">
+		<div ms-controller="basicInfo" style="margin-left:10px; border:1px black;border-bottom:groove 1px #0B92D4; padding-bottom:10px;">
+    		故障报告编号: (Failure Report N.O) &nbsp;&nbsp;           
+        	<input class="input-small" type="text" ms-duplex="frNumber" style="width:150px" value="FR111" readonly="readonly"></input>
+        	<div style="float:right; width:60%;text-align:right;">
+        		故障录入人：(FR Creater)
+        		<input class="input-small" type="text" ms-duplex="frCreater" style="width:100px" readonly="readonly"></input>
+        		&nbsp;&nbsp;
+        		录入日期：(Create Time)
+        		<input class="input-small" type="text" ms-duplex="frCreateDate" style="width:100px" readonly="readonly"></input>
+        		
+        	</div>
+		</div>
+    	<div style="margin:30px 0;"></div> 
+    	<div ms-controller="reporterItem" style="width:100%;height:700px;margin:0 auto;border-bottom:groove 1px #0B92D4;padding-bottom:30px;">
+	    	<div style="float:left; width:48%;height:500px; margin-left:10px;">
+	   			<div class="selectionBox">
+	   				归属项目：(Project)
+	   				<input class="input myinputs" type="text" style="width:200px;" ms-duplex="project" readonly="readonly"/>
+	   			</div>
+	   			<div class="selectionBox">
+	   				故障件型号：(Model)
+	   				<select class="myinputs" style="width:200px;" ms-duplex="componentModel">
+	   					<option ms-repeat="componentModelOptions">{{el}}</option>
+	   				</select>
+	   			</div>
+	   			<div class="selectionBox">
+	   				故障件名称：(Name)
+	   				<select class="myinputs" style="width:200px;" ms-duplex="componentName">
+	   					<option ms-repeat="componentNameOptions">{{el}}</option>
+	   				</select>
+	   			</div>
+	   			<div class="selectionBox">
+	   				故障件编号：(Code) 
+	   				<input class="myinputs" style="width:200px;" id="failureComponentCode" name="componentCode" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	   			</div>
+	   			<div class="selectionBox">
+	   				故障件批次号：(SRU Lot) 
+	   				<input class="myinputs" style="width:200px;" id="failureComponentSruLot" name="componentSruLot" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	   			</div>
+	   			<div class="selectionBox">
+	   				软件配置项：
+	   				<input class="easyui-combobox myinputs" style="width:200px;" id="softwareConfig" name="softConfig" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	   				<br>(Software Configuration)
+	   			</div>
+	   			<div class="selectionBox">
+	   				产品制造方：(Producer)
+	   				<input class="easyui-combobox myinputs" style="width:200px;" id="producer" name="pd" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	   			</div>
+	   			<div class="selectionBox">
+	   				故障发生时间：(Time of Failure)
+	   				<input class="easyui-datetimebox  myinputs" id="time" required style="width:200px">
+	   			</div>
+	   			<div class="selectionBox">
+	   				产品累计工作时间：(WorkingHours) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   				<input class="easyui-numberbox" id="workingHours" value="1000" style="width:100px" data-options="required:true"></input>
+	   			</div>
+	   			<div class="selectionBox">
+	   				环境条件：(Environment) 
+	   				<input class="easyui-combobox  myinputs" style="width:200px;" id="environment" name="env" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	   			</div>
+	   			<div class="selectionBox">
+	   				其他：(Others) 
+	   				<input class="easyui-textbox myinputs" style="width:200px;" id="enOthers" name="enO" url="" valueField="id" textField="name" panelHeight="auto"/>
+	   			</div>
+	   			<div class="selectionBox">
+	   				线缆编号：(Wire)
+	   				<input class="easyui-combobox  myinputs" style="width:200px;" id="wireNumber" name="wireNum" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	   			</div>
+	   			<div class="selectionBox">
+	    			故障影响：(Failure Effection) 
+	    			<input class="easyui-combobox myinputs" style="width:200px;" id="failureEffection" name="failureEffec" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	    		</div>
+	    		<div class="selectionBox">
+	    			故障发现人：(Reporter) 
+	    			<input class="easyui-textbox myinputs" style="width:200px;" id="reporter" name="rpt" url="" valueField="id" textField="name" panelHeight="auto" data-options="required:true"/>
+	    		</div>
+	    	</div>
+	    	<div style="float:right; width:48%;height:500px; margin-right:10px;">
+	    		<div class="selectionBox">
+	    			机型：(Type) 
+	    			<input class="easyui-combobox myinputs" style="width:200px;" id="aircraft" name="type" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	    		</div>
+	    		<div class="selectionBox">
+	    			所属系统型号：(System Type)
+	    			<input class="easyui-combobox myinputs" style="width:200px;" id="systemType" name="systp" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	    		</div>
+	    		<div class="selectionBox">
+	    			所属系统编号：(System S.N)
+	    			<input class="easyui-combobox myinputs" style="width:200px;" id="systemSN" name="syssn" url="" valueField="id" textField="name" multiple="false" panelHeight="auto"/>
+	    		</div>
+	    		<div class="selectionBox">
+	    			板卡号：(Borad Card) 
+	    			<input class="easyui-combobox myinputs" style="width:200px;" id="boardCardNum" name="bdcardNum" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	    		</div>
+	    		<div class="selectionBox">
+	    			机箱号：(Chassis)
+	    			<input class="easyui-combobox myinputs" style="width:200px;" id="chassisNum" name="chasNum" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	    		</div>
+	    		<div class="selectionBox">
+	    			产品提供方：(Provider)
+	    			<input class="easyui-combobox myinputs" style="width:200px;" id="provider" name="pvd" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	    		</div>
+	    		<div class="selectionBox">
+	    			故障发生地点：(Location)
+	    			<input class="easyui-combobox myinputs" style="width:200px;" id="location" name="lc" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	    		</div>
+	    		<div class="selectionBox">
+	    			故障发生时机：(In Which Process)
+	    			<input class="easyui-combobox myinputs" style="width:200px;" id="Process" name="prc" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	    		</div>
+	    		<div class="selectionBox">
+	    			其他：(Others)
+	    			<input class="easyui-textbox myinputs" style="width:200px;" id="procOthers" name="procO" url="" valueField="id" textField="name" panelHeight="auto"/>
+	    		</div>
+	    		<div class="selectionBox">
+	    			测试设备编号：
+	    			<input class="easyui-combobox myinputs" style="width:200px;" id="testEquipment" name="testEquip" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	    			<br>(Testing Equipment S.N)
+	    		</div>
+	    		<div class="selectionBox">
+	    			测试设备名称：
+	    			<input class="easyui-combobox myinputs" style="width:200px;" id="testEquipmentInfo" name="testEquipInfo" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	    			<br>(Testing Equipment Model) 
+	    		</div>
+	    		<div class="selectionBox">
+	   				故障模式：(Failure Mode)
+	   				<input class="easyui-combobox  myinputs" style="width:200px;" id="failureMode" name="fm" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	   			</div>
+	   			<div class="selectionBox">
+	   				其他：(Others)
+	   				<input class="easyui-textbox myinputs" style="width:200px;" id="fmOthers" name="fmO" url="" valueField="id" textField="name" panelHeight="auto"/>
+	    		</div>
+	    	</div>
+	    	<div style="margin:20px 0;"></div> 
+	    	<div style="clear:both; margin: 20px 10px 10px 10px;">
+		    	<div class="easyui-panel" title="故障现象描述(Description)" style="width:100%;height:200px;padding:10px;">
+		    	 	<input class="easyui-textbox" id="description" data-options="multiline:true" value="description about the failure." style="width:95%;height:70%;margin-left:100px;margin-right:100px;" />
+		    	 	<br><br>
+					描述附件：(Description Attachments) &nbsp;&nbsp;
+					<input class="easyui-filebox" name="file1" data-options="prompt:'Choose a file...'" style="width:200px">
+		    	</div>
+	    	</div>
+    	</div>
+    	<div style="clear:both; margin: 20px 10px 10px 10px;">
+    		<div style="border-bottom:groove 1px #0B92D4;padding-bottom:20px;">
+		    	<div id="p2" class="easyui-panel" title="项目/技术负责人意见(Technical Leader Opinion)" style="width:100%;height:200px;padding:10px;">
+		    	 	<div style="float:left; width:70%;height:70%;margin-left:10px;">
+			    	 	<input class="easyui-textbox" id="leaderOpinion" data-options="multiline:true" value="Technical Leader Opinion." style="width:100%;height:100%;margin-left:100px;margin-right:100px;float:left;" />
+			    	 	<br><br>
+						项目负责人：(Project Leader)
+			        		<input class="easyui-textbox" type="text" id="projectLeader" data-options="required:true" style="width:100px"></input>
+		        	</div>
+		        	<div style="float:right; width:25%;height:90%;margin-right:10px;">
+		   				故障分析报告责任人：(FAR Person)
+		   				<br><br>
+		   				<input class="easyui-combobox" style="width:200px;" id="farPerson" name="farPers" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+		        	</div>
+		    	 </div>
+	    	 </div>
+	    	 <div style="margin:20px 0;"></div> 
+	    	 <div style="border-bottom:groove 1px #0B92D4;padding-bottom:20px;">
+	    	 	<div id="p3" class="easyui-panel" title="质量主管意见(QA Leader Opinion)" style="width:100%;height:100px;padding:20px;">
+	   				质量问题性质：(Quality Issue Category)&nbsp;&nbsp;
+	   				<input class="easyui-combobox" style="width:200px;" id="qualityIssueCategory" name="qualityCategry" url="" valueField="id" textField="name" multiple="false" panelHeight="auto" data-options="required:true"/>
+	    	 	<!--  
+	    	 	<input type="checkbox" name="qx" value="1"   />用户管理
+                <input type="checkbox" name="qx" value="2"  />业务模板定制管理<br />
+                <input type="checkbox" name="qx" value="3" />部门管理
+                <input type="checkbox" name="qx" value="4"  />业务短信人工群发<br />
+                <input type="checkbox" name="qx" value="5"  />业务申请
+                <input type="checkbox" name="qx" value="6"  />业务取消
+	    	 	<br><br>
+				故障审查委员会主任：(MRB Leader)
+	        		<input class="easyui-textbox" type="text" id="mRBLeader" value="Jerry" data-options="required:true" style="width:100px"></input>
+	        	&nbsp;&nbsp;
+	        	审查时间：(MRB Sign Date)
+	        		<input class="easyui-textbox" type="text" id="mRBDate" value="2014-8-18" data-options="required:true" style="width:100px"></input>
+	        	-->
+	    	 	</div>
+	    	 </div>
+	    	 <div style="margin:20px 0;"></div> 
+	    	 <div id="p4" class="easyui-panel" title="故障审查委员会意见(MRB Opinion)" style="width:100%;height:200px;padding:10px;">
+	    	 	<input class="easyui-textbox" id="mrbOpinion" data-options="multiline:true" value="MRB Opinion." style="width:95%;height:70%;margin-left:100px;margin-right:100px;" />
+	    	 	<br><br>
+				故障审查委员会主任：(MRB Leader)
+	        		<input class="easyui-textbox" type="text" id="mRBLeader" data-options="required:true" style="width:100px"></input>
+	        	&nbsp;&nbsp;
+	        	审查时间：(MRB Sign Date)
+	        		<input class="easyui-textbox" type="text" id="mRBDate"  data-options="required:true" style="width:100px" value="2014-11-11"></input>
+	    	 </div>
+    	</div>
+    	<div style="margin:20px 0;"></div> 
+    	<input class="easyui-linkbutton" style="height:30px;width:80px;margin-left:48%;font-weight:bold;" value="Submit" onclick="checkRole(fillStatus)"/>
+	</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+package org.sjtu.p615.entity;
+
+import java.sql.Date;
+
+public class Test {
+	private Date date;
+	private String dateStandin;
+	
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public String getDateStandin() {
+		return dateStandin;
+	}
+	public void setDateStandin(String dateStandin) {
+		this.dateStandin = dateStandin;
+	}
+}

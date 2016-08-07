@@ -1,0 +1,243 @@
+package org.sjtu.p615.fracas.action;
+
+import java.sql.Date;
+import java.sql.Time;
+
+import org.sjtu.p615.entity.FailureBasicInfo;
+import org.sjtu.p615.entity.FailureReport;
+import org.sjtu.p615.fracas.service.IFailureBasicInfoService;
+import org.sjtu.p615.fracas.service.IFailureReportService;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class FailureReportAction extends ActionSupport{
+
+	private static final long serialVersionUID = 1L;
+	private IFailureBasicInfoService failureBasicInfoService;
+	private IFailureReportService failureReportService;
+	
+	private FailureBasicInfo failureBasicInfo;
+	private FailureReport failureReport;
+	
+	private String FailureSN;
+	private String FailureModel;
+	private String FailureReportNum;
+	
+	private String Id;
+	private String Environment;
+	private String Description;
+	private String CommtiteeSign;
+	private String Type;
+	private String OperatorSign;
+	private String TechnicalLeaderOpinion;
+	private String Mrb;
+	private String SystemType;
+	private String QualityIssueCategory;
+	private String Mark;
+	private String time;
+	private String FailureMode;
+	private String OperatorSignDate;
+	private String Process;
+	private String CommitteeSignDate;
+	private String Reporter;
+	private String Column19;
+	
+	public String addFailureReport() {
+		FailureBasicInfo failureBasicInfo = new FailureBasicInfo();
+		failureBasicInfo.setFailureSN(FailureSN);
+		failureBasicInfo.setFailureReportNum(FailureReportNum);
+		failureBasicInfo.setFailureModel(FailureModel);
+		
+		FailureReport failureReport = new FailureReport();
+		failureReport.setColumn19(Column19);
+		failureReport.setCommitteeSignDate(new Date(10000));
+		failureReport.setCommtiteeSign(CommtiteeSign);
+		failureReport.setDescription(Description);
+		failureReport.setEnvironment(Environment);
+		failureReport.setFailureMode(FailureMode);
+		failureReport.setMark(10);
+		failureReport.setMrb(Mrb);
+		failureReport.setOperatorSign(OperatorSign);
+		failureReport.setOperatorSignDate(new Date(10000));
+		failureReport.setProcess(Process);
+		failureReport.setQualityIssueCategory(QualityIssueCategory);
+		failureReport.setReporter(Reporter);
+		failureReport.setSystemType(SystemType);
+		failureReport.setTechnicalLeaderOpinion(TechnicalLeaderOpinion);
+		failureReport.setTime(new Time(100000));
+		failureReport.setType(Type);
+		
+		failureReportService.addFailureReport(failureBasicInfo, failureReport);
+		
+		
+		return SUCCESS;
+	}
+	
+	public String takeFailureReport() {
+		failureBasicInfo = failureBasicInfoService.getFailureBasicInfo(FailureReportNum);
+		failureReport = failureReportService.getFailureReport(FailureReportNum);
+		
+		return SUCCESS;
+	}
+	
+	public String getId() {
+		return Id;
+	}
+	public void setId(String id) {
+		Id = id;
+	}
+	public String getEnvironment() {
+		return Environment;
+	}
+	public void setEnvironment(String environment) {
+		Environment = environment;
+	}
+	public String getDescription() {
+		return Description;
+	}
+	public void setDescription(String description) {
+		Description = description;
+	}
+	public String getCommtiteeSign() {
+		return CommtiteeSign;
+	}
+	public void setCommtiteeSign(String commtiteeSign) {
+		CommtiteeSign = commtiteeSign;
+	}
+	public String getType() {
+		return Type;
+	}
+	public void setType(String type) {
+		Type = type;
+	}
+	public String getOperatorSign() {
+		return OperatorSign;
+	}
+	public void setOperatorSign(String operatorSign) {
+		OperatorSign = operatorSign;
+	}
+	public String getTechnicalLeaderOpinion() {
+		return TechnicalLeaderOpinion;
+	}
+	public void setTechnicalLeaderOpinion(String technicalLeaderOpinion) {
+		TechnicalLeaderOpinion = technicalLeaderOpinion;
+	}
+	public String getMrb() {
+		return Mrb;
+	}
+	public void setMrb(String mrb) {
+		Mrb = mrb;
+	}
+	public String getSystemType() {
+		return SystemType;
+	}
+	public void setSystemType(String systemType) {
+		SystemType = systemType;
+	}
+	public String getQualityIssueCategory() {
+		return QualityIssueCategory;
+	}
+	public void setQualityIssueCategory(String qualityIssueCategory) {
+		QualityIssueCategory = qualityIssueCategory;
+	}
+	public String getMark() {
+		return Mark;
+	}
+	public void setMark(String mark) {
+		Mark = mark;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
+	public String getOperatorSignDate() {
+		return OperatorSignDate;
+	}
+	public void setOperatorSignDate(String operatorSignDate) {
+		OperatorSignDate = operatorSignDate;
+	}
+	public String getFailureMode() {
+		return FailureMode;
+	}
+	public void setFailureMode(String failureMode) {
+		FailureMode = failureMode;
+	}
+	public String getProcess() {
+		return Process;
+	}
+	public void setProcess(String process) {
+		Process = process;
+	}
+	public String getCommitteeSignDate() {
+		return CommitteeSignDate;
+	}
+	public void setCommitteeSignDate(String committeeSignDate) {
+		CommitteeSignDate = committeeSignDate;
+	}
+	public String getReporter() {
+		return Reporter;
+	}
+	public void setReporter(String reporter) {
+		Reporter = reporter;
+	}
+	public String getColumn19() {
+		return Column19;
+	}
+	public void setColumn19(String column19) {
+		Column19 = column19;
+	}
+
+	public IFailureBasicInfoService getFailureBasicInfoService() {
+		return failureBasicInfoService;
+	}
+
+	public void setFailureBasicInfoService(IFailureBasicInfoService failureBasicInfoService) {
+		this.failureBasicInfoService = failureBasicInfoService;
+	}
+	public String getFailureSN() {
+		return FailureSN;
+	}
+	public void setFailureSN(String failureSN) {
+		FailureSN = failureSN;
+	}
+	public String getFailureModel() {
+		return FailureModel;
+	}
+	public void setFailureModel(String failureModel) {
+		FailureModel = failureModel;
+	}
+	public String getFailureReportNum() {
+		return FailureReportNum;
+	}
+	public void setFailureReportNum(String failureReportNum) {
+		FailureReportNum = failureReportNum;
+	}
+
+	public IFailureReportService getFailureReportService() {
+		return failureReportService;
+	}
+
+	public void setFailureReportService(IFailureReportService failureReportService) {
+		this.failureReportService = failureReportService;
+	}
+
+	public FailureBasicInfo getFailureBasicInfo() {
+		return failureBasicInfo;
+	}
+
+	public void setFailureBasicInfo(FailureBasicInfo failureBasicInfo) {
+		this.failureBasicInfo = failureBasicInfo;
+	}
+
+	public FailureReport getFailureReport() {
+		return failureReport;
+	}
+
+	public void setFailureReport(FailureReport failureReport) {
+		this.failureReport = failureReport;
+	}
+
+	
+}

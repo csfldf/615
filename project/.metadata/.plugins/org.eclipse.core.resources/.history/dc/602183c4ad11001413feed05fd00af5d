@@ -1,0 +1,48 @@
+package org.sjtu.p615.dept_mgmt.action;
+
+import org.sjtu.p615.dept_mgmt.entity.Cdnfile;
+import org.sjtu.p615.dept_mgmt.service.CdnfileService;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class AddAction extends ActionSupport{
+	
+	private CdnfileService cdnfileService;
+	private String cdnNode;
+	private String partName;
+	
+	public String execute() {
+		Cdnfile cdnfile = new Cdnfile();
+		cdnfile.setCdnNode("1");
+		cdnfile.setPartName("2");
+		cdnfileService.add(cdnfile);
+		return SUCCESS;
+	}
+
+	public CdnfileService getCdnfileService() {
+		return cdnfileService;
+	}
+
+	public void setCdnfileService(CdnfileService cdnfileService) {
+		this.cdnfileService = cdnfileService;
+	}
+
+	public String getCdnNode() {
+		return cdnNode;
+	}
+
+	public void setCdnNode(String cdnNode) {
+		this.cdnNode = cdnNode;
+	}
+
+	public String getPartName() {
+		return partName;
+	}
+
+	public void setPartName(String partName) {
+		this.partName = partName;
+	}
+	
+	
+
+}

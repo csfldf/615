@@ -1,0 +1,19 @@
+1404905791592	Rename resource 'struts_1.xml'
+1404908603746	Delete element
+1404909589606	Move file
+1404909647777	Delete elements
+1404909947056	Encapsulate field 'partName'
+1404909967818	Encapsulate field 'cdnNode'
+1404910128610	Delete elements
+1404910402636	Encapsulate field 'cdnfileDao'
+1404910490962	Encapsulate field 'sessionFactory'
+1404910978165	Encapsulate field 'cdnfileService'
+1404911141291	Encapsulate field 'cdnfileName'
+1404911185830	Encapsulate field 'cdnNode'
+1404911190477	Encapsulate field 'partName'
+1404915126601	Delete element
+1404915136184	Delete element
+1404915147628	Delete element
+1404915483042	Delete element
+1404915567613	Rename resource 'Book.hbm.xml'
+1404917487426	Delete element

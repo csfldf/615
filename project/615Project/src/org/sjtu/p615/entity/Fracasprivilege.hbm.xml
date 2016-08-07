@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-11-27 15:14:11 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.Fracasprivilege" table="fracasprivilege" catalog="testdb">
+        <id name="roleId" type="int">
+            <column name="roleId" />
+            <generator class="assigned" />
+        </id>
+        <property name="inputReport" type="java.lang.Boolean">
+            <column name="inputReport" />
+        </property>
+        <property name="techOpinion" type="java.lang.Boolean">
+            <column name="techOpinion" />
+        </property>
+        <property name="qualityOpinion" type="java.lang.Boolean">
+            <column name="qualityOpinion" />
+        </property>
+        <property name="mrbOpinion" type="java.lang.Boolean">
+            <column name="mrbOpinion" />
+        </property>
+        <property name="dutyOpinion" type="java.lang.Boolean">
+            <column name="dutyOpinion" />
+        </property>
+        <property name="deleteMark" type="java.lang.Boolean">
+            <column name="deleteMark" />
+        </property>
+    </class>
+</hibernate-mapping>

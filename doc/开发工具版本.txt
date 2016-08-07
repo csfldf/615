@@ -1,0 +1,10 @@
+Eclipse Java EE IDE for Web Developers.
+Version: Kepler Service Release 2
+
+Struts: struts2.3.16.1
+Spring: Version 4.0.2
+Hibernate: Version 4.2.11
+
+Mysql: Server version 5.1.54
+
+Tomcat: Version 7.0

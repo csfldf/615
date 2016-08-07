@@ -1,0 +1,48 @@
+package org.sjtu.p615.fracas.action;
+
+import java.util.HashMap;
+
+import net.sf.json.JSONObject;
+
+import org.sjtu.p615.entity.FailureBasicInfo;
+import org.sjtu.p615.entity.Test;
+
+public class TestAction {
+	private String result;
+	
+	private FailureBasicInfo failureBasicInfo;
+	private Test test;
+
+	public FailureBasicInfo getFailureBasicInfo() {
+		return failureBasicInfo;
+	}
+
+	public void setFailureBasicInfo(FailureBasicInfo failureBasicInfo) {
+		this.failureBasicInfo = failureBasicInfo;
+	}
+	
+	public String execute() {
+		System.out.println("aaa");
+		HashMap<String, String> map = new HashMap<>();
+		map.put("a", "a");
+		JSONObject jo = JSONObject.fromObject(map);
+		result = jo.toString();
+		return "success";
+	}
+
+	public Test getTest() {
+		return test;
+	}
+
+	public void setTest(Test test) {
+		this.test = test;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+}

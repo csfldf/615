@@ -1,0 +1,123 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+ 
+<%@ page contentType="text/html;charset=utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>故障报告录入</title>
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script></head>
+<body>
+    <h2>故障报告</h2>
+    <p>填写故障报告基本信息并提交</p>
+    <p><s:property value="time" /></p>
+ <!--  
+    <div style="margin:20px 0;"></div>
+    <div class="easyui-panel" title="故障报告" style="width:830px">
+        <div style="padding:10px 60px 20px 60px">
+        <form id="ff" method="post">
+            <table cellpadding="5">
+                <tr>
+                    <td style="width:160px">故障报告编号:
+                    <br> (Failure Report N.O)</td>
+                    <td><s:property value="failureReport.FailureReportNum"/></td>          
+                     <td>机型:
+                     <br> (Type)</td>
+                     <td><s:property value="failureReport.Type"/></td>           
+                </tr>
+                <tr>
+                    <td>故障型号:
+                    <br>(Model)</td>
+                    <td><s:property value="failureBasicInfo.FailureModel"/></td> 
+                    <td>所属系统型号:
+                    <br>(System Type and S.N.)</td>
+                    <td><s:property value="failureReport.SystemType"/></td>
+                </tr>
+                <tr>
+                    <td>故障发生时间:
+                    <br>(Time)</td>
+                    <td><s:property value="time"/></td>
+                    <td>故障件批次号:
+                    <br>(S.N)</td>
+                    <td><s:property value="failureBasicInfo.FailureSN"/></td>
+                </tr>
+                <tr>
+                    <td>故障环境条件:
+                    <br>(Environment)</td>
+                     <td><s:property value="failureReport.Environment"/></td>
+                     <td>故障发现人:
+                     <br>(Reporter)</td>
+                     <td><s:property value="failureReport.Reporter"/></td>
+                </tr>
+                <tr>
+                    <td>故障发生时机:
+                    <br>(In which Process)</td>
+                    <td>
+                    	<div class="easyui-panel" style="width:210px; padding:5px">
+                    				<s:property value="failureReport.Process"/>
+                    	</div>
+                    </td>
+                    <td>故障模式:
+                    <br>(Failure Mode)</td>
+                    <td>
+                    	<div class="easyui-panel" style="width:210px; padding:5px">
+                    				<s:property value="failureReport.FailureMode"/>
+                    	</div>
+                    </td>
+                </tr>
+                <tr>
+                	<td>
+                	故障现象:
+                	<br>
+                	(Description)
+                	</td>
+                	<td colspan="2"><s:property value="failureReport.Description"/></td>
+                	<td>
+                	填表人(Sign):<s:property value="failureReport.OperatorSign"/>
+                	<br>
+                	<br>
+                	日期(Date):<s:property value="OperatorSignDate"/>
+                	</td>
+                </tr>
+                <tr>
+                	<td>
+                	项目/技术负责人:
+                	<br>
+                	(Technical Leader)
+                	</td>
+                	<td colspan="3"><s:property value="failureReport.TechnicalLeaderOpinion"/></td>
+                </tr>
+                <tr>
+                    <td>质量问题性质:
+                    <br>(Quality Issue Category)</td>
+                    <td  colspan="3">
+                    	<div class="easyui-panel" style="padding:5px">
+                    				<s:property value="failureReport.QualityIssueCategory"/>
+                    	</div>
+                    </td>
+                </tr>
+                <tr>
+                	<td>
+                	故障审查委员会意见:
+                	<br>
+                	(MRB)
+                	</td>
+                	<td colspan="2"><s:property value="failureReport.Mrb"/></td>
+                	<td>
+                	签署(Sign):<s:property value="failureReport.CommtiteeSign"/>
+                	<br>
+                	<br>
+                	日期(Date):<s:property value="CommitteeSignDate"/>
+                	</td>
+                </tr>
+            </table>
+        </form>
+        </div>
+    </div>
+ -->
+</body>
+</html>

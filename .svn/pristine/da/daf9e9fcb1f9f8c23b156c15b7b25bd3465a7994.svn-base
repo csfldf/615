@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.sjtu.p615.dept_mgmt.dao.CdnfileDao"/>
+<fullyQualifiedTypeName name="org.sjtu.p615.dept_mgmt.service.CdnfileService"/>
+<fullyQualifiedTypeName name="org.sjtu.p615.dept_mgmt.entity.Cdnfile"/>
+<fullyQualifiedTypeName name="org.sjtu.p615.fracas.service.IFailureBasicInfoService"/>
+<fullyQualifiedTypeName name="com.opensymphony.xwork2.ActionSupport"/>
+<fullyQualifiedTypeName name="org.sjtu.p615.fracas.service.FailureBasicInfoService"/>
+<fullyQualifiedTypeName name="javax.transaction.Transaction"/>
+<fullyQualifiedTypeName name="org.sjtu.p615.fracas.service.IFailureReport"/>
+<fullyQualifiedTypeName name="org.sjtu.p615.dao.IFailureReportDao"/>
+<fullyQualifiedTypeName name="org.sjtu.p615.dao.IFailureBasicInfoDao"/>
+<fullyQualifiedTypeName name="org.sjtu.p615.fracas.service.IFailureReportService"/>
+<fullyQualifiedTypeName name="org.hibernate.SessionFactory"/>
+<fullyQualifiedTypeName name="org.hibernate.Session"/>
+<fullyQualifiedTypeName name="org.hibernate.Transaction"/>
+<fullyQualifiedTypeName name="org.sjtu.p615.entity.FailureReport"/>
+<fullyQualifiedTypeName name="java.sql.Time"/>
+<fullyQualifiedTypeName name="org.sjtu.p615.entity.FailureBasicInfo"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="org.sjtu.p615.entity.Test"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="net.sf.json.JSONObject"/>
+<fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+</qualifiedTypeNameHistroy>

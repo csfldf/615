@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <link rel="stylesheet" href="css/panel.css"/>
+    <link href="css/base/fineuploader-5.0.7.min.css" rel="stylesheet">
+</head>
+<body>
+    <div ms-controller="planSummary">
+        <!--<div class="accordion-group">
+        <div class="accordion-heading"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgProject')"
+                                          data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                          href="#accordion-element-projectList">我的项目<img id="imgProject" src="img/shrink.png" /></a></div>
+        <div class="accordion-body in collapse" id="accordion-element-projectList" style="position:relative;bottom:0px;left:0px;height:auto;">
+            <div class="accordion-inner" id="xxx" contenteditable="false">
+            <div>
+                <table class="table table-hover" id="prol">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <td>编号</td>
+                            <td>项目名称
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('project', 'projectName', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('project', 'projectName', 0)"></i>
+                                </span>
+                            </td>
+                            <td>项目开始时间
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('project', 'projectStartingDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('project', 'projectStartingDate', 0)"></i>
+                                </span>
+                            </td>
+                            <td>项目截止时间
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByDict('project', 'projectDeadlineDate', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByDict('project', 'projectDeadlineDate', 0)"></i>
+                                </span>
+                            </td>
+                            <td>待办事务数
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-chevron-up" ms-click="orderByNumber('project', 'projectWaitingTrans', 1)"></i>
+                                    <i class="icon-chevron-down" ms-click="orderByNumber('project', 'projectWaitingTrans', 0)"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ms-hover="hover" ms-repeat="data['project']['curReports']">
+                            <th><input type="radio" ms-duplex="el.text" ms-click="loadPlans(el,'select-plan')" /></th>
+                            <td>{{$index+(data['project']['indexPage'])*data['project']['pageSize']+1}}</td>
+                            <td>{{el.projectName}}</td>
+                            <td>{{el.projectStartingDate}}</td>
+                            <td>{{el.projectDeadlineDate}}</td>
+                            <td>{{el.projectWaitingTrans}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="height: 50px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页显示</span>
+                <select id="select-project"
+                        ms-change="setPageSize('project','select-project','accordion-element-projectList')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 60px">
+                    <option value ="5"  selected="selected">5</option>
+                    <option value ="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">共：{{data['project']['reports'].length}}项</span>
+                <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                    <button ms-click="prePage('project')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['project']['indexPage']+1}} 页，共 {{data['project']['pageNum']}} 页
+                    <button ms-click="nextPage('project')"><i class="icon-chevron-right"></i></button>
+                </div>
+            </div>
+            </div>
+        </div>-->
+
+        <div class="accordion-group" ms-visible="modeView['planWaitingList']">
+            <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgWTaskList')"
+                                              data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                              href="#accordion-element-planWaitingList">待办事项<img id="imgWTaskList" src="img/shrink.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-planWaitingList" style="position:relative;bottom:0px;left:0px;height:auto;">
+                <div class="accordion-inner" contenteditable="false">
+                    <table class="table table-hover" id="wpl">
+                        <thead>
+                        <tr>
+                            <!--<th><input type="checkbox" ms-duplex-radio="planCheckAll" /></th>-->
+                            <td style="width:3px"></td>
+                            <td>编号
+                            </td>
+                            <td>名称
+                            </td>
+                            <td ms-repeat="title['planWaitingTitle']" ms-visible="el.value">{{el.name}}
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-filter" ms-click="filterConfig('planWaiting',el.key)" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-class="one-row" ms-repeat="data['planWaiting']['curReports']"
+                            ms-click="loadPlan(el)" ms-visible="el.visible">
+                            <!--<th><input type="checkbox" ms-duplex-radio="el.text" /></th>-->
+                            <td style="width:3px" ms-css-background-color="el.bg"></td>
+                            <td>{{$index+data['planWaiting']['indexPage']*data['planWaiting']['pageSize']+1}}</td>
+                            <td>{{el.planName}}</td>
+                            <td ms-repeat-iter="title['planWaitingTitle']" ms-visible="iter.value">{{el[iter.key]}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height: 50px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页</span>
+                <select id="select-planWaiting"
+                        ms-change="setPageSize('planWaiting','select-planWaiting','accordion-element-planWaitingList')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 66px">
+                    <option value ="5"  selected="selected">5</option>
+                    <option value ="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">共{{data['planWaiting']['reports'].length}}项,选中{{data['planWaiting']['search_filter_reports'].length}}</span>
+                <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                    <button ms-click="prePage('planWaiting')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['planWaiting']['indexPage']+1}} 页，共 {{data['planWaiting']['pageNum']}} 页
+                    <button ms-click="nextPage('planWaiting')"><i class="icon-chevron-right"></i></button>
+                </div>
+                <a href="javascript:void(0)" role="button" style="position: absolute;bottom: 20px;left: 90%"
+                   data-toggle="modal" ms-click="openUsrSetWindow('planWaiting')">设置</a>
+            </div>
+        </div>
+
+
+        <div class="accordion-group" ms-visible="modeView['packageWaitingDecomposeList']">
+            <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgPackageWaitingDecomposeList')"
+                                                                                data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                                                                href="#accordion-element-packageWaitingDecomposeList">待分解工作包<img id="imgPackageWaitingDecomposeList" src="img/shrink.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-packageWaitingDecomposeList" style="position:relative;bottom:0px;left:0px;height:auto;">
+                <div class="accordion-inner" contenteditable="false">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td>编号
+                            </td>
+                            <td>通知类型
+                            </td>
+                            <td>工作内容
+                            </td>
+                            <td>工作来源
+                            </td>
+                            <td>通知时间
+                            </td>
+                            <td>操作
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-class="one-row" ms-repeat="data['packageWaitingDecompose']['curReports']"
+                            ms-click="loadPlan(el)" ms-visible="el.visible">
+                            <td>{{el.wbs}}</td>
+                            <td>{{el.planType}}</td>
+                            <td>{{el.planContent}}</td>
+                            <td>{{el.projectName}}</td>
+                            <td>{{el.planStartDate}}</td>
+                            <td>关闭</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height: 50px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页</span>
+                <select id="select-packageWaitingDecompose"
+                        ms-change="setPageSize('packageWaitingDecompose','select-packageWaitingDecompose','accordion-element-packageWaitingDecomposeList')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 66px">
+                    <option value ="5">5</option>
+                    <option value ="10" selected="selected">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">
+                共{{data['packageWaitingDecompose']['reports'].length}}项,选中{{data['packageWaitingDecompose']['search_filter_reports'].length}}</span>
+                <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                    <button ms-click="prePage('packageWaitingDecompose')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['packageWaitingDecompose']['indexPage']+1}} 页，共 {{data['packageWaitingDecompose']['pageNum']}} 页
+                    <button ms-click="nextPage('packageWaitingDecompose')"><i class="icon-chevron-right"></i></button>
+                </div>
+                <!--<input class="btn " value="发布" type="button"
+                       ms-click="releaseAction"
+                       ms-visible="uiDisplay.buttonNewChildPlan"
+                       ms-enabled="uiEnable.buttonNewChildPlan"
+                        >-->
+                <!--<a href="javascript:void(0)" role="button" style="position: absolute;bottom: 20px;left: 90%"
+                   data-toggle="modal" ms-click="openUsrSetWindow('planWaitingRelease')">设置</a>-->
+            </div>
+        </div>
+
+        <div class="accordion-group" ms-visible="modeView['taskWaitingFeedbackList']">
+            <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgTaskWaitingFeedbackList')"
+                                                                                data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                                                                href="#accordion-element-taskWaitingFeedbackList">待反馈任务<img id="imgTaskWaitingFeedbackList" src="img/shrink.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-taskWaitingFeedbackList" style="position:relative;bottom:0px;left:0px;height:auto;">
+                <div class="accordion-inner" contenteditable="false">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td></td>
+                            <td>编号
+                            </td>
+                            <td>通知类型
+                            </td>
+                            <td>工作内容
+                            </td>
+                            <td>工作来源
+                            </td>
+                            <td>通知时间
+                            </td>
+                            <td>操作
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-class="one-row" ms-repeat="data['taskWaitingFeedback']['curReports']"
+                            ms-click="checkUnRelease(el)" ms-visible="el.visible">
+                            <td><input type="checkbox" ms-duplex="el.text"/></td>
+                            <td>{{el.wbs}}</td>
+                            <td>{{el.planType}}</td>
+                            <td>{{el.planContent}}</td>
+                            <td>{{el.projectName}}</td>
+                            <td>{{el.planStartDate}}</td>
+                            <td>关闭</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height: 50px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页</span>
+                <select id="select-taskWaitingFeedback"
+                        ms-change="setPageSize('taskWaitingFeedback','select-taskWaitingFeedback','accordion-element-taskWaitingFeedbackList')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 66px">
+                    <option value ="5">5</option>
+                    <option value ="10" selected="selected">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">
+                共{{data['taskWaitingFeedback']['reports'].length}}项,选中{{data['taskWaitingFeedback']['search_filter_reports'].length}}</span>
+                <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                    <button ms-click="prePage('taskWaitingFeedback')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['taskWaitingFeedback']['indexPage']+1}} 页，共 {{data['taskWaitingFeedback']['pageNum']}} 页
+                    <button ms-click="nextPage('taskWaitingFeedback')"><i class="icon-chevron-right"></i></button>
+                </div>
+                <!--<input class="btn " value="发布" type="button"
+                       ms-click="releaseAction"
+                       ms-visible="uiDisplay.buttonNewChildPlan"
+                       ms-enabled="uiEnable.buttonNewChildPlan"
+                        >-->
+                <!--<a href="javascript:void(0)" role="button" style="position: absolute;bottom: 20px;left: 90%"
+                   data-toggle="modal" ms-click="openUsrSetWindow('planWaitingRelease')">设置</a>-->
+            </div>
+        </div>
+
+        <div class="accordion-group" style="width: 99.5%" id="planTask-group">
+        <div class="accordion-group" style="float:left" ms-css-width="{{modeView['taskList']?50:100}}%"
+             ms-visible="modeView['planList']">
+            <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgPlanList')"
+                                              data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                              href="#accordion-element-planList">计划列表<img id="imgPlanList" src="img/shrink.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-planList" style="position:relative;bottom:0px;left:0px;height: auto;">
+                <div class="accordion-inner" contenteditable="false">
+                    <div style="position:relative"
+                            ms-css-height="{{data['plan']['reports'].length==0?0:500}}px"
+                            ms-css-overflow="{{data['plan']['reports'].length==0?'':'scroll'}}">
+                        <table class="table" id="pl" style=" overflow-x:hidden;">
+                        <thead>
+                        <tr>
+                            <td style="width:5px">
+                                <button id="bntLRShrink-planList"
+                                        ms-click="LRShrink('planList','taskList','iLRShrink-planList')">
+                                    <i id="iLRShrink-planList" class="icon-chevron-right"></i>
+                                </button>
+                            </td>
+                            <td></td>
+                            <td>编号
+                            </td>
+                            <td>计划/工作包名称
+                            </td>
+                            <td ms-repeat="title['planTitle']" ms-visible="el.value">{{el.name}}
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-filter" ms-click="filterConfig('plan',el.key)" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody><!--ms-click="selectPlanRow(el)"-->
+                        <tr ms-repeat="data['plan']['reports']" ms-click="selectOnePlan(el)"
+                            ms-dblclick="loadPlan(el)" ms-visible="el.visible" ms-class="row{{el.planCode}}">
+                            <th><input type="radio" ms-duplex="el.text" ms-visible="el.leaf"
+                                       ms-click="loadTasks(el)" /></th>
+                            <td style="width:5px" ms-css-background-color="el.bg"></td>
+                            <td>{{el.wbs}}</td>
+                            <td ms-css-width="{{1/planTitleNum*100}}%">
+                                <span ms-html="el.space" ms-visible="!data['plan']['filted']"></span>
+                                <span style="position: relative" ms-visible="!data['plan']['filted']">
+                                <a href="javascript:void(0)" style="position: absolute;left: -13px"
+                                   ms-click="changePlanExpandShrink('plan'+el.planCode,el)">
+                                    <img ms-class="plan{{el.planCode}}" ms-src="el.imgSrc"/></a>
+                                </span>
+                                <span  style="position:absolute;z-index: 0">{{el.planName}}</span>
+                            </td>
+                            <td ms-repeat-iter="title['planTitle']" ms-visible="iter.value">{{el[iter.key]}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                <div style="position: relative;height: 70px">
+                <span style="position:absolute;bottom: 80px;left: 120px">
+                    共{{data['plan']['reports'].length}}项,选中{{data['plan']['search_filter_reports'].length}}
+                </span>
+                <!--<span style="position:absolute;bottom: 70px;left: 20px">每页</span>
+                <select id="select-plan" ms-change="setPageSize('plan','select-plan','accordion-element-planList')"
+                        style="position: absolute;bottom: 55px;left: 55px;width: 66px">
+                    <option id="selected-five" value ="5">5</option>
+                    <option value ="10" selected="selected">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 70px;left: 120px">共{{data['plan']['reports'].length}}项,选中{{data['plan']['search_filter_reports'].length}}</span>
+                <div class="pager" style="position: absolute;bottom: 50px;left: 40%">
+                    <button ms-click="prePage('plan')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['plan']['indexPage']+1}} 页，共 {{data['plan']['pageNum']}} 页
+                    <button ms-click="nextPage('plan')"><i class="icon-chevron-right"></i></button>
+                </div>-->
+                <!--<span style="position:absolute;bottom: 20px;left: 70%">我的项目</span>
+                <select id="select-shortcuts-myProject" ms-each="data['project']['reports']" ms-change="loadPlans('null')"
+                        style="position: absolute;bottom: 5px;left: 76%;width: 90px">
+                    <option ms-selected="el.text">{{el.projectName}}</option>
+                </select>-->
+                    <input class="btn btn-primary" value="新建工作包目录" type="button" style="position: absolute;bottom: 20px;left: 0px"
+                           ms-visible="modeView['planning']"
+                           ms-click="buttonActionRouter('NewPackageDir',$event)"
+                            >
+                    <input class="btn btn-primary" value="新建工作包" type="button" style="position: absolute;bottom: 20px;left: 160px"
+                           ms-visible="modeView['planning']"
+                           ms-click="buttonActionRouter('NewPackage',$event)"
+                            >
+                    <label class="control-label" ms-visible="modeView['planning']"
+                           style="position: absolute;left:380px;bottom: 20px">WBS调整：</label>
+                    <img style="position:absolute;left:475px;bottom: 20px" ms-visible="modeView['planning']"
+                         ms-click="shiftPlan('up')"
+                         src="img/up.png" />
+                    <img style="position:absolute;left:510px;bottom: 20px" ms-visible="modeView['planning']"
+                         ms-click="shiftPlan('down')"
+                         src="img/down.png" />
+                    <a href="javascript:void(0)" role="button" style="position: absolute;bottom: 20px;left: 90%"
+                       data-toggle="modal" ms-click="openUsrSetWindow('plan')">设置</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-group" style="float:right;width: 49.5%" ms-css-width="{{modeView['planList']?49.5:100}}%"
+             ms-visible="modeView['taskList']" id="taskList">
+            <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgTaskList')"
+                                              data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                              href="#accordion-element-taskList">任务列表<img id="imgTaskList" src="img/shrink.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-taskList" style="position:relative;bottom:0px;left:0px;height: auto;">
+                <div class="accordion-inner" contenteditable="false">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td style="width:9px">
+                                <button id="bntLRShrink-taskList"
+                                        ms-click="LRShrink('taskList','planList','iLRShrink-taskList')">
+                                    <i id="iLRShrink-taskList" class="icon-chevron-left"></i>
+                                </button>
+                            </td>
+                            <td>编号
+                            </td>
+                            <td>综合任务代码
+                            </td>
+                            <td ms-repeat="title['taskTitle']" ms-visible="el.value">{{el.name}}
+                                <span class="sort-icons" style="position:relative">
+                                    <i class="icon-filter" ms-click="filterConfig('task',el.key)" style="position: relative;left: 20px"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-repeat="data['task']['curReports']" style="position: relative" ms-class="one-row"
+                            ms-click="loadPlan(el)" ms-visible="el.visible">
+                            <td style="width:9px" ms-css-background-color="el.bg"></td>
+                            <!--<td>{{el.wbs}}</td>-->
+                            <td>{{$index+data['task']['indexPage']*data['task']['pageSize']+1}}</td>
+                            <td>{{el.planCode}}</td>
+                            <td ms-repeat-iter="title['taskTitle']" ms-visible="iter.value">{{el[iter.key]}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height: 50px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页</span>
+                <select id="select-task" ms-change="setPageSize('task','select-task','accordion-element-taskList')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 66px">
+                    <option value ="5">5</option>
+                    <option value ="10" selected="selected">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">共{{data['task']['reports'].length}}项,选中{{data['task']['search_filter_reports'].length}}</span>
+                <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                    <button ms-click="prePage('task')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['task']['indexPage']+1}} 页，共 {{data['task']['pageNum']}} 页
+                    <button ms-click="nextPage('task')"><i class="icon-chevron-right"></i></button>
+                </div>
+                <a href="javascript:void(0)" role="button" style="position: absolute;bottom: 20px;left: 90%"
+                   data-toggle="modal" ms-click="openUsrSetWindow('task')">设置</a>
+            </div>
+        </div><br>
+        <div style="clear:both"></div><!--这个层很有用，必须要，否则可能不兼容。-->
+        </div>
+
+        <div class="accordion-group" ms-visible="modeView['planChangeApplyList']">
+            <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgPlanChangeApplyList')"
+                                              data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                              href="#accordion-element-planChangeApply">我的变更申请<img id="imgPlanChangeApplyList" src="img/shrink.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-planChangeApply" style="position:relative;bottom:0px;left:0px;height:auto;">
+                <div class="accordion-inner" contenteditable="false">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td></td>
+                            <td>编号
+                            </td>
+                            <td>名称
+                            </td>
+                            <td>项目名称
+                            </td>
+                            <td>开始时间
+                            </td>
+                            <td>完成时间
+                            </td>
+                            <td>计划负责人
+                            </td>
+                            <td>状态
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-class="one-row" ms-repeat="data['planChangeApply']['curReports']"
+                            ms-click="checkUnRelease(el)" ms-visible="el.visible">
+                            <td><input type="checkbox" ms-duplex="el.text"/></td>
+                            <td>{{el.wbs}}</td>
+                            <td>{{el.planName}}</td>
+                            <td>{{el.projectName}}</td>
+                            <td>{{el.planStartDate}}</td>
+                            <td>{{el.planFinishDate}}</td>
+                            <td>{{el.planController}}</td>
+                            <td>{{el.state}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height: 50px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页</span>
+                <select id="select-planChangeApply"
+                        ms-change="setPageSize('planChangeApply','select-planChangeApply','accordion-element-planChangeApply')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 66px">
+                    <option value ="5">5</option>
+                    <option value ="10" selected="selected">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">共{{data['planChangeApply']['reports'].length}}项,选中{{data['planChangeApply']['search_filter_reports'].length}}</span>
+                <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                    <button ms-click="prePage('planChangeApply')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['planChangeApply']['indexPage']+1}} 页，共 {{data['planChangeApply']['pageNum']}} 页
+                    <button ms-click="nextPage('planChangeApply')"><i class="icon-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-group" ms-visible="modeView['planChangeApproveList']">
+            <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgPlanChangeApproveList')"
+                                              data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                              href="#accordion-element-planChangeApprove">变更审批<img id="imgPlanChangeApproveList" src="img/shrink.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-planChangeApprove" style="position:relative;bottom:0px;left:0px;height:auto;">
+                <div class="accordion-inner" contenteditable="false">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td></td>
+                            <td>编号
+                            </td>
+                            <td>名称
+                            </td>
+                            <td>项目名称
+                            </td>
+                            <td>开始时间
+                            </td>
+                            <td>完成时间
+                            </td>
+                            <td>计划负责人
+                            </td>
+                            <td>状态
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-class="one-row" ms-repeat="data['planChangeApprove']['curReports']"
+                            ms-click="checkUnRelease(el)" ms-visible="el.visible">
+                            <td><input type="checkbox" ms-duplex="el.text"/></td>
+                            <td>{{el.wbs}}</td>
+                            <td>{{el.planName}}</td>
+                            <td>{{el.projectName}}</td>
+                            <td>{{el.planStartDate}}</td>
+                            <td>{{el.planFinishDate}}</td>
+                            <td>{{el.planController}}</td>
+                            <td>{{el.planState}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height: 50px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页</span>
+                <select id="select-planChangeApprove"
+                        ms-change="setPageSize('planChangeApprove','select-planChangeApprove','accordion-element-planChangeApprove')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 66px">
+                    <option value ="5">5</option>
+                    <option value ="10" selected="selected">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">共{{data['planChangeApprove']['reports'].length}}项,选中{{data['planChangeApprove']['search_filter_reports'].length}}</span>
+                <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                    <button ms-click="prePage('planChangeApprove')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['planChangeApprove']['indexPage']+1}} 页，共 {{data['planChangeApprove']['pageNum']}} 页
+                    <button ms-click="nextPage('planChangeApprove')"><i class="icon-chevron-right"></i></button>
+                </div>
+                <!--<input class="btn " value="发布" type="button"
+                       ms-click="releaseAction"
+                       ms-visible="uiDisplay.buttonNewChildPlan"
+                       ms-enabled="uiEnable.buttonNewChildPlan"
+                        >-->
+                <!--<a href="javascript:void(0)" role="button" style="position: absolute;bottom: 20px;left: 90%"
+                   data-toggle="modal" ms-click="openUsrSetWindow('planWaitingRelease')">设置</a>-->
+            </div>
+        </div>
+
+        <div class="accordion-group" ms-visible="modeView['planChangeApprovedList']">
+            <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgPlanChangeApprovedList')"
+                                                                                data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                                                                href="#accordion-element-planChangeApproved">已批准的变更<img id="imgPlanChangeApprovedList" src="img/shrink.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-planChangeApproved" style="position:relative;bottom:0px;left:0px;height:auto;">
+                <div class="accordion-inner" contenteditable="false">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td></td>
+                            <td>编号
+                            </td>
+                            <td>名称
+                            </td>
+                            <td>项目名称
+                            </td>
+                            <td>开始时间
+                            </td>
+                            <td>完成时间
+                            </td>
+                            <td>计划负责人
+                            </td>
+                            <td>状态
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-class="one-row" ms-repeat="data['planChangeApproved']['curReports']"
+                            ms-click="checkUnRelease(el)" ms-visible="el.visible">
+                            <td><input type="checkbox" ms-duplex="el.text"/></td>
+                            <td>{{el.wbs}}</td>
+                            <td>{{el.planName}}</td>
+                            <td>{{el.projectName}}</td>
+                            <td>{{el.planStartDate}}</td>
+                            <td>{{el.planFinishDate}}</td>
+                            <td>{{el.planController}}</td>
+                            <td>{{el.planState}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height: 50px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页</span>
+                <select id="select-planChangeApproved"
+                        ms-change="setPageSize('planChangeApproved','select-planChangeApproved','accordion-element-planChangeApproved')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 66px">
+                    <option value ="5">5</option>
+                    <option value ="10" selected="selected">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">共{{data['planChangeApproved']['reports'].length}}项,选中{{data['planChangeApproved']['search_filter_reports'].length}}</span>
+                <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                    <button ms-click="prePage('planChangeApproved')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['planChangeApproved']['indexPage']+1}} 页，共 {{data['planChangeApproved']['pageNum']}} 页
+                    <button ms-click="nextPage('planChangeApproved')"><i class="icon-chevron-right"></i></button>
+                </div>
+                <!--<input class="btn " value="发布" type="button"
+                       ms-click="releaseAction"
+                       ms-visible="uiDisplay.buttonNewChildPlan"
+                       ms-enabled="uiEnable.buttonNewChildPlan"
+                        >-->
+                <!--<a href="javascript:void(0)" role="button" style="position: absolute;bottom: 20px;left: 90%"
+                   data-toggle="modal" ms-click="openUsrSetWindow('planWaitingRelease')">设置</a>-->
+            </div>
+        </div>
+
+        <div class="accordion-group" ms-visible="modeView['planWaitingReleaseList']">
+            <div class="accordion-heading" style="background-color: #abc5cb"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgWReleaseList')"
+                                              data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                              href="#accordion-element-planWaitingRelease">待发布项<img id="imgWReleaseList" src="img/shrink.png" /></a></div>
+            <div class="accordion-body in collapse" id="accordion-element-planWaitingRelease" style="position:relative;bottom:0px;left:0px;height:auto;">
+                <div class="accordion-inner" contenteditable="false">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td><input class="checkbox" type="checkbox" ms-duplex-radio="radio['planWaitingRelease']"
+                                       ms-click="selectAll('planWaitingRelease')"/></td>
+                            <td>编号
+                            </td>
+                            <td>名称
+                            </td>
+                            <td>项目名称
+                            </td>
+                            <td>开始时间
+                            </td>
+                            <td>完成时间
+                            </td>
+                            <td>计划负责人
+                            </td>
+                            <td>操作
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ms-class="one-row" ms-repeat="data['planWaitingRelease']['curReports']"
+                            ms-visible="el.visible">
+                            <td><input class="checkbox" type="checkbox"
+                                       ms-click="selectOne('planWaitingRelease',el.text)"
+                                       ms-duplex-radio="el.text"/></td>
+                            <td>{{el.wbs}}</td>
+                            <td>{{el.planName}}</td>
+                            <td>{{el.projectName}}</td>
+                            <td>{{el.planStartDate}}</td>
+                            <td>{{el.planFinishDate}}</td>
+                            <td>{{el.planController}}</td>
+                            <td>删除</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height: 50px"></div>
+                </div>
+                <span style="position:absolute;bottom: 20px;left: 20px">每页</span>
+                <select id="select-planWaitingRelease"
+                        ms-change="setPageSize('planWaitingRelease','select-planWaitingRelease','accordion-element-planWaitingRelease')"
+                        style="position: absolute;bottom: 5px;left: 80px;width: 66px">
+                    <option value ="5">5</option>
+                    <option value ="10" selected="selected">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select><span style="position:absolute;bottom: 20px;left: 145px">共{{data['planWaitingRelease']['reports'].length}}项,选中{{data['planWaitingRelease']['search_filter_reports'].length}}</span>
+                <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                    <button ms-click="prePage('planWaitingRelease')"><i class="icon-chevron-left"></i></button>
+                    第 {{data['planWaitingRelease']['indexPage']+1}} 页，共 {{data['planWaitingRelease']['pageNum']}} 页
+                    <button ms-click="nextPage('planWaitingRelease')"><i class="icon-chevron-right"></i></button>
+                </div>
+                <input class="btn " value="发布" type="button" style="position: absolute;bottom: 20px;left: 90%"
+                       ms-click="releaseAction"
+                       ms-visible="uiDisplay.buttonNewChildPlan"
+                       ms-enabled="uiEnable.buttonNewChildPlan"
+                        >
+                <!--<a href="javascript:void(0)" role="button" style="position: absolute;bottom: 20px;left: 90%"
+                   data-toggle="modal" ms-click="openUsrSetWindow('planWaitingRelease')">设置</a>-->
+            </div>
+        </div>
+
+        <div class="modal fade" ms-attr-id="modalName" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">
+                            筛选内容
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel panel-default" ms-visible="true">
+                            <table class="table table-hover" >
+                                <thead>
+                                <tr>
+                                    <th><a class="btn-primary" ms-click="selALL(1)">全选</a><br><a class="btn-danger" ms-click="selALL(0)">全不选</a></th>
+                                    <th>筛选内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ms-repeat="filter.org_values">
+                                    <td>
+                                        <input class="checkbox" type="checkbox" ms-duplex-radio="el.enabled">
+                                    </td>
+                                    <td>
+                                        {{el.name}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button style="float:right" type="button" ms-click="executeFilter()" class="btn btn-primary">
+                            确认
+                        </button>
+                        <button style="float:left" type="button" ms-attr-id="modalBtn" class="btn btn-default"
+                                data-dismiss="modal" >关闭
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="exportPro" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;width:700px" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">
+                            选择导出计划
+                        </h3>
+                    </div>
+                    <div class="accordion-body collapse" id="accordion-element-projectExportList" style="position:relative;bottom:0px;left:0px;height: auto;">
+                        <div class="accordion-inner" contenteditable="false">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <!--<th><input type="checkbox" ms-duplex-radio="exportCheckAll" /></th>-->
+                                    <td>编号</td>
+                                    <td>名称
+                                        <span class="sort-icons" style="position:relative">
+                                            <i class="icon-chevron-up" ms-click="orderByDict('allPlans',allProDGrid, 'projectName', 1)"></i>
+                                            <i class="icon-chevron-down" ms-click="orderByDict('allPlans',allProDGrid, 'projectName', 0)"></i>
+                                        </span>
+                                    </td>
+                                    <td>开始时间
+                                        <span class="sort-icons" style="position:relative">
+                                            <i class="icon-chevron-up" ms-click="orderByDict('allPlans',allProDGrid, 'projectStartingDate', 1)"></i>
+                                            <i class="icon-chevron-down" ms-click="orderByDict('allPlans',allProDGrid, 'projectStartingDate', 0)"></i>
+                                        </span>
+                                    </td>
+                                    <td>截止时间
+                                        <span class="sort-icons" style="position:relative">
+                                            <i class="icon-chevron-up" ms-click="orderByDict('allPlans',allProDGrid, 'projectDeadlineDate', 1)"></i>
+                                            <i class="icon-chevron-down" ms-click="orderByDict('allPlans',allProDGrid, 'projectDeadlineDate', 0)"></i>
+                                        </span>
+                                    </td>
+                                    <td>待办事务数
+                                        <span class="sort-icons" style="position:relative">
+                                            <i class="icon-chevron-up" ms-click="orderByNumber('allPlans',allProDGrid, 'projectWaitingTrans', 1)"></i>
+                                            <i class="icon-chevron-down" ms-click="orderByNumber('allPlans',allProDGrid, 'projectWaitingTrans', 0)"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ms-hover="hover" ms-repeat="data['projectExport']['curReports']">
+                                    <!--<th><input type="checkbox" ms-duplex-radio="el.import" /></th>-->
+                                    <td>{{$index+(data['projectExport']['indexPage'])*data['projectExport']['pageSize']+1}}</td>
+                                    <td>{{el.projectName}}</td>
+                                    <td>{{el.projectStartingDate}}</td>
+                                    <td>{{el.projectDeadlineDate}}</td>
+                                    <td>{{el.projectWaitingTrans}}</td>
+                                    <td>
+                                        <span class="sort-icons" style="position:relative">
+                                            <button class="qq-upload-cancel" ms-click="exportProject(el.projectName)">生成主计划</button>
+                                            <a class="qq-upload-cancel" target="_blank" ms-href="el.downloadHref">{{el.downloadstr}}</a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div style="height: 50px"></div>
+                            </div>
+                            <span style="position:absolute;bottom: 20px;left: 20px">每页显示</span>
+                            <select id="select-exportPro"
+                                    ms-change="setPageSize('projectExport','select-exportPro','accordion-element-projectExportList')"
+                                    style="position: absolute;bottom: 5px;left: 80px;width: 60px">
+                                <option value ="5"  selected="selected">5</option>
+                                <option value ="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                            </select>
+                            <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                                <button ms-click="prePage('projectExport')"><i class="icon-chevron-left"></i></button>
+                                第 {{data['projectExport']['indexPage']+1}} 页，共 {{data['projectExport']['pageNum']}} 页
+                                <button ms-click="nextPage('projectExport')"><i class="icon-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="modal fade" id="importPro" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">
+                            导入计划
+                        </h3>
+                    </div>
+                    <!--<div class="modal-body">-->
+                    <div class="accordion-body collapse" id="accordion-element-projectImportList" style="position:relative;bottom:0px;left:0px;height: auto;">
+                        <div class="accordion-inner" contenteditable="false">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                    <td> 编号 </td>
+                                    <td> 项目名称 </td>
+                                    <td> 开始日期 </td>
+                                    <td> 截止日期 </td>
+                                    <td> 待办事物数 </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ms-hover="hover" ms-repeat="data['projectImport']['curReports']">
+                                    <td><input type="radio" ms-duplex-radio="el.selected" ms-click="selectImportPro(el)"/></td>
+                                    <td>{{$index+(data['projectImport']['indexPage'])*data['projectImport']['pageSize']+1}}</td>
+                                    <td>{{el.projectName}}</td>
+                                    <td>{{el.projectStartingDate}}</td>
+                                    <td>{{el.projectDeadlineDate}}</td>
+                                    <td>{{el.projectWaitingTrans}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="height: 50px"></div>
+                        </div>
+                        <span style="position:absolute;bottom: 20px;left: 20px">每页显示</span>
+                        <select id="select-importPro"
+                                ms-change="setPageSize('projectImport','select-importPro','accordion-element-projectImportList')"
+                                style="position: absolute;bottom: 5px;left: 80px;width: 60px">
+                            <option value ="5"  selected="selected">5</option>
+                            <option value ="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                        <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+                            <button ms-click="prePage('projectImport')"><i class="icon-chevron-left"></i></button>
+                            第 {{data['projectImport']['indexPage']+1}} 页，共 {{data['projectImport']['pageNum']}} 页
+                            <button ms-click="nextPage('projectImport')"><i class="icon-chevron-right"></i></button>
+                        </div>
+                        </div>
+                </div>
+                <div class="modal-footer" style="position: relative">
+                    <div style="height: 40px"></div>
+                    <div ms-visible="importView" id="bootstrapped-fine-uploader" style="position: absolute;"></div>
+                    <button type="button" class="btn btn-default" style="position: absolute;width: 60px;right: 6px;top: 12px"
+                            data-dismiss="modal">关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+
+<script type="text/template" id="qq-template-bootstrap">
+    <div class="qq-uploader-selector qq-uploader span12" style="position: relative">
+        <div class="qq-upload-drop-area-selector qq-upload-drop-area span12" qq-hide-dropzone>
+            <span>Drop files here to upload</span>
+        </div>
+        <div class="qq-upload-button-selector qq-upload-button btn btn-inverse btn-small" style="position: absolute;top:-40px;
+                    width: 109px;height: 14px;margin-left: 419px;right:35%">
+            <i class="icon-upload icon-white"></i> 添加主计划文件
+        </div>
+        <div id="triggerUpload" class="btn btn-inverse btn-small" style="width:90px;position:absolute;right:13%;top:-40px">
+            <i class="icon-upload icon-white"></i> 导入数据库
+        </div>
+
+        <span class="qq-drop-processing-selector qq-drop-processing">
+          <span>Processing dropped files...</span>
+          <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+        </span>
+        <ul class="qq-upload-list-selector qq-upload-list" style="margin-top: 10px; text-align: center;">
+            <li>
+                <div class="qq-progress-bar-container-selector">
+                    <div class="qq-progress-bar-selector qq-progress-bar"></div>
+                </div>
+                <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                <span class="qq-edit-filename-icon-selector qq-edit-filename-icon"></span>
+                <span class="qq-upload-file-selector qq-upload-file"></span>
+                <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
+                <span class="qq-upload-size-selector qq-upload-size"></span>
+                <a class="qq-upload-cancel-selector qq-upload-cancel" href="#">Cancel</a>
+                <a class="qq-upload-retry-selector qq-upload-retry" href="#">Retry</a>
+                <a class="qq-upload-delete-selector qq-upload-delete" href="#">Delete</a>
+                <span class="qq-upload-status-text-selector qq-upload-status-text"></span>
+            </li>
+        </ul>
+    </div>
+</script>
+<script>
+    require(['fineuploader','am.sessionUtil','Login','am.planSummary'], function ($,sessionUtil,login,ps) {
+        /**
+         * 保证id在MainFrame上的唯一性
+         */
+        var random = (new Date()).getTime() + '';
+        var uploadFileIndex = 1;
+        $("#bootstrapped-fine-uploader").attr('id', "bootstrapped-fine-uploader" + random);//fineuploader
+        $("#qq-template-bootstrap").html($("#qq-template-bootstrap").text().replace('triggerUpload', 'triggerUpload' + random));//fineuploader-tmpl
+        $("#qq-template-bootstrap").attr('id', "qq-template-bootstrap" + random);
+        $("#personModal").attr('id', "personModal" + random);//personModal
+        $("[href=#personModal]").attr('href', "#personModal" + random);
+        $("#planReportContainer").attr('id',"planReportContainer"+random);
+
+        var uploader = $("#bootstrapped-fine-uploader" + random).fineUploader({
+            element: $('#bootstrapped-fine-uploader' + random),
+            request: {
+                endpoint: 'am/importMainProject.action'
+                /*params:{projectControllerId:avalon.vmodels["planSummary"].projectControllerId,
+                    projectControllerName:avalon.vmodels["planSummary"].projectControllerName},
+                paramsInBody:true*/
+//                filenameParam:'filename',
+//                inputName:'file',
+//                uuidName:'uuid',
+//                totalFileSizeName:'totalfilesize'
+            },
+            deleteFile: {
+                enabled: true, // defaults to false
+                endpoint: 'am/delOutput.action',
+                method: 'POST',
+                forceConfirm: true
+
+            },
+            autoUpload: false,
+            template: $('#qq-template-bootstrap' + random),
+            classes: {
+                success: 'alert alert-success',
+                fail: 'alert alert-error'
+            },
+            validation: {
+                //allowedExtensions: ['jpeg', 'jpg', 'txt'],
+                itemLimit: 50,
+                sizeLimit: 50 * 1024 * 1024 // 50 kB = 50 * 1024 bytes
+            },
+            showMessage: function (message) {
+                // Using Bootstrap's classes
+//                $('#bootstrapped-fine-uploader' + random).append('<div class="alert alert-error">' + message + '</div>');
+                alert("请添加上传文件!");
+            },
+            debug: true,
+            editFilename: {                                            //编辑名字
+                enable: true
+            }
+        }).on('delete',function(id){
+//            uploader.fineUploader('setDeleteFileParams',{planCode:$("#planReportContainer"+random+" [name=planCode]").val()})
+        }).on('complete', function (event,id, fileName, responseJSON) {
+            //获取项目
+            if(responseJSON.success) {
+                sessionUtil.getProjects(usrId, function (data) {
+                    var proGrids = eval('(' + data + ')');
+                    for (var u in proGrids) {
+                        proGrids[u].text = false;
+                    }
+                    avalon.vmodels["planSummary"].proDGrid = proGrids;
+                });
+                //获取所有项目
+                sessionUtil.getAllProjects(function (data) {
+                    var proGrids = eval('(' + data + ')');
+                    for (var u in proGrids) {
+                        proGrids[u].import = false;
+                        proGrids[u].exportPath = "";
+                    }
+                    avalon.vmodels["planSummary"].allProDGrid = proGrids;
+                    alert("导入成功！");
+                });
+            }
+            else {
+                alert("导入失败！\n\n错误信息：\n" + responseJSON.error);
+            }
+        }).on('error',function(event,id,name,errorReason){
+            $("ul[class='qq-upload-list-selector qq-upload-list'] li:lt("+uploadFileIndex+")").hide();
+            uploadFileIndex ++;
+        });
+        $('#triggerUpload' + random).click(function () {
+            //传递planCode
+            /*uploader.fineUploader('setParams',{projectControllerId:avalon.vmodels["planSummary"].projectControllerId,
+                projectControllerName:avalon.vmodels["planSummary"].projectControllerName,
+                projectName:$('#importProjectName').val()});
+            if(avalon.vmodels["planSummary"].projectControllerId=='' ||
+                    avalon.vmodels["planSummary"].projectControllerName=='')
+                alert("请选择项目负责人！");
+            else
+                uploader.fineUploader('uploadStoredFiles');*/
+//            uploader.fineUploader('setParams',{projectName:$('#importProjectName').val()});
+            if(avalon.vmodels["planSummary"].importProjectId=='' || avalon.vmodels["planSummary"].importProjectId==undefined)
+                alert("请选择要导入的项目！！！")
+            else {
+                var truthBeTold = window.confirm("导入新计划将会冻结当前计划！！！\n请确定是否要导入新计划？")
+                if(truthBeTold) {
+                    uploader.fineUploader('setParams', {projectId: avalon.vmodels["planSummary"].importProjectId});
+                    uploader.fineUploader('uploadStoredFiles');
+                }
+            }
+        });
+        /*var usrId = login.loginId;
+        usrId = "111";
+        $('#fine-uploader').fineUploader({
+            request: {
+                endpoint: 'am/fileUploads.action'
+            },
+            classes: {
+                success: 'alert alert-success',
+                fail: 'alert alert-error'
+            }
+        }).on('complete', function (event,id, fileName, responseJSON) {
+            //获取项目
+            if(responseJSON.success) {
+                sessionUtil.getProjects(usrId, function (data) {
+                    var proGrids = eval('(' + data + ')');
+                    for (var u in proGrids) {
+                        //                planSummaryMode.proDGrid[u].text = '';
+                        proGrids[u].text = false;
+                    }
+                    avalon.vmodels["planSummary"].proDGrid = proGrids;
+                });
+                //获取所有项目
+                sessionUtil.getAllProjects(function (data) {
+                    var proGrids = eval('(' + data + ')');
+                    for (var u in proGrids) {
+                        proGrids[u].import = false;
+                        proGrids[u].exportPath = "";
+                    }
+                    avalon.vmodels["planSummary"].allProDGrid = proGrids;
+                });
+                alert("导入成功！");
+            }
+            else
+                alert("导入失败！\n\n错误信息：\n"+responseJSON.error);
+         });*/
+    })
+
+</script>
+</div>
+</body>
+</html>

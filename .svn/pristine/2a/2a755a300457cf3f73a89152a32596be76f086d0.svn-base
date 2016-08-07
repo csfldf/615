@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+	
+	"classpath://org/hibernate/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.sjtu.p615.entity">
+	<class
+		name="FracasMetadata"
+		table="fracasmetadata"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="metadataId"
+			type="integer"
+			column="metadataId"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="metadataName"
+			column="metadataName"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="value"
+			column="value"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="deleteMark"
+			column="deleteMark"
+			type="boolean"
+			not-null="false"
+		/>
+
+	</class>	
+</hibernate-mapping>

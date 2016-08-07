@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- 由 Microsoft Visio 11.0, SVG Export, v1.0 生成 bg1.svg 页-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="14.2199in" height="1.44427in"
+		viewBox="0 0 1023.83 103.987" xml:space="preserve" color-interpolation-filters="sRGB" class="st4">
+	<v:documentProperties v:langID="2052" v:metric="true" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {visibility:visible}
+		.st2 {fill:#cdcdcd;fill-opacity:0.5;stroke:#cdcdcd;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.5;stroke-width:0.25}
+		.st3 {fill:url(#grad30-6);stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.25}
+		.st4 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<defs id="Patterns_And_Gradients">
+		<linearGradient id="grad30-6" v:fillPattern="30" v:foreground="#bfeaf7" v:background="#daf3fa" x1="0" y1="1" x2="0" y2="0">
+			<stop offset="0" style="stop-color:#bfeaf7;stop-opacity:1"/>
+			<stop offset="1" style="stop-color:#daf3fa;stop-opacity:1"/>
+		</linearGradient>
+	</defs>
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>页-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<g id="shape1-1" v:mID="1" v:groupContext="shape" transform="translate(0.25,-1.69)">
+			<title>圆角矩形</title>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+				<v:ud v:nameU="msvThemeColors" v:val="VT0(36):26"/>
+				<v:ud v:nameU="msvThemeEffects" v:val="VT0(16):26"/>
+			</v:userDefs>
+			<g id="shadow1-2" v:groupContext="shadow" v:shadowOffsetX="1.44" v:shadowOffsetY="-1.44" v:shadowType="1"
+					transform="matrix(1,0,0,1,1.44,1.44)" class="st1">
+				<path d="M1007.72 103.99 A14.1733 14.1733 -180 0 0 1021.89 89.81 L1021.89 16.11 A14.1733 14.1733 -180 0 0 1007.72
+							 1.94 L14.17 1.94 A14.1733 14.1733 -180 0 0 0 16.11 L0 89.81 A14.1733 14.1733 -180 0 0 14.17 103.99 L1007.72
+							 103.99 Z" class="st2"/>
+			</g>
+			<path d="M1007.72 103.99 A14.1733 14.1733 -180 0 0 1021.89 89.81 L1021.89 16.11 A14.1733 14.1733 -180 0 0 1007.72 1.94
+						 L14.17 1.94 A14.1733 14.1733 -180 0 0 0 16.11 L0 89.81 A14.1733 14.1733 -180 0 0 14.17 103.99 L1007.72 103.99
+						 Z" class="st3"/>
+		</g>
+	</g>
+</svg>

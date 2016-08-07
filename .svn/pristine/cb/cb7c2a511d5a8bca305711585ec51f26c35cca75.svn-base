@@ -1,0 +1,7 @@
+package org.sjtu.p615.dao;
+
+import org.sjtu.p615.entity.FailureReport;
+
+public interface IFailureReportDao {
+	public void add(FailureReport failureReport);
+}

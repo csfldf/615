@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+
+<div ms-controller="project" align="center">
+    <table class="gridheader grid" id="wpl" border="1">
+    <caption>待办事项列表</caption>
+    	<thead>
+        	<tr class="easyui-datagrid">
+	                <th></th>
+	                <td>编号</td>
+	                <td>项目名称</td>
+	                <td>项目开始时间</td>
+	                <td>项目截止时间</td>
+	                <td>待办事务数</td>
+	        </tr>
+	    </thead>
+        <tbody ms-each-el="datagrid">
+	        <tr ms-hover="hover" ms-class-highlight="el.checked">
+	            <th><input type="radio" ms-duplex="el.checked" ></th>
+	            <td>{{$index}}</td>
+	            <td>{{el.projectName}}</td>
+	            <td>{{el.projectStartingDate}}</td>
+	            <td>{{el.projectDeadlineDate}}</td>
+	            <td>{{el.projectWaitingTrans}}</td>	     
+	        </tr>
+        </tbody>
+    </table>
+</div><br><br><br>
+
+
+<div ms-controller="test" align="center">
+    <table class="gridheader grid" id="pl" border="1">
+    <caption>计划列表</caption>
+    	<thead>
+        	<tr class="easyui-datagrid">
+	                <th><input type="checkbox" ms-duplex-radio="checkall"></th>
+	                <td>编号</td>
+	                <td>综合任务编号</td>
+	                <td>综合任务代码</td>
+	                <td>工作名称</td>
+	                <td>工作截止日期</td>
+	                <td>离完成日期</td>
+	                <td>工作来源</td>
+	                <td>工作责任人</td>
+	                <td>工作状态</td>
+	                <td>操作</td>
+	        </tr>
+	    </thead>
+        <tbody ms-each-el="datagrid">
+	        <tr ms-hover="hover" ms-class-highlight="el.checked" ms-visible="el.visible">
+	            <th><input type="checkbox" ms-duplex-radio="el.checked" ></th>
+	            <td>{{el.vindex}}</td>
+	            <td><span ms-html="el.space"></span>
+	            <image ms-src="el.imageSrc" ms-click="test($index)" ms-visible="el.imageVisible">{{el.planSerialNumber}}
+	            </td>
+	            <td>{{el.planCode}}</td>
+	            <td>{{el.planName}}</td>
+	            <td>{{el.planDeadlineDate}}</td>
+	            <td>{{el.planRemainingDate}}</td>
+	            <td>{{el.planSource}}</td>
+	            <td>{{el.planController}}</td>
+	            <td>{{el.planStateCode}}</td>
+	            <td>
+		            <a href="plan_report_bootstrap.html"><image src="../images/icons/redo.png" /></a>{{el.planAgreeButton}}
+		            <a href="plan_report_bootstrap.html"><image src="../images/icons/cancel.png" /></a>{{el.planAgreeButton}}
+		            <a href="plan_report_bootstrap.html"><image src="../images/icons/redo.png" /></a>{{el.planAgreeButton}}
+	            </td>	     
+	        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div><a href="javascript:void(0)" ms-controller="issue" class="easyui-linkbutton" ms-click="issueMission()">审核下发</a></div>
+<div id="tb" style="padding:5px;height:auto">
+        <div style="margin-bottom:5px">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"></a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true"></a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true"></a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true"></a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
+            &nbsp;&nbsp;
+            From: <input class="easyui-datebox" style="width:80px">
+            To: <input class="easyui-datebox" style="width:80px">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search">Search</a>
+        </div>
+</div><br><br>
+</body>
+
+<script src="../js/avalon.js"></script>
+<link rel="stylesheet" href="../css/base/bootstrap.css">
+<script src="../js/globalConfig.js"></script>
+<script>
+
+/* avalon.post('../am/getPlans',{},function back(data){
+               alert(data);
+           }); 
+var button = '<a href="/plan_report_bootstrap.html"><img border="0" src="../images/icons/redo.png" /></a>'
+button + = '<a href=""><img border="0" src="../images/icons/cancel.png" /></a>'*/
+           
+var cell =[{planSerialNumber: "P1001",
+    planCode: "L1001",
+    planName: "一级计划(C919)",
+    planDeadlineDate: "2014-10-05",
+    planRemainingDate: "15",
+    planSource: "615",
+    planController: "C919项目组经理",
+    planStateCode: "1",
+    planAgreeButton: "", 
+    vindex: 0,
+    space:"",
+    pindex:"",
+    imageSrc:"",
+    checked: false,
+    visible: false,
+    level: 1
+    }
+    ,{
+    	planSerialNumber: "P1002",
+	    planCode: "L1002",
+	    planName: "二级计划(C919)",
+	    planDeadlineDate: "2014-10-05",
+	    planRemainingDate: "16",
+	    planSource: "615",
+	    planController: "C919项目组经理",
+	    planStateCode: "2",
+	    planAgreeButton: "",
+   		vindex: 0,
+    	space:"",
+    	pindex:"",
+   		imageSrc:"",
+	    checked: false,
+    	visible: false,
+    	level: 2
+    }
+    ,{
+    	planSerialNumber: "P1003",
+	    planCode: "L1003",
+	    planName: "三级计划(C919)",
+	    planDeadlineDate: "2014-10-05",
+	    planRemainingDate: "16",
+	    planSource: "615",
+	    planController: "C919项目组经理",
+	    planStateCode: "2",
+	    planAgreeButton: "", 
+   		vindex: 0,
+    	space:"",
+    	pindex:"",
+   		imageSrc:"",
+	    checked: false,
+    	visible: false,
+    	level: 3
+    }
+    ,{
+    	planSerialNumber: "P1004",
+	    planCode: "L1004",
+	    planName: "四级计划(C919)",
+	    planDeadlineDate: "2014-10-05",
+	    planRemainingDate: "16",
+	    planSource: "615",
+	    planController: "C919项目组经理",
+	    planStateCode: "2",
+	    planAgreeButton: "", 
+   		vindex: 0,
+    	space:"",
+    	pindex:"",
+   		imageSrc:"",
+	    checked: false,
+    	visible: false,
+    	level: 4
+    }
+    ,{
+    	planSerialNumber: "P1002",
+	    planCode: "L1002",
+	    planName: "二级计划(C919)",
+	    planDeadlineDate: "2014-10-05",
+	    planRemainingDate: "16",
+	    planSource: "615",
+	    planController: "C919项目组经理",
+	    planStateCode: "2",
+	    planAgreeButton: "",
+   		vindex: 0,
+    	space:"",
+    	pindex:"",
+   		imageSrc:"",
+	    checked: false,
+    	visible: false,
+    	level: 2
+    }
+    ,{
+    	planSerialNumber: "P1004",
+	    planCode: "L1004",
+	    planName: "三级计划(C919)",
+	    planDeadlineDate: "2014-10-05",
+	    planRemainingDate: "16",
+	    planSource: "615",
+	    planController: "C919项目组经理",
+	    planStateCode: "2",
+	    planAgreeButton: "", 
+   		vindex: 0,
+    	space:"",
+    	pindex:"",
+   		imageSrc:"",
+	    checked: false,
+    	visible: false,
+    	level: 3
+    }
+    ,{
+    	planSerialNumber: "P1004",
+	    planCode: "L1004",
+	    planName: "三级计划(C919)",
+	    planDeadlineDate: "2014-10-05",
+	    planRemainingDate: "16",
+	    planSource: "615",
+	    planController: "C919项目组经理",
+	    planStateCode: "2",
+	    planAgreeButton: "", 
+   		vindex: 0,
+    	space:"",
+    	pindex:"",
+   		imageSrc:"",
+	    checked: false,
+    	visible: false,
+    	level: 3
+    }
+    ,{
+    	planSerialNumber: "P1004",
+	    planCode: "L1004",
+	    planName: "四级计划(C919)",
+	    planDeadlineDate: "2014-10-05",
+	    planRemainingDate: "16",
+	    planSource: "615",
+	    planController: "C919项目组经理",
+	    planStateCode: "2",
+	    planAgreeButton: "", 
+   		vindex: 0,
+    	space:"",
+    	pindex:"",
+   		imageSrc:"",
+	    checked: false,
+    	visible: false,
+    	level: 4
+    }
+   ]
+
+var grids = avalon.range(0, 12).map(function(el, i) {
+    return avalon.mix({}, cell[i%6], {name: "电脑0" + i})
+})
+
+var picture = ["../images/icons/plus.png","../images/icons/minus.png"]
+var pindex = new Array(grids.length)
+var rowVisible = new Array(grids.length)
+var rowIndex = new Array(grids.length)
+rowIndex = [0,]
+/* grids[1].checked = grids[4].checked = true */
+//initiate table
+function initTable(){
+	var globalIndex = 1;
+	for (var i = 0; i < grids.length; i++){
+		grids[i].vindex = 0
+		if(grids[i].level == 1){//初始化行显示
+			grids[i].visible = true;
+			grids[i].vindex = globalIndex;
+			globalIndex++
+		}
+		else{//初始化子节点空格
+			grids[i].visible = false
+			for(var j=0;j < grids[i].level;j++){
+				grids[i].space += "&nbsp;&nbsp;";
+			}
+			escape(grids[i].space)
+			//grids[i].space = "<b>" + grids[i].space + "</b>"
+		}
+		grids[i].imageSrc = picture[0]//初始化图标显示
+		grids[i].imageVisible = false//将+-图标初始化为不可见
+		pindex[i] = 0
+		if(i+1 < grids.length){//初始化节点图标
+			if(grids[i].level < grids[i+1].level)
+				grids[i].imageVisible = true
+			else{
+				grids[i].space = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+				escape(grids[i].space)
+			 	/* var strpos,endpos;
+			 	strpos = grids[i].space.indexOf("<b>")
+			 	endpos = grids[i].space.indexOf("</b>")
+			 	var tmp = grids[i].space.slice(strpos,endpos)
+			 	tmp +=  "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>"
+			 	grids[i].space = tmp */
+			//	grids[i].space.replace(">&nbsp;",">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
+			}
+		}
+		rowVisible[i] = grids[i].visible//缓存每一次的行显示
+	}
+	grids[grids.length-1].space = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+	escape(grids[grids.length-1].space)
+	/* var strpos,endpos;
+ 	strpos = grids[grids.length-1].space.indexOf("<b>")
+ 	endpos = grids[grids.length-1].space.indexOf("</b>")
+ 	var tmp = grids[grids.length-1].space.slice(strpos,endpos)
+ 	tmp +=  "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>"
+ 	grids[grids.length-1].space = tmp */
+}
+initTable()
+
+avalon.define("test", function(vm) {
+    vm.datagrid = grids
+    vm.checkall = false
+    vm.test = function(index){
+   		//隐藏or显示子节点
+   		if(pindex[index] == 0){//展开节点
+   			for(var i=index+1;i < grids.length && vm.datagrid[index].level != vm.datagrid[i].level;i++){
+   				vm.datagrid[i].visible = rowVisible[i]
+   				if(vm.datagrid[index].level == vm.datagrid[i].level - 1){
+   					vm.datagrid[i].visible = true
+   					rowVisible[i] = vm.datagrid[i].visible
+   				}
+   			}
+   		}
+   		else{//收缩节点
+   			for(var i=index+1;i < grids.length && vm.datagrid[index].level != vm.datagrid[i].level;i++){
+   				if(vm.datagrid[index].level < vm.datagrid[i].level){
+   					rowVisible[i] = vm.datagrid[i].visible
+   					vm.datagrid[i].visible = false
+   				}
+   			}
+   		}
+   		//更改编号
+   		for(var i=0,j=1;i < vm.datagrid.length;i++){
+   			if(vm.datagrid[i].visible == true){//更改行编号
+   				vm.datagrid[i].vindex = j;
+   				j++
+   			}
+   		}
+   		pindex[index] = pindex[index] ^ 1
+   		vm.datagrid[index].imageSrc = picture[pindex[index]]
+    }
+    vm.$watch("checkall", function(a){
+        vm.datagrid.forEach(function(el) {
+            el.checked = a
+        })
+    })
+    avalon.scan()
+})
+
+var projectArray = [
+	{
+		projectName:"C919",
+		projectStartingDate:"2014-10-01",
+		projectDeadlineDate:"2014-11-01",
+		projectWaitingTrans:4
+	},
+	{
+		projectName:"D611",
+		projectStartingDate:"2014-10-01",
+		projectDeadlineDate:"2014-11-01",
+		projectWaitingTrans:3
+	},
+	{
+		projectName:"E615",
+		projectStartingDate:"2014-10-01",
+		projectDeadlineDate:"2014-11-01",
+		projectWaitingTrans:2
+	}
+]
+
+var pgrids = avalon.range(0, projectArray.length).map(function(el, i) {
+    return avalon.mix({}, projectArray[i], {})
+})
+
+avalon.define("project",function(vm) {
+	vm.datagrid = pgrids
+	avalon.scan()
+})
+
+/*  require(['jquery','datatables.bootstrap','datatables','bootstrap','ready!'],function($){
+	$(document).ready(function(){
+		$('#pl').DataTable()
+		avalon.scan()
+	}); 
+}) */
+</script>
+</html>

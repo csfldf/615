@@ -1,0 +1,15 @@
+package org.sjtu.p615.fracas.service;
+
+import org.sjtu.p615.dao.IContractRegistDao;
+
+public class ContractRegistService implements IContractRegistService {
+	private IContractRegistDao contractRegistDao;
+
+	public IContractRegistDao getContractRegistDao() {
+		return contractRegistDao;
+	}
+
+	public void setContractRegistDao(IContractRegistDao contractRegistDao) {
+		this.contractRegistDao = contractRegistDao;
+	}
+}

@@ -1,0 +1,915 @@
+package org.sjtu.p615.dao;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.PropertyFilter;
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
+import org.sjtu.p615.entity.*;
+import org.sjtu.p615.util.json.JsonDateValueProcessor;
+
+import java.lang.System;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+
+public class PlanDao implements IPlanDao{
+	private SessionFactory sessionFactory;
+	//add Plan
+	@Override
+	public boolean add(Plan plan) {
+		try{
+			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();		
+			session.save(plan);	
+			session.flush();
+			tx.commit();
+			session.close();
+			System.out.println("Add Plan Whose Code is "+plan.getPlanCode());
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;		
+	}
+	//update Plan
+	@Override
+	public boolean update(Plan plan) {
+		try{
+			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
+			session.saveOrUpdate(plan);		
+			session.flush();
+			tx.commit();
+			session.close();
+			System.out.println("Update Plan Whose Code is "+plan.getPlanCode());
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+	//delete Plan
+	@Override
+	public boolean delete(String planCode) {
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction tx=session.beginTransaction();
+			String hql="from Plan where PlanCode='"+planCode+"' and DeleteMark=0 ";
+			Query q = session.createQuery(hql);
+			List<Plan> result = q.list();
+			Plan plan = result.get(0);
+			plan.setDeleteMark(true);
+			session.merge(plan);
+
+            String hql1 = "from Plan where ParentPlanCode='" + planCode + "' and DeleteMark=0 ";
+            Query q1 = session.createQuery(hql1);
+            List<Plan> result1 = q1.list();
+            if (result1 != null) {
+                for (Plan son : result1) {
+                    delete(son.getPlanCode());
+                }
+            }
+            tx.commit();
+			session.close();
+			System.out.println("Delete Plan Whose Code is "+plan.getPlanCode());
+			return true;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+
+		
+	}
+	//get Plan
+	@Override
+	public Plan get(String planCode) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from Plan where PlanCode = '"+planCode+"' and DeleteMark =0";
+		Query q = session.createQuery(hql);
+		List<Plan> result = q.list();
+		Plan plan=null;
+		if(result.isEmpty()==false)
+			plan = result.get(0);
+		else
+			return plan;
+		String planid = plan.getPlanCode();
+		hql = "from Planoutput where TaskCode = '"+planid+"' and DeleteMark =0 ";
+		Query query = session.createQuery(hql);
+		List <Planoutput> planoutputs = query.list();
+		for(Planoutput temp : planoutputs){
+			String uuid=temp.getUUID();
+			temp.setFileHref("./am/downloadOutput?uuid="+uuid);
+			temp.setFileDelHref("./am/delOutput?planCode="+planid+"&uuid="+uuid);
+			temp.setUploadDateString(temp.getUploadDate().toString());
+		}
+//		plan.setPlanOutput(planoutputs);
+		tx.commit();
+		session.close();
+		return plan;	
+	}
+	@Override
+	public Plan get(String planCode, String projectId) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from Plan where PlanCode = '"+planCode+"' and ProjectId ='"+projectId+"' and DeleteMark =0";
+		Query q = session.createQuery(hql);
+		List<Plan> result = q.list();
+		Plan plan=null;
+		if(result.isEmpty()==false)
+			plan = result.get(0);
+		else
+			return plan;
+		tx.commit();
+		session.close();
+		return plan;	
+	}
+
+	/******************************************
+	 * Plan Statistics
+	 ****************************************************************/
+	@Override
+	public List<Plan> getPlansByConditons(String projectId,
+										  String dateColumn, String date1, String date2,
+										  String employeeId, String groupId, String departmentId){
+		Session session = sessionFactory.openSession();
+		String conditonString="";
+		try{
+			SimpleDateFormat sdf =new SimpleDateFormat( "yyyy-MM-dd" );			
+			if(date1!=null && date2!=null && dateColumn!=null && dateColumn.length()>0){
+				java.util.Date smallDate=sdf.parse(date1);
+				java.util.Date largeDate=sdf.parse(date2);
+				dateColumn=dateColumn.replaceFirst(dateColumn.substring(0,1), dateColumn.substring(0, 1).toUpperCase());
+				if(smallDate.compareTo(largeDate)<=0){
+					conditonString+=" and "+dateColumn+" >= '"+date1+"' and "+dateColumn+" <= '"+date2+"' ";
+				}
+			}
+			if (employeeId != null) {
+				conditonString += " and PlanControllerId = '" + employeeId+"' ";
+			}
+			if (groupId != null) {
+				conditonString += " and GroupId='" + groupId + "'";
+			}
+			if (departmentId != null) {
+				conditonString += " and ControlDepartmentId='" + departmentId + "'";
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+		String hql = " from Plan where DeleteMark=0 and Leaf=1 and ProjectId='" + projectId + "' "
+				+ conditonString+" and IsTask=0 and Leaf=1";
+		System.out.println(hql);
+		Query q = session.createQuery(hql);
+		List<Plan> result = q.list();
+		session.close();
+		return result;
+	}
+
+	@Override
+	public int getCountByConditions(String parent, int stateCode) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		StringBuilder sb =new StringBuilder();
+		String hql = " select count(*) from Plan where DeleteMark=0 and ParentPlanCode='"+parent+"' ";
+        if(stateCode>=0)
+            hql+="and PlanStateCode='"+stateCode+"'";
+		System.out.println(hql);
+		Query q = session.createQuery(hql);
+        long res = (long) q.uniqueResult();
+		session.close();
+		return (int) res;
+	}
+
+
+    /**********************************
+     * 10.28 所有查询变更审批相关
+     **************************************************/
+    @Override
+    public JSONArray getPlansWithApply(String checkApplyType, String userId) {
+        String sql = null;
+        Query query = null;
+        JsonConfig cfg = new JsonConfig();
+        cfg.setJsonPropertyFilter(new PropertyFilter() {
+            @Override
+            public boolean apply(Object source, String name, Object value) {
+                return value == null;
+            }
+        });
+        cfg.registerJsonValueProcessor(java.sql.Date.class, new JsonDateValueProcessor());
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        List list = null;
+        JSONArray result = null;
+        switch (checkApplyType) {
+            /*******************项目工作包统计***************************/
+            case "getApply":
+				sql = "from Plan WHERE (DeleteMark=0 and isTask=0 and Leaf=1 and PlanStateCode=3 and PlanControllerId='" + userId + "')" +
+						" OR (DeleteMark=0 and isTask=0 and Leaf=0 and PlanStateCode=4 and PlanControllerId='" + userId + "')";
+				query = session.createQuery(sql);
+                break;
+            case "getApplyToAudit":
+				sql = "from Plan WHERE (DeleteMark=0 and isTask=0 and Leaf=1 and PlanStateCode=3 and PlanAuditorId='" + userId + "')" +
+						" or (DeleteMark=0 and isTask=0 and Leaf=1 and (PlanStateCode=4 or PlanStateCode=5) and PlanAuditorId='" + userId + "')";
+				query = session.createQuery(sql);
+                break;
+            case "getApplyAudited":
+				sql = "from Plan WHERE DeleteMark=0 and isTask=0 and PlanStateCode=2 and PlanAuditorId='" + userId + "' and ChangeDetail LIKE '%操作变更%'";
+				query = session.createQuery(sql);
+                break;
+            default:
+        }
+        if (query != null) {
+            System.out.println(sql);
+            list = query.list();
+            result = JSONArray.fromObject(list, cfg);
+        }
+        tx.commit();
+        session.close();
+        return result;
+    }
+
+    /**********************************
+     * 10.28 统计部分所有查询
+     **************************************************/
+    @Override
+    public JSONArray getStatisticsByCondition(String statisticsType, String conditonString, String projectName, String id) {
+        String sql = null;
+        Query query = null;
+        JsonConfig cfg = new JsonConfig();
+        cfg.setJsonPropertyFilter(new PropertyFilter() {
+            @Override
+            public boolean apply(Object source, String name, Object value) {
+                return value == null;
+            }
+        });
+        cfg.registerJsonValueProcessor(java.sql.Date.class, new JsonDateValueProcessor());
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        List list = null;
+        JSONArray result = null;
+        switch (statisticsType) {
+            /*******************项目工作包统计***************************/
+            case "projectAll":
+                sql = "SELECT ProjectName, ProjectId, Count(PlanCode) as PackageCount," +
+                        " IFNULL(SUM(CASE PlanStateCode when 6 then 1 else 0 END),0) as FinishedCount," +
+						" IFNULL(SUM(CASE PlanStateCode when 6 then 0 else 1 END),0) as UnfinishedCount" +
+						" FROM plan where DeleteMark=0 and Leaf=1 and isTask=0 " + conditonString + " GROUP BY ProjectName";
+				query = session.createSQLQuery(sql)
+                        .addScalar("ProjectName", StandardBasicTypes.STRING)
+                        .addScalar("ProjectId", StandardBasicTypes.STRING)
+                        .addScalar("PackageCount", StandardBasicTypes.INTEGER)
+                        .addScalar("FinishedCount", StandardBasicTypes.INTEGER)
+                        .addScalar("UnfinishedCount", StandardBasicTypes.INTEGER)
+                        .setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
+                ;
+                break;
+            case "projectOne":
+                sql = "SELECT ProjectName, ProjectId, Count(PlanCode) as PackageCount," +
+                        " IFNULL(SUM(CASE PlanStateCode when 6 then 1 else 0 END),0) as FinishedCount," +
+						" IFNULL(SUM(CASE PlanStateCode when 6 then 0 else 1 END),0) as UnfinishedCount" +
+						" FROM plan where DeleteMark=0 and Leaf=1 and isTask=0 and ProjectName='" + projectName + "' " + conditonString;
+				query = session.createSQLQuery(sql)
+                        .addScalar("ProjectName", StandardBasicTypes.STRING)
+                        .addScalar("ProjectId", StandardBasicTypes.STRING)
+                        .addScalar("PackageCount", StandardBasicTypes.INTEGER)
+                        .addScalar("FinishedCount", StandardBasicTypes.INTEGER)
+                        .addScalar("UnfinishedCount", StandardBasicTypes.INTEGER)
+                        .setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
+                ;
+                break;
+            case "projectOneFinished":
+                sql = "FROM Plan where DeleteMark=0 and Leaf=1 and isTask=0 and ProjectId='" + id + "' and PlanStateCode=6 "
+                        + conditonString;
+                query = session.createQuery(sql);
+                break;
+            case "projectOneUnfinished":
+                sql = "FROM Plan where DeleteMark=0 and Leaf=1 and isTask=0 and ProjectId='" + id + "' and PlanStateCode<6 "
+                        + conditonString;
+                query = session.createQuery(sql);
+                break;
+            /*******************专业组工作包统计***************************/
+            case "groupAllInOneProject":
+                sql = "SELECT groupName as GroupName, groupId as GroupId, " +
+                        " ProjectName, Count(PlanCode) as PackageCount," +
+                        " IFNULL(SUM(CASE PlanStateCode when 6 then 1 else 0 END),0) as FinishedCount," +
+						" IFNULL(SUM(CASE PlanStateCode when 6 then 0 else 1 END),0) as UnfinishedCount" +
+						" FROM plan where DeleteMark=0 and Leaf=1 and isTask=0 and ProjectName='" + projectName + "' " + conditonString + " GROUP BY groupName";
+				query = session.createSQLQuery(sql)
+                        .addScalar("GroupName", StandardBasicTypes.STRING)
+                        .addScalar("GroupId", StandardBasicTypes.STRING)
+                        .addScalar("ProjectName", StandardBasicTypes.STRING)
+                        .addScalar("PackageCount", StandardBasicTypes.INTEGER)
+                        .addScalar("FinishedCount", StandardBasicTypes.INTEGER)
+                        .addScalar("UnfinishedCount", StandardBasicTypes.INTEGER)
+                        .setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
+                ;
+                break;
+            case "groupOneFinished":
+                sql = "FROM Plan where DeleteMark=0 and Leaf=1 and isTask=0 and ProjectName='" + projectName + "' and GroupId='" + id + "' and PlanStateCode=6 "
+                        + conditonString;
+                query = session.createQuery(sql);
+                break;
+            case "groupOneUnfinished":
+                sql = "FROM Plan where DeleteMark=0 and Leaf=1 and isTask=0 and ProjectName='" + projectName + "' and GroupId='" + id + "' and PlanStateCode<6 "
+                        + conditonString;
+                query = session.createQuery(sql);
+                break;
+            /********************员工任务统计**************************/
+            case "employeeAllInOneProject":
+                sql = "SELECT employee.EmployeeName, employee.EmployeeNumber as EmployeeId, ProjectName, " +
+                        "Count(PlanCode) as PackageCount," +
+                        " IFNULL(SUM(CASE PlanStateCode when 6 then 1 else 0 END),0) as FinishedCount," +
+						" IFNULL(SUM(CASE PlanStateCode when 6 then 0 else 1 END),0) as UnfinishedCount" +
+						" FROM plan INNER JOIN employee on plan.PlanControllerId=employee.EmployeeNumber" +
+                        " where plan.DeleteMark=0 and employee.DeleteMark=0 and Leaf=1 and isTask=0 and ProjectName='" + projectName + "' " + conditonString +
+                        " GROUP BY PlanControllerId";
+                query = session.createSQLQuery(sql)
+                        .addScalar("EmployeeName", StandardBasicTypes.STRING)
+                        .addScalar("ProjectName", StandardBasicTypes.STRING)
+                        .addScalar("EmployeeId", StandardBasicTypes.STRING)
+                        .addScalar("PackageCount", StandardBasicTypes.INTEGER)
+                        .addScalar("FinishedCount", StandardBasicTypes.INTEGER)
+                        .addScalar("UnfinishedCount", StandardBasicTypes.INTEGER)
+                        .setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
+                ;
+                break;
+            case "employeeOneFinished":
+                sql = "FROM Plan where DeleteMark=0 and Leaf=1 and isTask=0 and ProjectName='" + projectName + "' and PlanControllerId='" + id + "' and PlanStateCode=6 "
+                        + conditonString;
+                query = session.createQuery(sql);
+                break;
+            case "employeeOneUnfinished":
+                sql = "FROM Plan where DeleteMark=0 and Leaf=1 and isTask=0 and ProjectName='" + projectName + "' and PlanControllerId='" + id + "' and PlanStateCode<6 "
+                        + conditonString;
+                query = session.createQuery(sql);
+                break;
+            /********************部门工作包统计**************************/
+            case "departmentAllInOneProject":
+                sql = "SELECT IFNULL(department.Name,'') as DepartmentName, department.Id as DepartmentId, " +
+                        "ProjectName, Count(PlanCode) as PackageCount," +
+                        " IFNULL(SUM(CASE PlanStateCode when 6 then 1 else 0 END),0) as FinishedCount," +
+						" IFNULL(SUM(CASE PlanStateCode when 6 then 0 else 1 END),0) as UnfinishedCount" +
+						" FROM plan LEFT JOIN department on plan.controlDepartmentId=department.Id" +
+                        " where plan.DeleteMark=0  and Leaf=1 and isTask=0 and ProjectName='" + projectName + "' " + conditonString +
+                        " GROUP BY controlDepartmentId";
+                query = session.createSQLQuery(sql)
+                        .addScalar("DepartmentName", StandardBasicTypes.STRING)
+                        .addScalar("DepartmentId", StandardBasicTypes.STRING)
+                        .addScalar("ProjectName", StandardBasicTypes.STRING)
+                        .addScalar("PackageCount", StandardBasicTypes.INTEGER)
+                        .addScalar("FinishedCount", StandardBasicTypes.INTEGER)
+                        .addScalar("UnfinishedCount", StandardBasicTypes.INTEGER)
+                        .setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
+                ;
+                break;
+            case "departmentOneFinished":
+                sql = "FROM Plan where DeleteMark=0 and Leaf=1 and isTask=0 and ProjectName='" + projectName + "' and ControlDepartmentId='" + id + "' and PlanStateCode=6 "
+                        + conditonString;
+                query = session.createQuery(sql);
+                break;
+            case "departmentOneUnfinished":
+                sql = "FROM Plan where DeleteMark=0 and Leaf=1 and isTask=0 and ProjectName='" + projectName + "'and ControlDepartmentId='" + id + "' and PlanStateCode<6 "
+                        + conditonString;
+                query = session.createQuery(sql);
+                break;
+            default:
+        }
+        if (query != null) {
+            System.out.println(sql);
+            list = query.list();
+            result = JSONArray.fromObject(list, cfg);
+        }
+        tx.commit();
+        session.close();
+        return result;
+    }
+
+	/**********************************************************************************************************/
+
+	@Override
+	public List<Plan> getallplan() {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = " from Plan where DeleteMark=0";
+		System.out.println(hql);
+		Query q = session.createQuery(hql);
+		List<Plan> result = q.list();
+		tx.commit();
+		session.close();
+		return result;
+	}
+
+	@Override
+	public int getplancount(String plancontroller) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = " select count(*) from Plan where DeleteMark=0 and EmployeeId='"+plancontroller+"'";
+		System.out.println(hql);
+		Query q = session.createQuery(hql);
+		String xxx =q.uniqueResult().toString();
+		System.out.println(xxx);
+		int result=Integer.parseInt(xxx);
+		System.out.println(result);
+		tx.commit();
+		session.close();
+		return result;
+	}
+
+	@Override
+	public int updatestate(String plancode, int statecode) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		try{
+		String hql="from Plan where PlanCode='"+plancode+"' and DeleteMark=0 ";
+		System.out.println(hql);
+		Query q = session.createQuery(hql);
+		List<Plan> result = q.list();
+		Plan plan = result.get(0);
+		plan.setPlanStateCode(statecode);
+		java.util.Date now;
+		Date d;
+		switch(statecode){
+		case 2:plan.setIssue(true);now=new java.util.Date();d=new Date(now.getTime());plan.setPlanIssuedDate(d);break;
+		case 4:plan.setAccept(true);now=new java.util.Date();d=new Date(now.getTime());plan.setPlanStartDate(d);break;
+		case 6:plan.setComplete(true);now=new java.util.Date();d=new Date(now.getTime());plan.setPlanFinishDate(d);break;
+		}
+		session.merge(plan);
+		tx.commit();
+		session.close();
+		return 1;
+		}
+		catch(Exception e){
+			session.close();
+			return 0;
+		}
+	}
+
+	@Override
+	public int updateplan(Plan plan) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.saveOrUpdate(plan);
+		session.flush();
+		tx.commit();
+		session.close();
+		return 1;
+	}
+
+	@Override
+	public List<Plan> getstructure() {
+		// TODO Auto-generated method stub
+		Session session=sessionFactory.openSession();
+		Transaction tx=session.beginTransaction();
+		String hql = " from Plan where DeleteMark=0 and Level>0";
+		System.out.println(hql);
+		Query q = session.createQuery(hql);
+		List<Plan> result = q.list();
+//		List<PlanBasicInfo> basicinfo=new LinkedList<PlanBasicInfo>();
+//		for(Plan temp:result){
+//			basicinfo.add(new PlanBasicInfo(temp.getPlanCode(),temp.getPlanName(),temp.getLeaf(),temp.getParentCode(),temp.getLevel(),temp.getPlanKey()));
+//		}
+		tx.commit();
+		session.close();
+		return result;
+	}
+
+	@Override
+	public int deleteplan(String plancode) {
+		// TODO Auto-generated method stub
+		Session session=this.sessionFactory.openSession();
+		Transaction tx=session.beginTransaction();
+		try{
+		String hql="from Plan where PlanCode='"+plancode+"' and DeleteMark=0 ";
+		System.out.println(hql);
+		Query q = session.createQuery(hql);
+		List<Plan> result = q.list();
+		Plan plan = result.get(0);
+		plan.setDeleteMark(true);
+		session.merge(plan);
+		tx.commit();
+		session.close();
+		return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.close();
+			return 0;
+		}
+	}
+
+	@Override
+	public List<Plan> getbytype(String key, String value) {
+		// TODO Auto-generated method stub
+		String hql;
+
+		switch(key){
+		case"PlanCode":hql="from Plan where PlanCode Like \'%'"+value+"'%\' and DeleteMark=0";System.out.println(hql);break;
+		case"PlanName":hql="from Plan where PlanName Like \'%'"+value+"'%\' and DeleteMark=0";System.out.println(hql);break;
+		case"PlanSource":hql="from Plan where PlanSource Like \'%'"+value+"'%\' and DeleteMark=0";System.out.println(hql);break;
+		case"PlanController":hql="from Plan where PlanController Like \'%'"+value+"'%\' and DeleteMark=0";System.out.println(hql);break;
+		case"PlanState":hql="from Plan where PlanState Like \'%'"+value+"'%\' and DeleteMark=0";System.out.println(hql);break;
+		case"ParentCode":hql="from Plan where ParentCode Like \'%'"+value+"'%\' and DeleteMark=0��";System.out.println(hql);break;
+		default:hql="error";break;
+		}
+		Session session=this.sessionFactory.openSession();
+		Transaction tx=session.beginTransaction();
+		if(hql!="error")
+		{
+		Query q = session.createQuery(hql);
+		List<Plan> result = q.list();
+		tx.commit();
+		session.close();
+		return result;
+		}
+		else{
+			tx.commit();
+			session.close();
+			return null;
+		}
+	}
+
+	@Override
+	public List<Plan> getByEmployeeId(String employeeId) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from Plan where (PlanControllerId='"+employeeId+
+				"' or PlanCreatorId='"+employeeId+
+				"' or PlanAuditorId='"+employeeId+
+				"' or EmployeeId='"+employeeId+
+				"') and DeleteMark = 0";
+		System.out.println(hql);
+		Query q = session.createQuery(hql);
+		List<Plan> result = q.list();
+		tx.commit();
+		session.close();
+		return result;
+	}
+
+	@Override
+	public List<Plan> getChildPlans(int rootId) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "select * from Plan where FIND_IN_SET(ParentKey,find_child_plans_bak('"+rootId+"')) and DeleteMark=0";
+		System.out.println(hql);
+		List<Plan> result =session.createSQLQuery(hql).addEntity(Plan.class).list();
+		tx.commit();
+		session.close();
+		return result;
+	}
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	public PlanDao() {
+//		Configuration cfg=new Configuration().configure("1.4hibernate.cfg.xml");
+//		ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();    
+//	    this.sessionFactory = cfg.buildSessionFactory(sr);
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public List<Plan> getByProjectName(String projectName) {
+		// TODO Auto-generated method stub
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction tx=session.beginTransaction();
+			String hql="from Plan where ProjectName='"+projectName+"' and DeleteMark=0 ";
+			Query q = session.createQuery(hql);
+			List<Plan> result = q.list();
+			tx.commit();
+			session.close();
+//			System.out.println("Delete Plan Whose Code is "+plan.getPlanCode());
+			return result;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public List<Plan> getByProjectId(String projectId) {
+		// TODO Auto-generated method stub
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction tx=session.beginTransaction();
+			String hql="from Plan where ProjectId='"+projectId+"' and DeleteMark=0 ";
+			Query q = session.createQuery(hql);
+			List<Plan> result = q.list();
+			tx.commit();
+			session.close();
+//			System.out.println("Delete Plan Whose Code is "+plan.getPlanCode());
+			return result;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public List<Plan> getByEmployeeIdPorjectName(String employeeId,
+			String projectName) {
+		// TODO Auto-generated method stub
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction tx=session.beginTransaction();
+			String hql="from Plan where EmployeeId='"+employeeId+"' and ProjectName='"+projectName+"' and DeleteMark=0 ";
+			Query q = session.createQuery(hql);
+			List<Plan> result = q.list();
+			tx.commit();
+			session.close();
+//			System.out.println("Delete Plan Whose Code is "+plan.getPlanCode());
+			return result;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public List<Message> getMessage(String employeeId) {
+		// TODO Auto-generated method stub
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction tx=session.beginTransaction();
+			String hql="from Message where EmployeeId='"+employeeId+"'";
+			Query q = session.createQuery(hql);
+			List<Message> result = q.list();
+			tx.commit();
+			session.close();
+//			System.out.println("Delete Plan Whose Code is "+plan.getPlanCode());
+			return result;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public List<Remind> getRemind(String employeeId) {
+		// TODO Auto-generated method stub
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction tx=session.beginTransaction();
+			String hql="from Remind where EmployeeId='"+employeeId+"'";
+			Query q = session.createQuery(hql);
+			List<Remind> result = q.list();
+			tx.commit();
+			session.close();
+//			System.out.println("Delete Plan Whose Code is "+plan.getPlanCode());
+			return result;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public boolean delMessage(List<String> messageIds) {
+		// TODO Auto-generated method stub
+		try{
+			for(String messageId:messageIds){
+				Session session=sessionFactory.openSession();
+				Transaction tx=session.beginTransaction();
+				String hql="from Message where MessageId='"+messageId+"'";
+				Query q = session.createQuery(hql);
+				List<Message> result = q.list();
+				if(result.isEmpty()){
+					break;
+				}
+				Message message = result.get(0);
+				message.setDeleteMark(true);
+			//	session.delete(message);
+				session.update(message);
+				tx.commit();
+				session.close();
+				System.out.println("Delete Message Whose ID is "+message.getMessageId());
+			}
+			return true;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	@Override
+	public List<Plan> getTasksByParentCode(String parentCode, String projectName) {
+		// TODO Auto-generated method stub
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction tx=session.beginTransaction();
+			String hql="from Plan where ParentPlanCode='"+parentCode+"' and ProjectName='"+projectName+"'";
+			Query q = session.createQuery(hql);
+			List<Plan> result = q.list();
+			tx.commit();
+			session.close();
+//			System.out.println("Delete Plan Whose Code is "+plan.getPlanCode());
+			return result;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public List<Action> getActionsByEmployeeId(String employeeId) {
+		// TODO Auto-generated method stub
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction tx=session.beginTransaction();
+			String hql="from Action where EmployeeId='"+employeeId+"'";
+			Query q = session.createQuery(hql);
+			List<Action> result = q.list();
+			tx.commit();
+			session.close();
+//			System.out.println("Delete Plan Whose Code is "+plan.getPlanCode());
+			return result;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public boolean delTask(List<String> taskIds) {
+		// TODO Auto-generated method stub
+		try{
+			for(String taskId:taskIds){
+				Session session=sessionFactory.openSession();
+				Transaction tx=session.beginTransaction();
+				String hql="from Plan where PlanCode='"+taskId+"'";
+				Query q = session.createQuery(hql);
+				List<Plan> result = q.list();
+				if(result.size()==0){
+					System.out.println("No task to delete!!!");
+					return false;
+				}
+				Plan plan = result.get(0);
+				session.delete(plan);
+				tx.commit();
+				session.close();
+				System.out.println("Delete Task Whose ID is "+plan.getPlanCode());
+			}
+			return true;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	@Override
+	public void addTask(Plan plan) {
+		// TODO Auto-generated method stub
+		/*try{
+			Session session0 = sessionFactory.openSession();
+			Transaction tx0 = session0.beginTransaction();	
+			String hql="from Plan where PlanCode='"+plan.getPlanCode()+"'";
+			Query q = session0.createQuery(hql);
+			List<Plan> result = q.list();
+			Plan delplan = result.get(0);
+			session0.delete(delplan);
+			session0.flush();
+			tx0.commit();
+			session0.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}*/
+		try{
+			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();	
+			String hql="from Plan where PlanCode='"+plan.getPlanCode()+"'";
+			Query q = session.createQuery(hql);
+			List<Plan> result = q.list();
+			if(result.size()!=0){
+				session.delete(result.get(0));
+				session.flush();	
+			}
+			session.save(plan);	
+			session.flush();
+			tx.commit();
+			session.close();
+			System.out.println("Add Plan Whose Code is "+plan.getPlanCode());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	@Override
+	public boolean addMessage(Message message) {
+		// TODO Auto-generated method stub
+		try{
+			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();		
+			session.save(message);	
+			session.flush();
+			tx.commit();
+			session.close();
+			System.out.println("Add Message Whose Code is "+message.getMessageId());
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	@Override
+	public List<Plan> getWaitingTasks(String employeeId) {
+		// TODO Auto-generated method stub
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction tx=session.beginTransaction();
+			String hql="from Plan where (PlanControllerId='"+employeeId+
+					"' or PlanCreatorId='" + employeeId +
+					"' or PlanAuditorId='" + employeeId +
+					"') and DeleteMark=0";
+			Query q = session.createQuery(hql);
+			List<Plan> result = q.list();
+			tx.commit();
+			session.close();
+//			System.out.println("Delete Plan Whose Code is "+plan.getPlanCode());
+			return result;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public void freezeCurrentMainPlan(String projectId) {
+		// TODO Auto-generated method stub
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction tx=session.beginTransaction();
+			String hql="from Plan where ProjectId='"+projectId+"' and DeleteMark=0 ";
+			Query q = session.createQuery(hql);
+			List<Plan> result = q.list();
+			tx.commit();
+			//将冻结的计划的所有项目的deleteMark设置为1
+			for(Plan plan:result){
+				plan.setDeleteMark(true);
+				session.saveOrUpdate(plan);
+				session.flush();
+			}
+			tx.commit();
+			session.close();
+			System.out.println("Freeze Project Whose Name is "+projectId);
+			return;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return;
+	}
+	@Override
+	public List<Plan> getChildPlans(String planCode) {
+		// TODO Auto-generated method stub
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction tx=session.beginTransaction();
+			String hql="from Plan where ParentPlanCode='"+ planCode +
+					"' and DeleteMark=0";
+			Query q = session.createQuery(hql);
+			List<Plan> result = q.list();
+			tx.commit();
+			session.close();
+//			System.out.println("Delete Plan Whose Code is "+plan.getPlanCode());
+			return result;			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public boolean updatePlan(List<Pair<String,String>> property) {
+		// TODO Auto-generated method stub
+		String planCode = property.get(0).getValue();
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction tx=session.beginTransaction();
+			for(Pair p:property){
+				String key = p.getKey().toString();
+				String value = p.getValue().toString();
+				if(key.equals("planCode")) continue;
+				String hql="update Plan set "+ key +"='"+ value
+						+ "' where PlanCode='"+ planCode
+						+ "' and DeleteMark=0";
+				Query q = session.createQuery(hql);
+				q.executeUpdate();
+			}
+			tx.commit();
+			session.close();
+//			System.out.println("Delete Plan Whose Code is "+plan.getPlanCode());	
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	
+
+}

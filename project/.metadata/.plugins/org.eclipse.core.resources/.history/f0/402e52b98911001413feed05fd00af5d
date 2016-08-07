@@ -1,0 +1,44 @@
+package org.sjtu.p615.entity;
+
+import java.sql.Date;
+import java.sql.Time;
+
+public class FailureReport {
+	private int Id;
+	private String Environment;
+	private String Description;
+	private String CommtiteeSign;
+	private String Type;
+	private String OperatorSign;
+	private String TechnicalLeaderOpinion;
+	private String Mrb;
+	private String SystemType;
+	private String QualityIssueCategory;
+	private int Mark;
+	private Time time;
+	private String FailureMode;
+	private Date OperatorSignDate;
+	private String Process;
+	private Date CommitteeSignDate;
+	private String Reporter;
+	private String Column19;
+	public int getId() {
+		return Id;
+	}
+	public void setId(int id) {
+		Id = id;
+	}
+	public String getEnvironment() {
+		return Environment;
+	}
+	public void setEnvironment(String environment) {
+		Environment = environment;
+	}
+	public String getDescription() {
+		return Description;
+	}
+	public void setDescription(String description) {
+		Description = description;
+	}
+	
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Custom css file -->
+    <link rel="stylesheet" href="css/failureReport.css"/>
+    <link rel="stylesheet" href="css/panel.css"/>
+    <link rel="stylesheet" href="js/base/bs-tagsinput/bootstrap-tagsinput.css"/>
+  </head>
+  <body>
+    <div ms-controller="metadataManagement" style="max-width:90%;">
+      <table class="table table-bordered" id="failure-report-table">
+        <tbody>
+          <tr>
+            <td>机型: (Type)</td>
+            <!-- <td><input name="tags" id="frNumberInput"/></td> -->
+            <td><input id="type" type="text" value="" data-role="tagsinput"/></td>
+            <td>所属系统型号: (System Type)</td>
+            <td><input id="systemtype" type="text" value="" data-role="tagsinput"/></td>
+          </tr>
+          <tr>
+            <td>系统编号: (System S.N)</td>
+            <td><input id="systemsn" type="text" value="" data-role="tagsinput"/></td>
+            <td>故障件型号、名称: (Failed Item Part No)</td>
+            <td><input id="componentmodel" type="text" value="" data-role="tagsinput"/></td>
+          </tr>
+          <tr>
+            <td>故障件批次号: (Failed Item Batch No)</td>
+            <td><input id="componentsrulot" type="text" value="" data-role="tagsinput"/></td>
+            <td>故障件编号: (Failed Item S.N)</td>
+            <td><input id="componentsn" type="text" value="" data-role="tagsinput"/></td>
+          </tr>
+          <tr>
+            <td>产品提供方: (Supplier)</td>
+            <td><input id="provider" type="text" value="" data-role="tagsinput"/></td>
+            <td>产品制造方: (Manufacture)</td>
+            <td><input id="producer" type="text" value="" data-role="tagsinput"/></td>
+          </tr>
+		  <tr>
+            <td>测试/试验设备编号: (Testing equipment S.N)</td>
+            <td><input id="testequipmentnumber" type="text" value="" data-role="tagsinput"/></td>
+            <td>测试/试验设备名称: (Testingequipment Model)</td>
+            <td><input id="testequipmentmodel" type="text" value="" data-role="tagsinput"/></td>
+          </tr>
+          <tr>
+            <td>故障环境条件: (Environment)</td>
+            <td><input id='environment' type="text" value="" data-role="tagsinput"/></td>
+            <td>故障发生时机: (Failure Detected Phase)</td>
+            <td><input id="process" type="text" value="" data-role="tagsinput"/></td>
+          </tr>
+          <tr>
+            <td>故障模式: (Failure Mode)</td>
+            <td><input id="failuremode" type="text" value="" data-role="tagsinput"/></td>
+            <td>质量问题性质: (Quality Issue Category)</td>
+            <td><input id="qualityissuecategory" type="text" value="" data-role="tagsinput"/></td>
+          </tr>
+          <tr>
+            <td>故障原因: (Failure Cause)</td>
+            <td><input id="failurecause" type="text" value="" data-role="tagsinput"/></td>
+            <td>故障分类: (Failure Category)</td>
+            <td><input id="failurecategory" type="text" value="" data-role="tagsinput"/></td>
+          </tr>
+          <tr>
+            <td>纠正措施建议: (Corrective Action Recommendation)</td>
+            <td><input id="recommendation" type="text" value="" data-role="tagsinput"/></td>
+            <td>采取: (Required Content in Response)</td>
+            <td><input id="requiredcontent" type="text" value="" data-role="tagsinput"/></td>
+          </tr>
+          <tr>
+            <td>实施部门/组: (Implementation Group/Department)</td>
+            <td><input id="implementationgroup" type="text" value="" data-role="tagsinput"/></td>
+             <td>补加工单号: (Required Content in Response)</td>
+            <td><input id="requiredresponsecontent" type="text" value="" data-role="tagsinput"/></td>
+          </tr>
+          <tr>
+            <td>产品编号: (Serial No)</td>
+            <td><input id="serialno" type="text" value="" data-role="tagsinput"/></td>
+             <td>软件配置项号: (Software Party No)</td>
+            <td><input id="softwarepartyno" type="text" value="" data-role="tagsinput"/></td>
+          </tr>
+          <tr>
+            <td>软件版本: (Revision)</td>
+            <td><input id="revision" type="text" value="" data-role="tagsinput"/></td>
+            <td>需要mrb审核项</td>
+            <td><input id="mrb" type="text" value="" data-role="tagsinput"/></td>
+          </tr>
+        </tbody>
+      </table>
+      <script>
+      	$("#type").tagsinput('add', 'some tag,hello');
+	  </script>
+      <div class="btn-group" ms-visible="editMode">
+        <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal"  ms-click="saveFr()">保存</a>
+        <a href="#myModal" role="button" class="btn btn-success" data-toggle="modal"  ms-click="commitFr()">提交</a>
+        <a href="#myModal" role="button" class="btn btn-danger" data-toggle="modal"  ms-click="cancelFr()">取消</a>
+      </div>
+
+      <!-- Modal -->
+      <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Fracas</h3>
+        </div>
+        <div class="modal-body">
+          <p>您的操作已完成</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true" ms-click="back()">确定</button>
+        </div>
+      </div>
+    </div>
+    </div>
+    <script type="text/javascript" src="js/base/bs-tagsinput/bootstrap-tagsinput.js"></script>
+  </body>
+</html>

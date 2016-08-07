@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Custom css file -->
+    <link rel="stylesheet" href="css/failureReport.css"/>
+  </head>
+  <body>
+    <div ms-controller="failureReport" style="max-width:90%;">
+      <table class="table table-bordered" id="failure-report-table">
+        <tbody>
+          <tr>
+            <td>故障报告编号: (Failure Report NO)</td>
+            <td><input ms-widget="textbox" ms-duplex="frNumber" type="textbox" ms-disabled="frNumberDisable"/></td>
+            <td>项目名称: (Program ID)</td>
+            <td>
+              <select ms-duplex="project" ms-change="selectProject(project)" ms-disabled="projectDisable">
+                <option ms-repeat="projectOpts" ms-attr-value="el.value" ms-attr-label="el.label" ms-click="selectProject(1)"></option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="2">故障件型号、名称: (Model)</td>
+            <td rowspan="2">
+              <select ms-duplex="type" ms-disabled="typeDisable">
+                <option ms-repeat="typeOpts" ms-attr-value="el.value" ms-attr-label="el.label"></option>
+              </select>
+            </td>
+            <td>所属系统型号: (System Type)</td>
+            <td>
+              <select ms-duplex="systemType" ms-disabled="systemTypeDisable">
+                <option ms-repeat="systemTypeOpts" ms-attr-value="el.value" ms-attr-label="el.label"></option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>系统编号: (System S.N)</td>
+            <td><input ms-widget="textbox" ms-duplex="systemSn" type="textbox"  ms-disabled="systemSnDisable"/></td>
+          </tr>
+          <tr>
+            <td>故障发生时间: (Time of failure)</td>
+            <td><input class="happenTime" ms-widget="datepicker" data-datepicker-timer="true" ms-duplex="happenTime" /></td>
+            <td>故障件批次号: (SRU Lot)</td>
+            <td><input ms-widget="textbox" ms-duplex="componentSruLot" type="textbox" ms-disabled="componentSruLotDisable" /></td>
+          </tr>
+          <tr>
+            <td>产品已运行时间: (Operation Time)</td>
+            <td><input ms-widget="textbox" ms-duplex="workingHours" type="textbox" ms-disabled="workingHoursDisable" /></td>
+            <td>故障件编号: (SRU S.N.)</td>
+            <td><input ms-widget="textbox" ms-duplex="code" type="textbox" ms-disabled="codeDisable" /></td>
+          </tr>
+          <tr>
+            <td>产品提供方: (Supplier)</td>
+            <td>
+              <select ms-duplex="provider" ms-disabled="providerDisable">
+                <option ms-repeat="providerOpts" ms-attr-value="el.value" ms-attr-label="el.label"></option>
+              </select>
+            </td>
+            <td>产品制造方: (Manufacture)</td>
+            <td>
+              <select ms-duplex="producer" ms-disabled="producerDisable">
+                <option ms-repeat="producerOpts" ms-attr-value="el.value" ms-attr-label="el.label"></option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>故障环境条件: (Environment)</td>
+            <td>
+              <ul>
+                <li ms-repeat="environmentOpts">
+                  <input type="checkbox" ms-value="el.value" ms-duplex="environment" data-duplex-changed="checkOne" ms-disabled="environmentDisable" />{{el.label}}
+                </li>
+              </ul>
+            </td>
+            <td>故障发现人: (Reporter)</td>
+            <td><input ms-widget="textbox" ms-duplex="reporter" type="textbox" ms-disabled="reporterDisable" /></td>
+          </tr>
+          <tr>
+            <td>测试/试验设备编号: (Testing equipment S.N)</td>
+            <td>
+              <select ms-duplex="testEquipmentNumber" ms-disabled="testEquipmentNumberDisable">
+                <option ms-repeat="testEquipmentNumberOpts" ms-attr-value="el.value" ms-attr-label="el.label"></option>
+              </select>
+            </td>
+            <td>测试/试验设备名称: (Testingequipment Model)</td>
+            <td>
+              <select ms-duplex="testEquipmentInfo" ms-disabled="testEquipmentInfoDisable">
+                <option ms-repeat="testEquipmentInfoOpts" ms-attr-value="el.value" ms-attr-label="el.label"></option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>故障发生时机: (In which Process)</td>
+            <td colspan="3">
+              <ul>
+                <li ms-repeat="processOpts" ><input type="checkbox" ms-value="el.value" ms-duplex="process" data-duplex-changed="checkOne" ms-disabled="processDisable" />{{el.label}}</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>故障模式: (Failure Mode)</td>
+            <td colspan="3">
+              <ul>
+                <li ms-repeat="failureModeOpts" ><input type="checkbox" ms-value="el.value" ms-duplex="failureMode" data-duplex-changed="checkOne" ms-disabled="failureModeDisable" />{{el.label}}</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="2">故障现象: (Description)</td>
+            <td colspan="3" id="description"><input ms-widget="textbox" ms-duplex="description" type="textbox" ms-disabled="descriptionDisable" /></td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              填表人( Sign ) : <input ms-widget="textbox" ms-duplex="frCreater" type="textbox" ms-disabled="frCreaterDisable" />
+              日 期 ( Date ) : <input ms-widget="textbox" ms-duplex="frCreateDate" type="textbox" ms-disabled="frCreateDateDisable" />
+            </td>
+          </tr>
+          <tr ms-visible="tlMode">
+            <td rowspan="2">项目/技术负责人: (Technical Leader)</td>
+            <td colspan="3" id="description"><input ms-widget="textbox" ms-duplex="leaderOpinion" type="textbox" ms-disabled="leaderOpinionDisable" /></td>
+          </tr>
+
+          <tr ms-visible="tlMode">
+            <td colspan="3">
+              故障分析报告负责人:
+              <select ms-duplex="farAnalyst" ms-disabled="farAnalystDisable">
+                <option ms-repeat="farAnalystOpts" ms-attr-value="el.value" ms-attr-label="el.label"></option>
+              </select>
+            </td>
+          </tr>
+          <tr ms-visible="qaMode">
+            <td>质量问题性质: (Quality Issue Category)</td>
+            <td colspan="3">
+              <ul>
+                <li ms-repeat="qualityIssueCategoryOpts" ><input type="checkbox" ms-value="el.value" ms-duplex="qualityIssueCategory" data-duplex-changed="checkOne" ms-disabled="qualityIssueCategoryDisable" />{{el.label}}</li>
+              </ul>
+            </td>
+          </tr>
+          <tr ms-visible="mrbMode">
+            <td>故障审查委员会意见: (MRB)</td>
+            <td colspan="3" id="description"><input ms-widget="textbox" ms-duplex="mrbOpinion" type="textbox" ms-disabled="mrbOpinionDisable" /></td>
+          </tr>
+
+          <tr ms-visible="supervisorMode">
+            <td>状态: (Status)</td>
+            <td>
+              <select ms-duplex="status" ms-disabled="statusDisable">
+                <option ms-repeat="statusOpts" ms-attr-value="el.value" ms-attr-label="el.label"></option>
+              </select>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <div ms-visible="editMode">
+        <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal"  ms-click="commitFr(1)">提交</a>
+        <a href="#myModal" role="button" class="btn btn-success" data-toggle="modal"  ms-click="saveFr()">保存</a>
+      </div>
+
+      <div ms-visible="supervisorMode">
+        <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal"  ms-click="commitFr(4)">提交</a>
+      </div>
+
+      <div ms-visible="farMode">
+        <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal"  ms-click="doFar()">生成故障分析报告</a>
+      </div>
+
+      <a href="#myModal" role="button" class="btn btn-danger" data-toggle="modal"  ms-click="cancelFr()">取消</a>
+
+      <!-- Modal -->
+      <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Fracas</h3>
+        </div>
+        <div class="modal-body">
+          <p>您的操作已完成</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true" ms-click="confirm()">确定</button>
+          <button class="btn" data-dismiss="modal" aria-hidden="true" ms-click="">取消</button>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

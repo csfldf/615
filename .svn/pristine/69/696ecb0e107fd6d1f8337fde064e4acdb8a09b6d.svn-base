@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" name="fragment" content="!">
+    <meta content="utf-8" http-equiv="encoding">
+    <link rel="stylesheet" href="css/panel.css"/>
+    <!--Test CSS ,need to delete-->
+    <!--<link href="./css/base/bootstrap.css" rel="stylesheet">-->
+
+    <link href="./css/main/docs.css" rel="stylesheet">
+    <script src="./js/avalon.js"></script>
+    <script src="./js/globalConfig.js"></script>
+    <script src="./js/base/chart/Chart.js"></script>
+    <!--<script src="./js/base/slideout.js"></script>-->
+    <!--<script src="./js/base/jquery-1.11.1.js"></script>
+    <script src="./js/base/BootSideMenu.js"></script>-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!--<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.css">-->
+    <script>
+        require(['bootstrap', 'Login', 'mmRequest', 'UIMainFrame', 'am.planSummary','am.actionSummary','ready!'],
+                function (bb,loginVM) {
+
+//            $.post(
+//                    'am/checkLogin',
+//                    {},
+//                    function(data){
+//                        if(data.success){
+//                            loginVM.isLogin=true;
+//                            loginVM.loginId=data.employeeNumber;
+//                            loginVM.loginName=data.employeeName;
+//                        }
+//                    }
+//            )
+        });
+
+    </script>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        [ms-controller], [ms-important] {
+            visibility: hidden;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .slideout-menu {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 0;
+            width: 256px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            display: none;
+        }
+
+        .slideout-panel {
+            position: relative;
+            z-index: 1;
+        }
+
+        .slideout-open,
+        .slideout-open body,
+        .slideout-open .slideout-panel {
+            overflow: hidden;
+        }
+
+        .slideout-open .slideout-menu {
+            display: block;
+        }
+    </style>
+</head>
+<body ms-controller="UIMainFrame">
+<script>
+    require(['slideout'], function (Slideout) {
+        /*slideout = new Slideout({
+         'panel': document.getElementById('simpleTab'),
+         'menu': document.getElementById('leftsidebar'),
+         'padding': 256,
+         'tolerance': 70
+         });
+         document.getElementById('slideButton').addEventListener('click', function() {
+         slideout.toggle();
+         });*/
+    })
+</script>
+<div id="topnavbar0" class="navbar navbar-static-top">
+    <div class="navbar-inner" style="
+    background-image: linear-gradient(to bottom, #9ECCFB, #337AC2);">
+        <div class="container-fluid">
+            <!--导航栏左侧单级菜单生成-->
+            <ul class="nav">
+                <li><a class="brand" style="color: whitesmoke; font-weight: bold" href="#!/">615项目管理平台</a></li>
+            </ul>
+            <form class="navbar-search pull-left" hidden="true">
+                <input type="text" class="search-query" placeholder="Search">
+            </form>
+        </div>
+    </div>
+
+</div>
+<div id="topnavbar" class="navbar navbar-static-top">
+    <div class="navbar-inner" style="padding: 0px">
+        <div class="container-fluid">
+            <!--导航栏左侧单级菜单生成-->
+            <ul class="nav">
+                <li ms-repeat="navMenu.leftMenu" ms-class="active:el.active">
+                    <a ms-href="el.href" ms-click="_navActiveOne($index)" style="display: inline-block">{{el.text}}</a>
+                </li>
+                <li ms-repeat="navMenu.dropdownMenu" class="dropdown" ms-class="active:el.active">
+                    <a ms-href="el.href" class="dropdown-toggle" data-toggle="dropdown">{{el.text}}</a>
+                    <ul class="dropdown-menu">
+                        <li ms-repeat="el.submenu">
+                            <a ms-href="el.href" ms-click="_navActiveOne($index)" style="display: inline-block">{{el.text}}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li ms-repeat="navMenu.rightMenu" ms-class="active:el.active">
+                    <a ms-href="el.href" ms-click="_navActiveOne($index)" style="display: inline-block">{{el.text}}</a>
+                </li>
+                <li ms-repeat="navMenu.dropdownMenu2" class="dropdown" ms-class="active:el.active">
+                    <a ms-href="el.href" class="dropdown-toggle" data-toggle="dropdown">{{el.text}}</a>
+                    <ul class="dropdown-menu">
+                        <li ms-repeat="el.submenu">
+                            <a ms-href="el.href" ms-click="_navActiveOne($index)" style="display: inline-block">{{el.text}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-search pull-left" hidden="true">
+                <input type="text" class="search-query" placeholder="Search">
+            </form>
+            <!--导航栏右侧多级菜单生成-->
+            <ul class="nav pull-right" ms-controller="loginVM">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="modal"
+                       data-target="#loginModal" style="font-size:medium" ms-visible="!isLogin">登录</a>
+                </li>
+                <label style="float:left;display: block;font-size:medium;margin-top:10px" ms-if="isLogin">你好，{{loginName}} ｜</label>
+                <li ms-visible="isLogin"><a href="#!/perInfo" style="font-size:medium;padding: 10px">个人信息</a></li>
+                <li ms-click="logOut()" ms-visible="isLogin"><a href="#" style="font-size:medium;padding: 10px">登出</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <!--Avalon Sidebar 实现-->
+        <div id="leftsidebar" ms-class="{{leftSidebarClass}}" ms-visible="leftSidebarVisiablity">
+        <!--<div id="leftsidebar" class="container sidebar sidebar-left" data-status="opened">
+            <div class="row">-->
+                <div class="bs-docs-sidebar">
+                    <!--<div ms-controller="testSimpleTree" style="position:fixed;top:100px;z-index:1">
+                        <div ms-widget="simpletree,tree,$simpletreeOpt">
+                        </div>
+                    </div>-->
+                    <ul id="sidebar1" class="nav nav-pills nav-stacked"
+                        ms-visible="showNormalSidebar"
+                        ms-repeat="currentSidebar"
+                        ms-visible="showOriginSidebar">
+                        <li class="nav-header"><b>{{el.header}}</b></li>
+                        <li ms-class="active:elem.active" ms-repeat-elem="el.submenu">
+                            <a ms-click="_sidebarActiveOne($outer.$index,$index)" ms-href="elem.href">{{elem.text}}</a>
+                        </li>
+                    </ul>
+                    <div id="sidebar2" ms-visible="!showNormalSidebar">{{currentSpecialSidebar|html}}</div>
+                    <!--<div id="sidebar3" ms-visible="projectManagementBar">-->
+                        <!--<div ms-controller="proMgr">-->
+                            <!--<ul id="project" class="nav nav-list simpletree">-->
+                                <!--<li ms-include="'simpletreetmpl'" ms-repeat="projects">-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                            <!--&lt;!&ndash;<a ms-href="#!/am/project/add">创建新项目</a>&ndash;&gt;-->
+                            <!--<noscript id="simpletreetmpl">-->
+                                <!--<i class="pull-left"-->
+                                   <!--ms-class-1="icon-plus:el.groups && !$opts.expandAllAtFirst"-->
+                                   <!--ms-class-2="icon-minus:el.groups && $opts.expandAllAtFirst"-->
+                                   <!--ms-class-3="icon-th:!el.groups"></i>-->
+                        <!--<span ms-attr-id='"project"+el.projectId'>-->
+                            <!--<a style="width:80px;height:30px;font-size:22px;" ms-click="selectProject(el.projectId)">{{el.projectName}}</a>-->
+                        <!--</span><br>-->
+                                <!--<ul class="nav nav-list" ms-if="el.groups" ms-class="hide:!$opts.expandAllAtFirst">-->
+                                    <!--<li ms-attr-id='"group"+el.groupId' ms-include="'simpletreetmp2'"-->
+                                        <!--ms-repeat="el.groups"></li>-->
+                                <!--</ul>-->
+                            <!--</noscript>-->
+                            <!--<noscript id="simpletreetmp2">-->
+                                <!--<i class="pull-left"-->
+                                   <!--ms-class-1="icon-plus:el.groups && !$opts.expandAllAtFirst"-->
+                                   <!--ms-class-2="icon-minus:el.groups && $opts.expandAllAtFirst"-->
+                                   <!--ms-class-3="icon-th:!el.groups"></i>-->
+                            <!--<span>-->
+                                <!--<a style="width:100px;height:30px;font-size:18px;" ms-click="pickGroup(el.groupId)">{{el.groupName}}</a>-->
+                                <!--&lt;!&ndash;<a ms-href="#!/am/project/groupMember/{{el.id}}">新增</a>&ndash;&gt;-->
+                            <!--</span>-->
+                            <!--</noscript>-->
+                            <!--&lt;!&ndash;<div id="btn-div" ms-controller="proMgr">&ndash;&gt;-->
+                            <!--<div ms-controller="proMgr">-->
+                                <!--<div>-->
+                                    <!--<a role="button" class="btn btn-primary" data-toggle="modal"-->
+                                       <!--data-target="#newProjectModal">创建项目 </a>-->
+                                    <!--<a ms-click="delOneProject()" role="button" class="btn btn-danger">删除项目</a>-->
+                                <!--</div>-->
+                                <!--<div>-->
+                                    <!--<a role="button" class="btn btn-primary" ms-click="showNewGroupModal()">新增小组</a>-->
+                                    <!--<a ms-click="delOneGroup()" role="button" class="btn btn-danger">删除小组</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<script>-->
+                            <!--require('jquery', function ($) {-->
+                                <!--$(".simpletree").click(function (e) {-->
+                                    <!--var $nodeI = $(e.target).parent().children("i"),-->
+                                            <!--$nodeUL = $(e.target).parent().children("ul");-->
+                                    <!--if (!$nodeI.hasClass("icon-th")) {-->
+                                        <!--if ($nodeUL.hasClass("hide")) {-->
+                                            <!--$nodeI.removeClass("icon-plus")-->
+                                            <!--$nodeI.addClass("icon-minus")-->
+                                        <!--}-->
+                                        <!--else {-->
+                                            <!--$nodeI.removeClass("icon-minus")-->
+                                            <!--$nodeI.addClass("icon-plus")-->
+                                        <!--}-->
+                                        <!--$nodeUL.toggleClass("hide");-->
+                                    <!--}-->
+                                <!--})-->
+                            <!--})-->
+                        <!--</script>-->
+                    <!--</div>-->
+                    <div id="sidebar4" ms-visible="prjMaintainBar">
+                        <div ms-controller="prj_maintain">
+                            <div class="accordion-group" ms-repeat="data.projects.original_reports" style="position:relative;width:100%;">
+                            <div class="panel-heading">
+                                <a class="accordion-toggle" ms-click="selOnePrj(el.projectId)" contenteditable="false" ms-attr-data-parent="#accordion-{{el.projectId}}{{el.projectName}}" data-toggle="collapse" style="color: darkred" ms-href="#accordion-prj{{el.projectId}}">{{el.projectName}}
+                                    </a><img style="position: relative;left:15px" src="img/+1.png" ms-click="addFirstGrp(el)">
+                            </div>
+                            <div class="accordion-body collapse" ms-attr-id="accordion-prj{{el.projectId}}" style="position:relative;bottom:0px;left:0px;height:0px;">
+                                <div class="accordion-inner" contenteditable="false" >
+                                    <div class="accordion-group" ms-repeat="el.groups" style="position: relative;width: 80%;float: right">
+                                        <div class="panel-heading">
+                                            <a class="accordion-toggle" ms-click="selOneFirstGrp(el,el.groupId)" contenteditable="false"  ms-attr-data-parent="#accordion-{{el.groupId}}{{el.groupName}}" data-toggle="collapse" style="color: darkred" ms-href="#accordion-grp{{el.groupId}}">{{el.groupName}}
+                                                </a><img style="position: relative;left:10px" src="img/+1.png" ms-click="addSecondGrp(el)">&nbsp;&nbsp;&nbsp;&nbsp;<img style="position: relative;left:10px" src="img/delete.png" ms-click="delFirstGrp(el)">
+
+
+                                            <!--<a style="position: relative;" class="icon-plus"></a><a style="position: relative;"class="icon-minus"></a>-->
+                                        </div>
+                                        <div class="accordion-body collapse" ms-attr-id="accordion-grp{{el.groupId}}" style="position:relative;left:0px;height:0px;">
+                                            <div class="accordion-inner" contenteditable="false">
+                                                <div class="panel-heading" ms-repeat="el.subGroups">
+                                                    <a class="accordion-toggle" ms-click="selOneSecondGrp(el,el.groupId)" contenteditable="false"  data-toggle="collapse" style="color: darkred">{{el.groupName}}</a><img src="img/delete.png" style="position: relative;left:15px" ms-click="delSecondGrp(el)">
+                                                </div>
+                                                <!--<div>-->
+                                                    <!--<a role="button" class="btn btn-primary" ms-click="showNewGroupModal()">新增小组</a>-->
+                                                    <!--<a ms-click="delOneGroup()" role="button" class="btn btn-danger">删除小组</a>-->
+                                                <!--</div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div>-->
+                                        <!--<a role="button" class="btn btn-primary" ms-click="showNewGroupModal()">新增专业组</a>-->
+                                        <!--<a ms-click="delOneGroup()" role="button" class="btn btn-danger">删除专业组</a>-->
+                                    <!--</div>-->
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div id="sidebar5" ms-visible="fastAccessBar">
+                        <ul class="nav nav-pills nav-stacked" ms-controller="prj_def">
+                            <li class="nav-header"><b>{{fastAccessConfig.header}}</b></li>
+                            <li ms-repeat="fastAccessConfig.submenu">
+                                <a ms-href="el.href">{{el.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--<div id="sidebar6" ms-visible="commBar">-->
+                        <!--<ul class="nav nav-pills nav-stacked" ms-controller="commMgr">-->
+                            <!--<li class="nav-header"><b>{{commSideBar.header}}</b></li>-->
+                            <!--<li ms-repeat="commSideBar.submenu">-->
+                                <!--<a ms-href="el.href">{{el.text}}</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                    <div id="sidebar6" ms-visible="planMgrBar">
+                        <ul class="nav nav-pills nav-stacked" ms-controller="planSummary">
+                            <!--<li ms-visible="importView">
+                                <a href="#importPro" role="button" style="position: relative;left: 30px"
+                                   ms-click="initImportProject"
+                                   data-toggle="modal" data-target="#importPro">
+                                    主计划导入
+                                </a>
+                            </li>-->
+                            <li ms-repeat="siderBar" ms-class="{{el.class}}" ms-visible="el.visible">
+                                <a ms-href="el.href" style="position: relative"
+                                   ms-data-toggle="el.toggle"
+                                   ms-data-target="el.target"
+                                   ms-css-color="el.color"
+                                   ms-css-left="el.left" ms-click="changeMode(el.mode,el.item)">{{el.item}}</a>
+                            </li>
+                            <li class="nav-header"><a style="position: relative;left:0px"
+                                                      role="button" data-toggle="modal"
+                                                      href="#!/am/planStatistics">
+                                报表统计</a></li>
+                            <li><a role="button" style="position: relative;left: 30px"
+                                   data-toggle="modal" href="#!/am/planStatistics/select/byProject">项目工作包统计</a></li>
+                            <li><a role="button" style="position: relative;left: 30px"
+                                   data-toggle="modal" href="#!/am/planStatistics/select/byGroup">专业组工作报统计</a></li>
+                            <li><a role="button" style="position: relative;left: 30px"
+                                   data-toggle="modal" href="#!/am/planStatistics/select/byEmployee">员工任务统计</a></li>
+                            <li><a role="button" style="position: relative;left: 30px"
+                                   data-toggle="modal" href="#!/am/planStatistics/select/byDepartment">部门工作报统计</a></li>
+                            <!-- <br>
+                             <li class="nav-header" ms-visible="importView">
+                                 <a href="#exportPro" ms-click="initExportProject" role="button"
+                                    data-toggle="modal" data-target="#exportPro">
+                                     主计划导出
+                                 </a>
+                             </li>-->
+                        </ul>
+                    </div>
+                    <div id="sidebar7" ms-visible="actionMgrBar">
+                        <ul class="nav nav-pills nav-stacked" ms-controller="actionSummary">
+                            <li class="nav-header"><b>{{actionSideBarConfig.header}}</b></li>
+                            <li ms-repeat="actionSideBarConfig.subMenu">
+                                <a role="button" data-toggle="modal" ms-click="newActionDir">{{el.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            <!--</div>-->
+            <div class="toggler">
+                <span class="glyphicon glyphicon-chevron-right" style="display:none;"></span>
+                <span class="glyphicon glyphicon-chevron-left" style="display:block;"></span>
+            </div>
+        </div>
+        <!--Tab + Content-->
+        <div ms-class="{{contentClass}}" id="simpleTab">
+            <div class="bs-docs-example" style="padding: 0px">
+                <div ms-controller="planSummary" style="float: right">
+                    <span style="top: 20px;left: 70%">我的项目</span>
+                    <select id="select-shortcuts-myProject" ms-each="data['project']['reports']" ms-change="loadPlans('null')"
+                            style="top: 5px;left: 76%;width: 140px">
+                        <option ms-selected="el.text">{{el.projectName}}</option>
+                    </select>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li>
+                        <button id="slideButton" class="toggle-button btn" ms-click="toggleSideBar">{{buttonContent}}</button>
+                    </li>
+                    <li ms-repeat="tabs" ms-class="active:$index==currentIndex">
+                        <a ms-href="'#simpleTabContent'+el.tabId" data-toggle="tab"
+                           ms-click="clickTabCallback($index)">
+                            {{el.tabName|html}}
+                            <button ms-if="_canRemove(el)" ms-click="removeTab($event, $index)"
+                                    class="close">&times;</button>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" ms-each="tabs">
+                    <div class="AreaTabContent tab-pane"
+                         ms-class="active:$index==currentIndex"
+                         ms-if-loop="!el.useHref"
+                         ms-attr-id="$tabContentPrefix+el.tabId">
+                        {{el.tabContent|html}}
+                    </div>
+                    <div class="AreaTabContent tab-pane"
+                         ms-class="in active:$index==currentIndex"
+                         ms-if-loop="el.useHref"
+                         ms-attr-id="$tabContentPrefix+el.tabId"
+                         ms-include-src="el.href" data-include-loaded="el.tmplLoaded"
+                         data-include-rendered="el.tmplRendered">
+                        <div class="loading">Loading pages...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--多级菜单模板-->
+<noscript id="topnavMenuTmpl">
+    <li ms-class="dropdown-submenu:el.submenu">
+        <a ms-href="el.href">{{el.text}}</a>
+        <ul ms-include="'topnavMenuTmpl'" ms-repeat="el.submenu" class="dropdown-menu">
+        </ul>
+    </li>
+</noscript>
+<style type="text/css">
+    .code {
+        /*background-image:url(code.jpg);*/
+        font-family: Arial;
+        font-style: italic;
+        color: Red;
+        border: 0;
+        padding: 2px 3px;
+        letter-spacing: 3px;
+        font-weight: bolder;
+    }
+
+    .unchanged {
+        border: 0;
+    }
+</style>
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" ms-controller="loginVM" style="display: none; ">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="loginModalLabel">
+                    登录
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form ms-attr-id="$formId">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">用户名</label>
+
+                                <div class="controls">
+                                    <input type="text" name="username" ms-duplex="loginINFO.username"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">密码</label>
+
+                                <div class="controls">
+                                    <input type="password" name="password" ms-duplex="loginINFO.password"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="row-fluid">-->
+                    <!--<div class="span6">-->
+                    <!--<div class="control-group"><!-- Text input-->
+                    <!--<label class="control-label">验证码</label>-->
+
+                    <!--<div class="controls">-->
+                    <!--<input type="text" name="verificationCode" ms-duplex="loginINFO.verificationCode"/>-->
+                    <!--<input type="text" ms-duplex="code" readonly="readonly" id="checkCode" class="code" style="width: 80px"  /><br />-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </form>
+                <button type="button" ms-click="login()" class="btn btn-primary">
+                    登录
+                </button>
+                <button type="button" id="login_close_btn" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+            </div>
+            <!--<div class="modal-footer">-->
+
+            <!--</div>-->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+</body>
+</html>
+<!--
+2014.10.14:add:导航栏badge支持
+2014.10.15:add:导航栏和侧边栏的单击active效果
+
+-->

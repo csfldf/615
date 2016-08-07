@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="fracas" namespace="/fracas" extends="struts-default,json-default">
+
+  		<action name="add" class="org.sjtu.p615.fracas.action.FailureReportAction" method="addFailureReport">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="get" class="org.sjtu.p615.fracas.action.FailureReportAction" method="takeFailureReport">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="getByProject" class="org.sjtu.p615.fracas.action.FailureReportAction" method="takeFailureReportByProject">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="getFrsByEmployee" class="org.sjtu.p615.fracas.action.FailureReportAction" method="takeFailureReportByEmployee">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="getFrDrafts" class="org.sjtu.p615.fracas.action.FailureReportAction" method="takeFailureReportDrafts">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="getByAttr" class="org.sjtu.p615.fracas.action.FailureReportAction" method="takeFailureReportByAttr">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="getFarByAttr" class="org.sjtu.p615.fracas.action.FailureAnalysisReportAction" method="takeFailureAnalysisReportByAttr">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="get_project" class="org.sjtu.p615.fracas.action.ProjectSelectionAction" method="takeProject">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="get_project_session" class="org.sjtu.p615.fracas.action.ProjectSelectionAction" method="takeProjectSession">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="select_project" class="org.sjtu.p615.fracas.action.ProjectSelectionAction" method="selectProject">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="get_selections" class="org.sjtu.p615.fracas.action.FracasMetadataAction" method="getFrMetadataByProject">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="get_Amounts" class="org.sjtu.p615.fracas.action.FailureReportAction" method="getProjectTodoListAmounts">
+  			<result type = "json">
+  				<param name="root">result</param>
+  			</result>
+  		</action>
+
+		<action name="get_TotalAmounts" class="org.sjtu.p615.fracas.action.FailureReportAction" method="getTotalTodoListAmount">
+  			<result type = "json">
+  				<param name="root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="login" class="org.sjtu.p615.fracas.action.LoginAction" method="login">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="load_fr_metadata" class="org.sjtu.p615.fracas.action.FracasMetadataAction" method="getOne">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="save_metadata" class="org.sjtu.p615.fracas.action.FracasMetadataAction" method="save">
+  			<result type = "json">
+  				<param name = "root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="saveFailureAnalysisReport" class="org.sjtu.p615.fracas.action.FailureAnalysisReportAction" method="saveFailureAnalysisReport">
+  			<result type = "json">
+  				<param name="root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="getFarsByEmployee" class="org.sjtu.p615.fracas.action.FailureAnalysisReportAction" method="getFailureAnalysisReportByEmployee">
+  			<result type = "json">
+  				<param name="root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="getOneFar" class="org.sjtu.p615.fracas.action.FailureAnalysisReportAction" method="getOneFailureAnalysisReport">
+  			<result type = "json">
+  				<param name="root">result</param>
+  			</result>
+  		</action>
+  		
+  		<action name="getFarDrafts" class="org.sjtu.p615.fracas.action.FailureAnalysisReportAction" method="getFailureAnalysisReportDrafts">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="getAllMetadata" class="org.sjtu.p615.fracas.action.FracasMetadataAction" method="getAllMetadata">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="getAllMetadataNames" class="org.sjtu.p615.fracas.action.FracasMetadataAction" method="getAllMetadataNames">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="saveCar" class="org.sjtu.p615.fracas.action.CorrectiveActionReportAction" method="saveCar">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="getAllCars" class="org.sjtu.p615.fracas.action.CorrectiveActionReportAction" method="getAllCars">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<action name="getOneCar" class="org.sjtu.p615.fracas.action.CorrectiveActionReportAction" method="getOneCar">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+    </package>
+
+
+    <!-- Add packages here -->
+
+</struts>

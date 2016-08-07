@@ -1,0 +1,200 @@
+package org.sjtu.p615.dao;
+
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
+import org.sjtu.p615.entity.Employee;
+import org.sjtu.p615.entity.Group;
+import org.sjtu.p615.entity.Plan;
+import org.sjtu.p615.entity.Role;
+import org.sjtu.p615.entity.Roleinfo;
+
+public class RoleDao implements IRoleDao {
+
+	public RoleDao() {
+		// Configuration cfg=new
+		// Configuration().configure("1.4hibernate.cfg.xml");
+		// ServiceRegistry sr = new
+		// ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();
+		// this.sessionFactory = cfg.buildSessionFactory(sr);
+		// TODO Auto-generated constructor stub
+	}
+
+	private SessionFactory sessionFactory;
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	@Override
+	public List<Role> getRoleByEmployeeId(String EmployeeId) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from Role where EmployeeId='" + EmployeeId
+				+ "'and DeleteMark=0";
+		Query q = session.createQuery(hql);
+		List<Role> role = q.list();
+		tx.commit();
+		session.close();
+		return role;
+	}
+
+	@Override
+	public String getEmployeeId(int RoleKey) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from Role where RoleKey='" + RoleKey
+				+ "' and DeleteMark=0";
+		Query q = session.createQuery(hql);
+		Role role = (Role) q.uniqueResult();
+		tx.commit();
+		session.close();
+		return role.getEmployeeId();
+	}
+
+	@Override
+	public Role getOneRole(int RoleKey) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from Role where RoleKey='" + RoleKey
+				+ "' and DeleteMark=0";
+		Query q = session.createQuery(hql);
+		Role role = (Role) q.uniqueResult();
+		tx.commit();
+		session.close();
+		return role;
+	}
+
+	@Override
+	public List<Role> getRoleByProject(String projectId) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from Role where ProjectId='" + projectId
+				+ "'and DeleteMark=0";
+		Query q = session.createQuery(hql);
+		List<Role> role = q.list();
+		tx.commit();
+		session.close();
+		return role;
+	}
+
+	@Override
+	public void saveRole(Role role) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.saveOrUpdate(role);
+		if(role.getRoleId()==17){
+			Employee emp = (Employee) session.get(Employee.class, role.getEmployeeId());
+			emp.setRoleId(17);
+			session.saveOrUpdate(emp);
+		}
+		tx.commit();
+		session.close();
+	}
+
+	@Override
+	public List<Role> getByGroup(int GroupId) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from Role where GroupId='" + GroupId
+				+ "'and DeleteMark=0";
+		Query q = session.createQuery(hql);
+		List<Role> role = q.list();
+		tx.commit();
+		session.close();
+		return role;
+	}
+
+	@Override
+	public List<Role> getByProject(int ProjectId) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from Role where ProjectId='" + ProjectId
+				+ "'and deleteMark=0";
+		Query q = session.createQuery(hql);
+		List<Role> role = q.list();
+		tx.commit();
+		session.close();
+		return role;
+	}
+
+	@Override
+	public void addRoles(List<Role> roles) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		for (Role tmp : roles) {
+			session.save(tmp);
+		}
+		tx.commit();
+		session.close();
+	}
+
+	@Override
+	public void deleteOneRole(int roleKey) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Role role = (Role) session.get(Role.class, roleKey);
+		role.setDeleteMark(true);
+		tx.commit();
+		session.close();
+	}
+
+	@Override
+	public List<Role> getOneRole(String employeeId, String projectName) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from Role where EmployeeId='" + employeeId
+				+ "'and ProjectName='" + projectName + "'and deleteMark=0";
+		Query q = session.createQuery(hql);
+		List<Role> role = q.list();
+		tx.commit();
+		session.close();
+		return role;
+	}
+
+	@Override
+	public List<Role> getByRoleId(int roleId) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from Role where RoleId='" + roleId + "'and deleteMark=0";
+		Query q = session.createQuery(hql);
+		List<Role> role = q.list();
+		tx.commit();
+		session.close();
+		return role;
+	}
+
+	@Override
+	public List<String> getEmpsByPrj(String prjId) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "select distinct r.employeeId from Role r where r.projectId='"+prjId+"'and r.deleteMark=0";
+		Query q = session.createQuery(hql);
+		List<String> res = q.list();
+		tx.commit();
+		session.close();
+		return res;
+	}
+}

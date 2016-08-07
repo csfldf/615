@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title></title>
+    <!--<script type="application/javascript" src="js/base/echarts/echarts-all.js"></script>-->
+</head>
+<script src="../js/avalon-1.3.6.js"></script>
+<script src="../js/base/jquery-1.11.1.js"></script>
+<script src="../js/base/bootstrap.js"></script>
+<script src="../js/globalConfig.js"></script>
+<link rel="stylesheet" href="../css/base/bootstrap.css">
+<body>
+<div class="container-fluid" ms-controller="planStatisticsReports">
+    <div class="row-fluid">
+        <form class="form-inline">
+            <span>请选择统计类型：</span>
+            <select class="input-medium" autofocus required ms-duplex="type">
+                <option value="byProject" selected="selected">按项目工作包统计</option>
+                <option value="byGroup">按专业组工作包统计</option>
+                <option value="byEmployee">按员工任务统计</option>
+                <option value="byDepartment">按部门工作包统计</option>
+            </select>
+            <select class="input-medium" name="dateType" autofocus required
+                    ms-duplex="dateType">
+                <option value="planIssuedDate" selected="selected">按任务发布日期</option>
+                <option value="planDeadlineDate">按任务截止日期</option>
+                <option value="planStartDate">按任务实际开始日期</option>
+                <option value="planFinishDate">按任务实际结束日期</option>
+            </select>
+            <div class="input-prepend">
+                <span class="add-on">开始日期</span>
+                <input class="input-medium" name="startDate" type="date" autofocus required
+                       ms-duplex="startDate">
+            </div>
+            <div class="input-prepend">
+                <span class="add-on">结束日期</span>
+                <input class="input-medium" name="finishDate" type="date" placeholder="结束日期" required
+                       ms-duplex="finishDate">
+            </div>
+            <label class="btn btn-primary" ms-click="continueStat">统计</label>
+        </form>
+    </div>
+        <!--<form class="form-inline" ms-visible="projectId!=''">
+            <div class="input-prepend">
+                <span class="add-on">员工姓名</span>
+                <input class="input-medium" name="employeeName" type="text" required onfocus="this.blur()"
+                       ms-duplex="employeeName">
+            </div>
+            <a class="btn"
+                    ms-click="initEmployeeSelector('#selector')">选择员工</a>
+            &lt;!&ndash;<button class="btn" data-toggle="modal" data-target="#employeeSelector">选择人员</button>&ndash;&gt;
+            <button class="btn"
+                    ms-click="update($event,'byEmployeeId')">统计</button>
+        </form>
+        <form class="form-inline" ms-visible="projectId!=''">
+            <div class="input-prepend">
+                <span class="add-on">专业组名称</span>
+                <input class="input-medium" name="groupName" type="text" required onfocus="this.blur()"
+                       ms-duplex="groupName">
+            </div>
+            <a class="btn"
+                    ms-click="initGroupSelector('#selector')">选择专业组</a>
+            <button class="btn"
+                    ms-click="update($event,'byGroupId')">统计</button>
+        </form>
+        <form class="form-inline" ms-visible="projectId!=''">
+            <div class="input-prepend">
+                <span class="add-on">部门名称</span>
+                <input class="input-medium" name="departmentName" type="text" required onfocus="this.blur()"
+                       ms-duplex="departmentName">
+            </div>
+            <a class="btn"
+               ms-click="initDepartmentSelector('#selector')">选择部门</a>
+            <button class="btn"
+                    ms-click="update($event,'byDepartmentId')">统计
+            </button>
+        </form>
+    </div>-->
+    <div class="row-fluid">
+        <form>
+            <legend style="background-color: #abc5cb"><strong> 工作包统计</strong></legend>
+            <table class="table table-bordered table-striped table-hover table-condensed" id="planSummaryTable"></table>
+        </form>
+    </div>
+
+    <br>
+
+    <div class="row-fluid">
+        <form>
+            <legend style="background-color: #abc5cb"><strong> 工作包详细情况</strong></legend>
+        <table class="table-bordered table" id="planStatisticsTable"></table>
+        </form>
+    </div>
+
+    <br>
+
+    <div class="row-fluid" style="height: 100%">
+        <form>
+            <legend style="background-color: #abc5cb"><strong> 工作包分析图</strong></legend>
+            <!-- 统计图表 -->
+            <div class="span12" id="planChart"
+                 style="border: 1px solid #dddddd; padding: 0px;border-radius:4px;margin-bottom: 10px;margin-left: 0px">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

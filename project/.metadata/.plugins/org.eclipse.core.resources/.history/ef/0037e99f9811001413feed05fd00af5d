@@ -1,0 +1,8 @@
+package org.sjtu.p615.fracas.service;
+
+import org.sjtu.p615.entity.FailureBasicInfo;
+import org.sjtu.p615.entity.FailureReport;
+
+public interface IFailureReport {
+	public void addFailureReport(FailureBasicInfo failureBasicInfo, FailureReport failureReport);
+}

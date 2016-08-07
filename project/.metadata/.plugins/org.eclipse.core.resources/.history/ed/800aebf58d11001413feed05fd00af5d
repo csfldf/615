@@ -1,0 +1,5 @@
+package org.sjtu.p615.dao;
+
+public class IFailureReportDao {
+
+}

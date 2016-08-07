@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-9-27 21:50:52 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.Roleinfo" table="roleinfo" catalog="testdb">
+        <id name="roleId" type="java.lang.Integer">
+            <column name="RoleId" />
+            <generator class="identity" />
+        </id>
+        <property name="roleName" type="string">
+            <column name="RoleName" />
+        </property>
+        <property name="permissionLevel" type="java.lang.Integer">
+            <column name="PermissionLevel" />
+        </property>
+        <property name="deleteMark" type="java.lang.Boolean">
+            <column name="DeleteMark" />
+        </property>
+    </class>
+</hibernate-mapping>

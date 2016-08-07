@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- For Test : No Cache -->
+	<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+	<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+	<META HTTP-EQUIV="expires" CONTENT="0">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>草稿列表</title>
+    <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/demo.css">
+    
+	<script type="text/javascript"  src="../js/amScript.js"></script>
+    <script type="text/javascript"  src="../js/getUrlParam.js"></script>  
+    <script type="text/javascript"  src="../js/errorMessage.js"></script>
+    <script type="text/javascript"  src="../js/amCookie.js"></script>
+    
+    <script type="text/javascript" src="../js/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script> 
+     <script type="text/javascript" src="../js/datagrid-detailview.js"></script> 
+    <script type="text/javascript" src="../js/datagrid-filter.js"></script>
+ 	<script type="text/javascript" src="../js/datagrid-groupview.js"></script> 
+    
+</head>
+<body>
+<script>
+function initTable(tableId,url){
+	 var $t=$("#"+tableId);
+	 $t.datagrid({
+		url					:	url,
+		loadMsg				: 	'Processing, please wait …',
+		//定义Expand Row的详细视图
+		onLoadSuccess		:	function(data){	
+									//Load完成时每一行设置button的样式								
+// 									funcList.execute();
+// 									funcList.clear();
+   								if($("#dg").datagrid('getData').rows==null||$("#dg").datagrid('getData').rows=="")
+   									window.parent.document.getElementById("main-view").src="plan_report.html?type=new";
+								$("#dg").datagrid('hideColumn','scriptKey');
+									//合并同类项-未完成
+								},
+// 		onHeaderContextMenu	: 	function(e, field){
+// 									e.preventDefault();
+// 									if (!cmenu){
+// 										createColumnMenu();
+// 									}
+// 									cmenu.menu('show', {
+// 										left:e.pageX,
+// 										top:e.pageY
+// 									});
+// 								},		
+//  		idField				:	'roleId', 
+// 		onBeforeLoad		: 	function () {  
+// 									$(this).datagrid('rejectChanges');  
+// 								}
+	 });
+
+}
+function modifyScript(){
+	var script=$('#dg').datagrid('getSelected');
+	var scriptKey=script.scriptKey;
+	if(scriptKey != null&&scriptKey!=""){
+// 			setFCookie("roleID_"+str,roleKey);
+ 			//window.parent.document.cookie = planCode + "<";
+			location.href="plan_report.html?type=script&scriptKey="+scriptKey;
+			$("#main-view").attr("src", "./plan_report.html");
+		}
+	else{
+		alert("please choose a line");
+	}
+}
+function deleteScript(){
+	
+}
+var roleData = "";//存放传过来的数据
+
+
+$(document).ready(function(e) {
+
+	var username = window.parent.document.getElementById("user").innerHTML;
+
+	var url=buildUrl(C.URL_GET_SCRIPT_LIST,[C.URLPARAS_GET_SCRIPT_LIST[0],username]);
+   	initTable('dg',url);
+
+
+});
+// function formatScriptAction(value,rowData,rowIndex){
+// 	button = '<a id="'+ actionType.idPrefix + rowIndex +tableId+'" href="javascript:operationButtonClick(\''+ 
+// 	tableId +'\',\'' + actionHref[0] + '\',' + rowIndex + ');">' + actionType.text +'</a>';
+// }
+</script>
+
+		<table id="dg" title="草稿管理" style="width:auto;height:auto" data-options="
+		                                                                        pagination		:	true,
+		                                                                        nowrap			:	true,
+		                                                                        collapsible		:	true,
+		                                                                        striped			:	true,
+		                                                                        resizeHandle	:	'both',
+		                                                                        autoRowHeight	:	true,
+		                                                                        checkOnSelect	:	false,
+		                                                                        rownumbers		:	true,
+		                                                                        remoteSort		:	false,
+		                                                                        showHeader		:	true,
+		                                                                        showFooter		:	true,
+		                                                                        fitColumns		:	true,                
+		                                                                        multiSort		:	true,
+		                                                                        toolbar			:	'#tb',
+		                                                                        singleSelect	:	true">
+<!-- 		    <thead data-options="frozen:true"> -->
+<!--     			<tr> -->
+<!--         			<th data-options="field:'chechbox',checkbox:true"></th> -->
+<!--         		</tr> -->
+<!--     		</thead> -->
+		    <thead>
+		    	<tr>
+		        	<th data-options="field:'planCode'" >计划编号</th>
+		               <th data-options="field:'planSerialNumber'" >计划序列号</th>
+		               <th data-options="field:'scriptKey'" >计划序列号</th>
+<!-- 		               <th data-options="field:'scriptAction',formatter:formatScriptAction" width="100px">操作</th> -->
+<!-- 		               <th data-options="field:'departmentName'">部门名称</th> -->
+<!-- 		               <th data-options="filed:'roleKey'" style="display:none" >RoleKey</th> -->
+		        </tr>
+		    </thead>
+		</table>
+		<div>
+		    <input type="submit" onclick="modifyScript()" value="继续创建"/>
+<!-- 		    <input type="submit" onclick="deleteScript()" value="删除草稿"/> -->
+		</div>
+	</body>
+</html>

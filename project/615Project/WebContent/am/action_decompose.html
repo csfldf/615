@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div ms-important="actionDecompose">
+    <div class="panel panel-default" style="display: block" id="actionDecompose">
+        <div class="panel-heading">行动项发布</div>
+        <div class="accordion-body collapse" id="decomposeAction" style="position:relative;bottom:0px;left:0px;height: auto;">
+            <div class="accordion-inner" contenteditable="false">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <td><input ms-click="checkAll" ms-checked="checkedAll" type="checkbox"></td>
+                        <td>编号</td>
+                        <td>行动项内容
+                            <!--<span class="sort-icons" style="position:relative">
+                                <i class="icon-chevron-up" ms-click="orderByDict('wproject',proDGrid, 'projectName', 1)"></i>
+                                <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectName', 0)"></i>
+                            </span>-->
+                        </td>
+                        <td>开始时间
+                            <!--<span class="sort-icons" style="position:relative">
+                                <i class="icon-chevron-up" ms-click="orderByDict('wproject,'proDGrid, 'projectStartingDate', 1)"></i>
+                                <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectStartingDate', 0)"></i>
+                            </span>-->
+                        </td>
+                        <td>完成时间
+                            <!--<span class="sort-icons" style="position:relative">
+                                <i class="icon-chevron-up" ms-click="orderByDict('wproject',proDGrid, 'projectDeadlineDate', 1)"></i>
+                                <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectDeadlineDate', 0)"></i>
+                            </span>-->
+                        </td>
+                        <td>责任人
+                            <!--<span class="sort-icons" style="position:relative">
+                                <i class="icon-chevron-up" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 1)"></i>
+                                <i class="icon-chevron-down" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 0)"></i>
+                            </span>-->
+                        </td>
+                        <td>来源
+                            <!--<span class="sort-icons" style="position:relative">
+                                <i class="icon-chevron-up" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 1)"></i>
+                                <i class="icon-chevron-down" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 0)"></i>
+                            </span>-->
+                        </td>
+                        <td>操作
+                            <!--<span class="sort-icons" style="position:relative">
+                                <i class="icon-chevron-up" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 1)"></i>
+                                <i class="icon-chevron-down" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 0)"></i>
+                            </span>-->
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-hover="hover" ms-repeat="curActionReport">
+                        <td><input type="checkbox" ms-checked="el.checked" ></td>
+                        <td>{{$index+indexActionReportPage*pageSize+1}}</td>
+                        <td><textarea ms-duplex="el.actionContent" type="text" style="width: 160px;height:20px"
+                                      ms-class="{{el.actionId}}" ms-change="actionContentLegalityJudge(el)"
+                                      ms-focus="expandContent(el.actionId)" ms-blur="shrinkContent(el.actionId)"></textarea>
+                        </td>
+                        <td><div class="controls">
+                            <input ms-duplex="el.actionStartDate" type="date" class="input-xlarge span11" style="width: 145px"
+                                   name="actionStartDate"
+                                   ms-change="dateLegalityJudge('actionStartDate',el)" required></div></td>
+                        <td><input ms-duplex="el.actionDeadlineDate" type="date" class="input-xlarge span11" style="width: 145px"
+                                   ms-change="dateLegalityJudge('actionDeadlineDate',el)"></td>
+                        <td><div class="controls">
+                            <div class="input-append">
+                                <input onfocus="this.blur()" style="width: 79px"
+                                       ms-duplex="el.actionController" type="text" required>
+                                <a class="inline btn" ms-click="initEmployeeSelector('#selector',el)">选择员工</a>
+                            </div>
+                        </div></td>
+                        <td>{{el.source}}</td>
+                        <td><a href="javascript:void(0)" ms-click="deleteAction(el)">删除</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="height: 50px"></div>
+            </div>
+            <span style="position:absolute;bottom: 20px;left: 20px">每页显示</span>
+            <select id="select-action" ms-change="setPages"
+                    style="position: absolute;bottom: 5px;left: 80px;width: 60px">
+                <option value ="5"  selected="selected">5</option>
+                <option value ="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select><span style="position:absolute;bottom: 20px;left: 145px">共：{{actionReport.length}}项</span>
+            <div class="pager" style="position:absolute;bottom:0px;left:40%">
+                <button ms-click="preActionReportPage"><i class="icon-chevron-left"></i></button>
+                第 {{indexActionReportPage+1}} 页，共 {{pagesAction}} 页
+                <button ms-click="nextActionReportPage"><i class="icon-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <input class="btn btn primary" type="button" value="新增行动项"
+                   ms-click="addAction" style="display: inline-block;">&nbsp;&nbsp;
+            <input class="btn btn primary" type="button" value="行动项发布"
+                   ms-click="releaseAction">&nbsp;&nbsp;
+            <input class="btn btn primary" type="button" value="目录查看"
+                   ms-click="toActionDirView()">
+            <input class="btn btn primary" type="button" value="退出"
+                   ms-click="closeActionDecomposeTab($event)">
+        </div>
+    </div>
+    <br><br>
+    <div class="panel panel-default">
+        <div class="panel-heading">行动项目录信息</div>
+        <br>
+        <div class="span2">
+            <div class="control-group"><!-- Text input-->
+                <div class="controls">
+                    <div >
+                        <label class="control-label ">开始时间:</label>
+                        <span>{{actionTmpl.actionStartDate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span2">
+            <div class="control-group"><!-- Text input-->
+                <div class="controls">
+                    <div >
+                        <label class="control-label ">完成时间:</label>
+                        <span>{{actionTmpl.actionDeadlineDate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span2">
+            <div class="control-group"><!-- Text input-->
+                <div class="controls">
+                    <div >
+                        <label class="control-label ">负责人:</label>
+                        <span>{{actionTmpl.actionController}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-5-19 15:10:56 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.DocLibrary" table="doclibrary" catalog="testdb">
+        <id name="uuid" type="string">
+            <column name="UUID" />
+            <generator class="assigned" />
+        </id>
+        <property name="title" type="string">
+            <column name="Title" not-null="true" />
+        </property>
+        <property name="type" type="string">
+            <column name="Type" not-null="true" />
+        </property>
+        <property name="size" type="long">
+            <column name="Size" not-null="true" />
+        </property>
+        <property name="ownerId" type="string">
+            <column name="OwnerId" length="11" />
+        </property>
+        <property name="ownerName" type="string">
+            <column name="OwnerName" length="11" />
+        </property>
+        <property name="projectId" type="string">
+            <column name="ProjectId" length="11"/>
+        </property>
+        <property name="modifiedDate" type="timestamp">
+            <column name="ModifiedDate" length="19" not-null="true" />
+        </property>
+        <property name="attachmentName" type="string">
+            <column name="AttachmentName" not-null="true" />
+        </property>
+        <property name="deleteMark" type="boolean">
+            <column name="DeleteMark" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-9-27 21:50:52 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class catalog="testdb" name="org.sjtu.p615.entity.Script" table="script">
+  <id name="scriptKey" type="java.lang.Integer">
+   <column name="ScriptKey"/>
+   <generator class="identity"/>
+  </id>
+  <property generated="never" lazy="false" name="employeeId" type="string">
+   <column name="EmployeeId"/>
+  </property>
+  <property generated="never" lazy="false" name="uuid" type="string">
+   <column name="UUID"/>
+  </property>
+  <property generated="never" lazy="false" name="scriptContent" type="string">
+   <column length="1000" name="ScriptContent"/>
+  </property>
+  <property name="scriptType" type="string">
+  	<column  name="ScriptType"/>
+  </property>
+  
+ </class>
+</hibernate-mapping>

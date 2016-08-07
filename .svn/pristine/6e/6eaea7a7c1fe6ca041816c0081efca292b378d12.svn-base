@@ -1,0 +1,40 @@
+#navigator-list {
+	position:absolute;
+	top:50%;
+	left:40%;
+	width:100%;
+	height:100%;
+}
+
+#navigator-list li{
+	width:150px;
+	float:left;
+	list-style:none;
+	text-align:center;
+	
+}
+
+#navigator-list a{
+	font-size:18px;
+}
+
+#report-view {
+	align:center;
+	width:100%;
+	height:100%;
+	frameborder:no;
+	border:0px;
+	scrolling:no;
+}
+
+.function-list {
+	
+}
+
+.function-list li{
+	list-style:none;
+}
+
+.function-list a{
+	font-size:15px;
+}

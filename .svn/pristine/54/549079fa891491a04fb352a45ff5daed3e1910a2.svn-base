@@ -1,0 +1,118 @@
+<HTML>
+    <head>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+    <link rel="stylesheet" type="text/css" href="../uploadify/uploadify.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="../uploadify/jquery.uploadify.min.js"></script>
+    <script type="text/javascript" src="../uploadify/jquery.uploadify.js"></script>
+    <script type="text/javascript">
+		var list = "";
+		$(document).ready(function() {
+			//设置uploadify的属性
+			$('#file_upload').uploadify({
+	            'swf'      : '../uploadify/uploadify.swf',
+	            'uploader' : '../am/uploadmultfile.action',
+	         	//'uploader':		'../uploadify/uploadify.php',
+				'buttonText'	: 'Select..',
+				'floder'		: 'upload',
+				//'formData'	: {'planCode':$("#planCode").val()},
+				//'formData'	: {'planCode':"112"},
+				'auto'			: false,
+				'multi'			: true,//使用会导致按键图标消失
+				/*'fileObjName'	: 'outputfile',*/
+				'fileObjName'  : 'file_upload',
+				'height'		: 18,
+				'width'			: 80,
+				'sizeLimit' 	: 10*1024*1024,
+				//'queueID'		: 'fileQueue', //使用的话会导致上传图标消失
+				'displayData'	: 'speed',
+				'queueSizeLimit': 100, //可上传的文件个数
+				'preventCaching': true,
+				'rollover'		: true,//button是否变换
+				'removeCompleted': false,
+				'progressData'	: 'all',
+				'transparent'	: false,
+				'cancelImg'		: '../uploadify/uploadify-cancel.png',
+				//'onUploadSuccess' : function(file, data, response) {alert('The file was saved to: ' + data);}
+			    'onUploadSuccess' : function(file, data, response) {
+			    //	var obj = jQuery.parseJSON(data);       
+			    //	alert(data);     
+			    //	list = list + "{location:" + data + "},";       
+			    	if(list == null)
+			   	 		list = data + ";";
+			   	  	else
+			   	  		list = list + data + ";";
+                 //	var dataObj=eval("("+obj.mylist+")");//截取message部分转换为json对象   
+                 //	alert(dataObj);
+			    },
+			    'onQueueComplete' : function(queueData) {  
+                   //alert(queueData.uploadsSuccessful + ' 个文件上传成功！');  
+                   //$("#shownode").append("<p>已成功上传"+queueData.uploadsSuccessful+"个文件</p>");
+                  // list = list + "]"; 
+                   callAction(list);
+                 //  alert(list);
+                //   var jsonobject = eval("{" + list + "}");
+                //   alert(jsonobject[0].location);
+               }  
+				// Your options here
+			});
+		});
+		function callAction(paramdata){
+			$.post('../am/import2Db.action',
+						{
+						//	userName:"zhaoyao",
+						//	password:"1017392352"
+							'uploadFiles':paramdata
+						},
+						function back(data){
+							var backdata = eval("("+data+")");
+							if(backdata != ""){
+							//	var backdata = parse(data);
+								var printInfo = "The related MS project files:\r\n";
+								for(var i = 0; i < backdata.length ; i++){
+										//alert(backdata[i]);
+										printInfo += backdata[i] + "\r\n";
+								}
+								printInfo += "are not uploaded!\r\nPlease upload these files to server!";
+								alert(printInfo);
+							}
+							else
+								alert("import project to Database complete!");
+						});
+		}
+	</script>
+    </head>
+    
+    <body class=pagebackground>
+        
+        <form id="form" action="uploadmultfile" method="POST" encType="multipart/form-data">
+            <table class=dialog1 height="20" cellSpacing="1" cellPadding="8" width="90%" align="center">
+                <tbody>
+                <tr>
+                	
+			        <td><input type="file" name="file_upload" id="file_upload" width="160px"/><br>
+			        <p>
+          			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#file_upload').uploadify('upload','*');">Upload</a>
+        			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#file_upload').uploadify('cancel','*');">Cancel</a>
+			        </p>
+			        </td>
+			    </tr>
+			    <tr><td>
+			    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="callAction()">test</a>
+			        </td>
+			    </tr>
+                </tbody>
+            </table>
+        </form>
+    </body>
+    <script>
+    	function uplaodFile(){
+    		$('#file_upload').uploadify('upload','*');
+    		callAction();
+    	}
+    </script>
+</HTML>

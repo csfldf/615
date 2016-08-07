@@ -1,0 +1,28 @@
+package org.sjtu.p615.fracas.action;
+
+import org.sjtu.p615.fracas.service.IContractRegistService;
+
+public class ContractRegistAction {
+	private String params;
+	private String result;
+	private IContractRegistService contractRegistService;
+	
+	public String getParams() {
+		return params;
+	}
+	public void setParams(String params) {
+		this.params = params;
+	}
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
+	}
+	public IContractRegistService getContractRegistService() {
+		return contractRegistService;
+	}
+	public void setContractRegistService(IContractRegistService contractRegistService) {
+		this.contractRegistService = contractRegistService;
+	}
+}

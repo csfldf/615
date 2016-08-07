@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/panel.css"/>
+    <link rel="stylesheet" href="js/base/bs-tagsinput/bootstrap-tagsinput.css"/>
+    <!--<title >沟通管理</title>-->
+</head>
+<body>
+    <div ms-controller="msgDetailMgr">
+        <div class="panel panel-default" style="position:relative;" ms-visible="true">
+            <div class="panel-heading">{{typeName}}</div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>所属项目
+                    <span class="sort-icons" style="position:relative">
+                        <i class="icon-chevron-up" ms-click="orderByDict('msgs', 'prjName', 1)"></i>
+                        <i class="icon-chevron-down" ms-click="orderByDict('msgs', 'prjName', 0)"></i>
+                        <!--<i class="icon-filter" ms-click="filterConfig('msgs','prjName')" style="position: relative;left: 5%"></i>-->
+	        	    </span>
+                    </th>
+                    <th>标题
+                    </th>
+                    <th>内容
+                    </th>
+                    <th>发布人
+                    <span class="sort-icons" style="position:relative">
+                        <i class="icon-chevron-up" ms-click="orderByDict('msgs', 'empName', 1)"></i>
+                        <i class="icon-chevron-down" ms-click="orderByDict('msgs', 'empName', 0)"></i>
+                        <!--<i class="icon-filter"  ms-click="filterConfig('msgs','empName')" style="position: relative;left: 5%"></i>-->
+	        	    </span></th>
+                    <th>操作
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ms-attr-id="'msg'+el.id" class="one-row" ms-repeat="data.msgs.curReports" ms-click="detail(el.id)">
+                    <td>{{el.prjName}}</td>
+                    <td>{{el.title}}</td>
+                    <td>{{el.content}}</td>
+                    <td>{{el.empName}}</td>
+                    <td>
+                        <a  type="button" ms-visible="el.path" class="btn-success" ms-href="el.downloadHref">下载</a>
+                        <!--<button ms-visible="el.state" class="btn-danger" ms-click="recall(el.id)">撤回</button>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <span style="position:relative;bottom: 3px;left: 1%">每页显示</span>
+                <select ms-change="setPagesMessage('msgs')" ms-duplex="data.msgs.pageSize"
+                        style="position: relative;bottom: 0px;left: 2%;width: 4%">
+                    <option value ="5" selected="selected">5</option>
+                    <option value ="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+                <span style="position: relative;bottom:3px;left: 5%">从总共{{data.msgs.totalNum}}项中选择了{{data.msgs.filterNum}}项</span>
+                <span style="position: relative;bottom:3px;left: 30%">
+                    <button ms-click="prePage('msgs')"><i class="icon-chevron-left" ></i></button>
+                    第 {{data.msgs.indexPage+1}} 页，共 {{data.msgs.pageNum}} 页
+                    <button ms-click="nextPage('msgs')"><i class="icon-chevron-right" ></i></button>
+                </span>
+                <!--<span style="position: relative;left:60%"><a ms-click="reset('msgs')">重置</a></span>-->
+            </div>
+        </div>
+    </div>
+    <!--<div class="modal fade" ms-attr-id="'filterModal'+id" tabindex="-1" role="dialog"-->
+          <!--aria-hidden="true" ms-controller="msgDetailMgr" style="display: none; ">-->
+        <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<button type="button" class="close"-->
+                            <!--data-dismiss="modal" aria-hidden="true">-->
+                        <!--&times;-->
+                    <!--</button>-->
+                    <!--<h4 class="modal-title">-->
+                        <!--筛选内容-->
+                    <!--</h4>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<div class="panel panel-default" ms-visible="true">-->
+                        <!--<table class="table table-hover">-->
+                            <!--<thead>-->
+                            <!--<tr>-->
+                                <!--<th>选择</th>-->
+                                <!--<th>筛选内容</th>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<tr ms-repeat="filter.org_values">-->
+                                <!--<td>-->
+                                    <!--<input class="checkbox" type="checkbox" ms-duplex-radio="el.enabled">-->
+                                <!--</td>-->
+                                <!--<td>-->
+                                    <!--{{el.name}}-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                    <!--<button style="float:right" type="button" ms-click="executeFilter()" class="btn btn-primary">-->
+                        <!--确认-->
+                    <!--</button>-->
+                    <!--<button style="float:left" type="button" ms-attr-id="'filterModal'+id+'_close_btn'" class="btn btn-default"-->
+                            <!--data-dismiss="modal" >关闭-->
+                    <!--</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</body>
+<script src="../js/avalon.js"></script>
+<link rel="stylesheet" href="../css/base/bootstrap.css">
+<script src="../js/globalConfig.js"></script>
+<script>
+    require(['am.msgDetail','jquery','bootstrap'], function (data,$) {
+        avalon.scan()
+    } );
+
+</script>
+</html>

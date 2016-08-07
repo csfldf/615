@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="../js/avalon.js"></script>
+<link rel="stylesheet" href="../css/base/bootstrap.css">
+<script src="../js/globalConfig.js"></script> 
+<title>615项目</title>
+</head>
+<body>
+<div ms-controller="frMode">
+	<h2>{{title}}</h2>
+	<table class="table table-hover">
+			<thead>
+				<tr>
+					<th ms-repeat="frInfo">{{el}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ms-repeat="onGoingFrs">
+					<td>{{el.frNumber}}</th>
+					<td>{{el.project}}</th>
+					<td>{{el.frCreater}}</th>
+					<td>{{el.frCreateDate}}</th>
+					<td>{{el.reporter}}</th>
+					<td>{{el.happenTIme}}</th>
+					<td>{{el.status}}</th>
+				</tr>
+			</tbody>
+		</table>
+</div>
+</body>
+</html>

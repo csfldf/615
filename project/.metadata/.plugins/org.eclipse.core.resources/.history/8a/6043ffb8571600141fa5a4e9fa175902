@@ -1,0 +1,20 @@
+package org.sjtu.p615.fracas.action;
+
+import org.sjtu.p615.entity.FailureBasicInfo;
+
+public class TestAction {
+	private FailureBasicInfo failureBasicInfo;
+
+	public FailureBasicInfo getFailureBasicInfo() {
+		return failureBasicInfo;
+	}
+
+	public void setFailureBasicInfo(FailureBasicInfo failureBasicInfo) {
+		this.failureBasicInfo = failureBasicInfo;
+	}
+	
+	public String execute() {
+		System.out.println("aaa");
+		return "success";
+	}
+}

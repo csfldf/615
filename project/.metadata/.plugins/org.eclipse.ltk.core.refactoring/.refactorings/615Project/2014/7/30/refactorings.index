@@ -1,0 +1,38 @@
+1405939243868	Encapsulate field 'sessionFactory'
+1405939977054	Encapsulate field 'failureBasicInfoDao'
+1405940491775	Encapsulate field 'failureBasicInfoService'
+1405940742408	Copy file
+1405947783807	Encapsulate field 'test'
+1405956597993	Delete elements
+1406024376858	Encapsulate field 'Id'
+1406024384699	Encapsulate field 'Environment'
+1406024389364	Encapsulate field 'Description'
+1406024394552	Encapsulate field 'CommtiteeSign'
+1406024400774	Encapsulate field 'Type'
+1406024408425	Encapsulate field 'OperatorSign'
+1406024412863	Encapsulate field 'TechnicalLeaderOpinion'
+1406024417288	Encapsulate field 'Mrb'
+1406024421659	Encapsulate field 'SystemType'
+1406024426355	Encapsulate field 'QualityIssueCategory'
+1406024431218	Encapsulate field 'Mark'
+1406024436492	Encapsulate field 'time'
+1406024441159	Encapsulate field 'OperatorSignDate'
+1406024446995	Encapsulate field 'FailureMode'
+1406024452125	Encapsulate field 'Process'
+1406024457139	Encapsulate field 'CommitteeSignDate'
+1406024462039	Encapsulate field 'Reporter'
+1406024466230	Encapsulate field 'Column19'
+1406024784325	Encapsulate field 'sessionFactory'
+1406026562629	Encapsulate field 'failureReportDao'
+1406029888291	Encapsulate field 'failureBasicInfoDao'
+1406030579537	Encapsulate field 'FailureSN'
+1406030583660	Encapsulate field 'FailureModel'
+1406030587271	Encapsulate field 'FailureReportNum'
+1406030794397	Delete elements
+1406030826821	Encapsulate field 'failureReportService'
+1406031304623	Delete elements
+1406039208225	Encapsulate field 'failureBasicInfo'
+1406039211717	Encapsulate field 'failureReport'
+1406039875206	Delete elements
+1406043752521	Encapsulate field 'FailureInfoId'
+1406202310497	Delete elements

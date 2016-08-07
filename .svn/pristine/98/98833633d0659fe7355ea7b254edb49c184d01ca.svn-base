@@ -1,0 +1,37 @@
+package org.sjtu.p615.fracas.service;
+
+import org.sjtu.p615.dao.IFailureBasicInfoDao;
+import org.sjtu.p615.dao.IFailureReportDao;
+import org.sjtu.p615.entity.FailureBasicInfo;
+
+public class FailureReport implements IFailureReport {
+	
+	private IFailureReportDao failureReportDao;
+	private IFailureBasicInfoDao failureBasicInfoDao;
+
+
+	public IFailureReportDao getFailureReportDao() {
+		return failureReportDao;
+	}
+
+	public void setFailureReportDao(IFailureReportDao failureReportDao) {
+		this.failureReportDao = failureReportDao;
+	}
+
+	public IFailureBasicInfoDao getFailureBasicInfoDao() {
+		return failureBasicInfoDao;
+	}
+
+	public void setFailureBasicInfoDao(IFailureBasicInfoDao failureBasicInfoDao) {
+		this.failureBasicInfoDao = failureBasicInfoDao;
+	}
+
+	@Override
+	public void addFailureReport(FailureBasicInfo failureBasicInfo,
+			org.sjtu.p615.entity.FailureReport failureReport) {
+		// TODO Auto-generated method stub
+		failureBasicInfoDao.add(failureBasicInfo);
+		failureReportDao.add(failureReport);
+	}
+
+}

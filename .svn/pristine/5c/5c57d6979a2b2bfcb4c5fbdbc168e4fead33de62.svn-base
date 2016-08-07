@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+	
+	"classpath://org/hibernate/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.sjtu.p615.entity">
+	<class
+		name="FailureDescriptionAttachments"
+		table="failuredescriptionattachments"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="DescriptionAttachs"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="deleteMark"
+			column="DeleteMark"
+			type="boolean"
+			not-null="false"
+		/>
+		<many-to-one
+			name="frNumber"
+			column="FrNumber"
+			class="FailureReport"
+			not-null="true"
+		>
+		</many-to-one>
+
+
+	</class>	
+</hibernate-mapping>

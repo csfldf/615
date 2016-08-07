@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- 由 Microsoft Visio 11.0, SVG Export, v1.0 生成 fracas项目选择.svg Page-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="16.0354in" height="11.6929in"
+		viewBox="0 0 1154.55 841.89" xml:space="preserve" color-interpolation-filters="sRGB" class="st27">
+	<v:documentProperties v:langID="2052" v:metric="true" v:viewMarkup="false">
+		<v:userDefs>
+			<v:ud v:nameU="msvNoAutoConnect" v:val="VT0(1):26"/>
+		</v:userDefs>
+	</v:documentProperties>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {visibility:visible}
+		.st2 {fill:#d8d8d8;stroke:#d8d8d8;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st3 {fill:#ffffff;stroke:#a5a5a5;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st4 {fill:none}
+		.st5 {stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;visibility:hidden}
+		.st6 {fill:#dddddd}
+		.st7 {stroke:#9a9a9a;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.5}
+		.st8 {fill:#000000;font-family:宋体;font-size:0.666664em}
+		.st9 {fill:#7f7f7f;stroke:#7f7f7f;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st10 {fill:#f2f2f2;font-family:微软雅黑;font-size:1.00001em;font-weight:bold}
+		.st11 {fill:url(#grad30-30)}
+		.st12 {stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75;visibility:hidden}
+		.st13 {stroke:#ffffff;stroke-linecap:butt;stroke-width:0.75}
+		.st14 {stroke:#a5a5a5;stroke-linecap:butt;stroke-width:0.75}
+		.st15 {fill:#f2f2f2;font-family:微软雅黑;font-size:1.00001em}
+		.st16 {fill:none;stroke:#daf3fa;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st17 {fill:#f2f2f2;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st18 {fill:#000000;font-family:微软雅黑;font-size:1.00001em}
+		.st19 {fill:#000000;font-family:微软雅黑;font-size:0.75em}
+		.st20 {fill:#d8d8d8;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st21 {fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st22 {fill:#000000;font-family:微软雅黑;font-size:0.833336em}
+		.st23 {fill:#ffffff;stroke:none;stroke-linecap:butt;stroke-width:0.75}
+		.st24 {fill:#ffffff;font-family:微软雅黑;font-size:0.666664em}
+		.st25 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st26 {fill:#ff0000;stroke:#ff0000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st27 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<defs id="Patterns_And_Gradients">
+		<linearGradient id="grad30-30" v:fillPattern="30" v:foreground="#d5e2f4" v:background="#c6d8f0" x1="0" y1="1" x2="0" y2="0">
+			<stop offset="0" style="stop-color:#d5e2f4;stop-opacity:1"/>
+			<stop offset="1" style="stop-color:#c6d8f0;stop-opacity:1"/>
+		</linearGradient>
+	</defs>
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>页-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<g id="group1-1" transform="translate(95.3053,-305.811)" v:mID="1" v:groupContext="group">
+			<v:userDefs>
+				<v:ud v:nameU="msvSDContainerMargin" v:prompt="" v:val="VT0(0.083333333333333):29"/>
+				<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Container)"/>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<title>应用程序窗体</title>
+			<g id="shape1-2" v:mID="1" v:groupContext="groupContent">
+				<g id="shadow1-3" v:groupContext="shadow" v:shadowOffsetX="2.12598" v:shadowOffsetY="-2.12598" v:shadowType="1"
+						transform="matrix(1,0,0,1,2.12598,2.12598)" class="st1">
+					<rect x="0" y="332.693" width="511.64" height="509.197" rx="4.25197" ry="4.25197" class="st2"/>
+				</g>
+				<rect x="0" y="332.693" width="511.64" height="509.197" rx="4.25197" ry="4.25197" class="st3"/>
+			</g>
+			<g id="shape2-6" v:mID="2" v:groupContext="shape" transform="translate(0,-479.717)">
+				<title>工作表.2</title>
+				<v:userDefs>
+					<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Heading)"/>
+					<v:ud v:nameU="msvSDContainerHeadingEdge" v:prompt="" v:val="VT4(Bottom)"/>
+					<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+				</v:userDefs>
+				<rect x="0" y="815.09" width="511.64" height="26.8" rx="4.25197" ry="4.25197" class="st4"/>
+				<rect x="0" y="815.09" width="511.64" height="26.8" rx="4.25197" ry="4.25197" class="st5"/>
+			</g>
+		</g>
+		<g id="group15-9" transform="translate(214.016,-725.669)" v:mID="15" v:groupContext="group">
+			<v:userDefs>
+				<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#dddddd)"/>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT4(Tab)"/>
+				<v:ud v:nameU="RoundingRadius" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="CtrlPtX" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="CtrlPtY" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="Active" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="Pixel" v:prompt="" v:val="VT0(0.0098425196850394):24"/>
+				<v:ud v:nameU="TabColorIn" v:prompt="" v:val="VT5(#f2f2f2)"/>
+				<v:ud v:nameU="ActiveColor" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="TabDecHeight" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<title>上选项卡项目.15</title>
+			<desc>项目选择</desc>
+			<g id="shape16-10" v:mID="16" v:groupContext="shape">
+				<title>工作表.16</title>
+				<path d="M0 841.89 L44 841.89 L44 827.72 L0 827.72 L0 841.89 Z" class="st6"/>
+				<path d="M44 841.89 L44 827.72 L0 827.72 L0 841.89" class="st7"/>
+			</g>
+			<g id="shape15-13" v:mID="15" v:groupContext="groupContent">
+				<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+				<v:textRect cx="22.0018" cy="834.803" width="44.01" height="14.1732"/>
+				<text x="6" y="837.2" class="st8" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>项目选择</text>			</g>
+		</g>
+		<g id="group17-15" transform="translate(101.305,-725.669)" v:mID="17" v:groupContext="group">
+			<v:userDefs>
+				<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#dddddd)"/>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT4(Tab)"/>
+				<v:ud v:nameU="RoundingRadius" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="CtrlPtX" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="CtrlPtY" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="Active" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="Pixel" v:prompt="" v:val="VT0(0.0098425196850394):24"/>
+				<v:ud v:nameU="TabColorIn" v:prompt="" v:val="VT5(#f2f2f2)"/>
+				<v:ud v:nameU="ActiveColor" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="TabDecHeight" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<title>上选项卡项目.17</title>
+			<desc>选择操作</desc>
+			<g id="shape18-16" v:mID="18" v:groupContext="shape">
+				<title>工作表.18</title>
+				<path d="M0 841.89 L44 841.89 L44 827.72 L0 827.72 L0 841.89 Z" class="st6"/>
+				<path d="M44 841.89 L44 827.72 L0 827.72 L0 841.89" class="st7"/>
+			</g>
+			<g id="shape17-19" v:mID="17" v:groupContext="groupContent">
+				<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+				<v:textRect cx="22.0018" cy="834.803" width="44.01" height="14.1732"/>
+				<text x="6" y="837.2" class="st8" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>选择操作</text>			</g>
+		</g>
+		<g id="shape3-21" v:mID="3" v:groupContext="shape" transform="translate(96.378,-771.024)">
+			<title>框</title>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<rect x="0" y="799.37" width="510.236" height="42.5197" class="st9"/>
+		</g>
+		<g id="shape4-23" v:mID="4" v:groupContext="shape" transform="translate(96.378,-780.945)">
+			<title>框.4</title>
+			<desc>615项目</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="39.685" cy="830.551" width="79.38" height="22.6772"/>
+			<rect x="0" y="819.213" width="79.3701" height="22.6772" class="st9"/>
+			<text x="16.58" y="834.15" class="st10" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>615项目</text>		</g>
+		<g id="group5-26" transform="translate(185.669,-771.024)" v:mID="5" v:groupContext="group">
+			<v:userDefs>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT4(Status)"/>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<title>状态栏拆分器</title>
+			<g id="shape5-27" v:mID="5" v:groupContext="groupContent">
+				<rect x="0" y="799.37" width="1.41732" height="42.5197" class="st11"/>
+				<rect x="0" y="799.37" width="1.41732" height="42.5197" class="st12"/>
+			</g>
+			<g id="shape6-32" v:mID="6" v:groupContext="shape" transform="translate(842.223,800.87) rotate(90)">
+				<title>工作表.6</title>
+				<g id="shadow6-33" v:groupContext="shadow" v:shadowOffsetX="0.75" v:shadowOffsetY="0" v:shadowType="1"
+						v:shadowAngle="180" transform="matrix(1,0,0,1,-2.27374E-013,-0.75)" class="st1">
+					<path d="M0 841.89 L39.52 841.89" class="st13"/>
+				</g>
+				<path d="M0 841.89 L39.52 841.89" class="st14"/>
+			</g>
+		</g>
+		<g id="shape7-38" v:mID="7" v:groupContext="shape" transform="translate(274.961,-781.654)">
+			<title>框.7</title>
+			<desc>Fracas管理</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="39.685" cy="830.551" width="79.38" height="22.6772"/>
+			<rect x="0" y="819.213" width="79.3701" height="22.6772" class="st9"/>
+			<text x="9.79" y="834.15" class="st15" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>Fracas管理</text>		</g>
+		<g id="shape8-41" v:mID="8" v:groupContext="shape" transform="translate(188.504,-781.654)">
+			<title>框.8</title>
+			<desc>行动项管理</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="40.3937" cy="830.551" width="80.79" height="22.6772"/>
+			<rect x="0" y="819.213" width="80.7874" height="22.6772" class="st9"/>
+			<text x="10.39" y="834.15" class="st15" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>行动项管理</text>		</g>
+		<g id="group9-44" transform="translate(272.126,-771.024)" v:mID="9" v:groupContext="group">
+			<v:userDefs>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT4(Status)"/>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<title>状态栏拆分器.9</title>
+			<g id="shape9-45" v:mID="9" v:groupContext="groupContent">
+				<rect x="0" y="797.953" width="1.41732" height="43.937" class="st11"/>
+				<rect x="0" y="797.953" width="1.41732" height="43.937" class="st12"/>
+			</g>
+			<g id="shape10-49" v:mID="10" v:groupContext="shape" transform="translate(842.223,799.453) rotate(90)">
+				<title>工作表.10</title>
+				<g id="shadow10-50" v:groupContext="shadow" v:shadowOffsetX="0.75" v:shadowOffsetY="0" v:shadowType="1"
+						v:shadowAngle="180" transform="matrix(1,0,0,1,0,-0.75)" class="st1">
+					<path d="M0 841.89 L40.94 841.89" class="st13"/>
+				</g>
+				<path d="M0 841.89 L40.94 841.89" class="st14"/>
+			</g>
+		</g>
+		<g id="shape11-55" v:mID="11" v:groupContext="shape" transform="translate(102.047,-368.504)">
+			<title>框.11</title>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<rect x="0" y="484.724" width="85.0394" height="357.165" class="st16"/>
+		</g>
+		<g id="shape19-57" v:mID="19" v:groupContext="shape" transform="translate(214.016,-368.504)">
+			<title>框.19</title>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<rect x="0" y="484.724" width="386.929" height="357.165" class="st16"/>
+		</g>
+		<g id="shape21-59" v:mID="21" v:groupContext="shape" transform="translate(355.748,-780.945)">
+			<title>框.21</title>
+			<desc>合同管理</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="39.685" cy="830.551" width="79.38" height="22.6772"/>
+			<rect x="0" y="819.213" width="79.3701" height="22.6772" class="st9"/>
+			<text x="15.68" y="834.15" class="st15" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>合同管理</text>		</g>
+		<g id="group22-62" transform="translate(352.913,-771.024)" v:mID="22" v:groupContext="group">
+			<v:userDefs>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT4(Status)"/>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<title>状态栏拆分器.22</title>
+			<g id="shape22-63" v:mID="22" v:groupContext="groupContent">
+				<rect x="0" y="799.37" width="1.41732" height="42.5197" class="st11"/>
+				<rect x="0" y="799.37" width="1.41732" height="42.5197" class="st12"/>
+			</g>
+			<g id="shape23-67" v:mID="23" v:groupContext="shape" transform="translate(842.223,800.87) rotate(90)">
+				<title>工作表.23</title>
+				<g id="shadow23-68" v:groupContext="shadow" v:shadowOffsetX="0.75" v:shadowOffsetY="0" v:shadowType="1"
+						v:shadowAngle="180" transform="matrix(1,0,0,1,-2.27374E-013,-0.75)" class="st1">
+					<path d="M0 841.89 L39.52 841.89" class="st13"/>
+				</g>
+				<path d="M0 841.89 L39.52 841.89" class="st14"/>
+			</g>
+		</g>
+		<g id="shape20-73" v:mID="20" v:groupContext="shape" transform="translate(214.016,-697.323)">
+			<title>框.20</title>
+			<desc>待办事项汇总</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="193.465" cy="830.551" width="386.93" height="22.6772"/>
+			<rect x="0" y="819.213" width="386.929" height="22.6772" class="st17"/>
+			<text x="4" y="834.15" class="st18" v:langID="2052"><v:paragraph/><v:tabList/>待办事项汇总</text>		</g>
+		<g id="shape25-76" v:mID="25" v:groupContext="shape" transform="translate(102.047,-666.142)">
+			<title>框.25</title>
+			<desc>事件汇总</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st17"/>
+			<text x="24.52" y="834.67" class="st19" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>事件汇总</text>		</g>
+		<g id="shape24-79" v:mID="24" v:groupContext="shape" transform="translate(101.305,-688.819)">
+			<title>框.24</title>
+			<desc>项目选择</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st20"/>
+			<text x="24.52" y="834.67" class="st19" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>项目选择</text>		</g>
+		<g id="shape26-82" v:mID="26" v:groupContext="shape" transform="translate(101.305,-612.283)">
+			<title>框.26</title>
+			<desc>录入</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st17"/>
+			<text x="33.52" y="834.67" class="st19" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>录入</text>		</g>
+		<g id="shape27-85" v:mID="27" v:groupContext="shape" transform="translate(101.305,-634.961)">
+			<title>框.27</title>
+			<desc>故障报告</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st21"/>
+			<text x="22.52" y="834.97" class="st22" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>故障报告</text>		</g>
+		<g id="shape28-88" v:mID="28" v:groupContext="shape" transform="translate(101.305,-589.606)">
+			<title>框.28</title>
+			<desc>查看</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st17"/>
+			<text x="33.52" y="834.67" class="st19" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>查看</text>		</g>
+		<g id="shape29-91" v:mID="29" v:groupContext="shape" transform="translate(102.047,-566.929)">
+			<title>框.29</title>
+			<desc>分析报告</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st21"/>
+			<text x="22.52" y="834.97" class="st22" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>分析报告</text>		</g>
+		<g id="shape30-94" v:mID="30" v:groupContext="shape" transform="translate(101.305,-548.504)">
+			<title>框.30</title>
+			<desc>录入</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st17"/>
+			<text x="33.52" y="834.67" class="st19" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>录入</text>		</g>
+		<g id="shape31-97" v:mID="31" v:groupContext="shape" transform="translate(101.305,-527.244)">
+			<title>框.31</title>
+			<desc>查看</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st17"/>
+			<text x="33.52" y="834.67" class="st19" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>查看</text>		</g>
+		<g id="shape32-100" v:mID="32" v:groupContext="shape" transform="translate(102.047,-498.898)">
+			<title>框.32</title>
+			<desc>故障处理</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st21"/>
+			<text x="22.52" y="834.97" class="st22" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>故障处理</text>		</g>
+		<g id="shape33-103" v:mID="33" v:groupContext="shape" transform="translate(101.305,-479.055)">
+			<title>框.33</title>
+			<desc>录入</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st17"/>
+			<text x="33.52" y="834.67" class="st19" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>录入</text>		</g>
+		<g id="shape34-106" v:mID="34" v:groupContext="shape" transform="translate(101.676,-456.378)">
+			<title>框.34</title>
+			<desc>查看</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st17"/>
+			<text x="33.52" y="834.67" class="st19" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>查看</text>		</g>
+		<g id="shape35-109" v:mID="35" v:groupContext="shape" transform="translate(101.305,-426.614)">
+			<title>框.35</title>
+			<desc>故障处理</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st21"/>
+			<text x="22.52" y="834.97" class="st22" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>故障处理</text>		</g>
+		<g id="shape36-112" v:mID="36" v:groupContext="shape" transform="translate(101.305,-405.354)">
+			<title>框.36</title>
+			<desc>项目管理</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st17"/>
+			<text x="24.52" y="834.67" class="st19" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>项目管理</text>		</g>
+		<g id="shape37-115" v:mID="37" v:groupContext="shape" transform="translate(102.047,-381.26)">
+			<title>框.37</title>
+			<desc>元数据管理</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="831.969" width="85.04" height="19.8425"/>
+			<rect x="0" y="822.047" width="85.0394" height="19.8425" class="st17"/>
+			<text x="20.02" y="834.67" class="st19" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>元数据管理</text>		</g>
+		<g id="shape38-118" v:mID="38" v:groupContext="shape" transform="translate(555.591,-782.84)">
+			<title>用户</title>
+			<desc>User A</desc>
+			<v:userDefs>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT4(Icon)"/>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(2,2,2,2)" v:tabSpace="42.5197"/>
+			<v:textRect cx="38.4955" cy="832.447" width="31.64" height="18.8865"/>
+			<path d="M16.61 829.16 A2.4253 2.4641 -180 0 0 19.03 826.7 A2.4253 2.4641 -180 0 0 16.61 824.23 A2.42621 2.46503 -180
+						 0 0 14.18 826.7 A2.42666 2.46549 -180 0 0 16.61 829.16 ZM16.61 823 A3.63469 3.69285 0 0 1 20.24 826.7 A3.63469
+						 3.69285 0 0 1 16.61 830.39 A3.63454 3.6927 0 0 1 12.97 826.7 A3.63454 3.6927 0 0 1 16.61 823 ZM6.07 840.47
+						 A4.23563 4.3034 -180 0 0 10.92 838.01 A5.32849 5.41375 -180 0 0 8.59 833.23 A17824.7 18109.9 -180 0 0 6.07
+						 838.26 A9055.07 9199.95 0 0 1 3.55 833.23 A5.32908 5.41435 -180 0 0 1.22 838.01 A4.23515 4.30292 -180 0
+						 0 6.07 840.47 ZM8.47 831.71 A6.38618 6.48835 0 0 1 12.13 838.01 A4.83974 4.91717 0 0 1 6.07 841.7 A4.83934
+						 4.91677 0 0 1 0.01 838.01 A6.38886 6.49108 0 0 1 3.68 831.71 A4.35029 4.41989 -180 0 0 4.34 832.08 L6.07
+						 835.55 L7.8 832.08 A4.2838 4.35234 -180 0 0 8.47 831.71 ZM19 830.25 A6.38618 6.48835 0 0 1 22.66 836.54
+						 A4.83974 4.91717 0 0 1 16.61 840.24 A9.64742 9.80178 0 0 1 12.55 839.49 A3.6777 3.73654 -180 0 0 12.82 838.25
+						 A8.3506 8.48421 -180 0 0 16.61 839.01 A4.23563 4.3034 -180 0 0 21.45 836.54 A5.32723 5.41246 -180 0 0 19.12
+						 831.77 A11399.5 11581.9 -180 0 0 16.61 836.8 A12687.4 12890.4 0 0 1 14.09 831.77 A4.82891 4.90617 -180 0
+						 0 12.09 834.41 A6.85828 6.96801 -180 0 0 11.31 833.09 A5.7002 5.79141 0 0 1 14.21 830.25 A4.35029 4.41989
+						 -180 0 0 14.87 830.62 L16.61 834.08 L18.34 830.62 A4.2838 4.35234 -180 0 0 19 830.25 ZM6.07 830.62 A2.42484
+						 2.46364 -180 0 0 8.49 828.16 A2.4253 2.4641 -180 0 0 6.07 825.7 A2.42621 2.46503 -180 0 0 3.65 828.16 A2.42666
+						 2.46549 -180 0 0 6.07 830.62 ZM6.07 824.47 A3.63469 3.69285 0 0 1 9.71 828.16 A3.63469 3.69285 0 0 1 6.07
+						 831.85 A3.63454 3.6927 0 0 1 2.44 828.16 A3.63454 3.6927 0 0 1 6.07 824.47 Z" class="st23"/>
+			<text x="24.68" y="834.85" class="st24" v:langID="2052"><v:paragraph/><v:tabList/>User A</text>		</g>
+		<g id="shape39-121" v:mID="39" v:groupContext="shape" transform="translate(214.016,-647.717)">
+			<title>工作表.39</title>
+			<rect v:rectContext="foreign" x="0" y="789.334" width="384.094" height="52.5553" class="st25"/>
+			<image x="0" y="789.334" width="384.094" height="52.5553" preserveAspectRatio="none" xlink:href="data:image/png;base64,
+						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"/>
+			<rect v:rectContext="foreign" x="0" y="789.334" width="384.094" height="52.5553" class="st25"/>
+		</g>
+		<g id="shape12-125" v:mID="12" v:groupContext="shape" transform="translate(340.157,-792.992)">
+			<title>圆形</title>
+			<desc>3</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="5.66929" cy="836.22" width="11.34" height="11.3386"/>
+			<path d="M0 836.22 A5.66929 5.66929 0 1 1 11.34 836.22 A5.66929 5.66929 0 0 1 0 836.22 Z" class="st26"/>
+			<text x="4" y="838.62" class="st8" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>3</text>		</g>
+		<g id="shape13-128" v:mID="13" v:groupContext="shape" transform="translate(255.118,-792.992)">
+			<title>圆形.13</title>
+			<desc>4</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="5.66929" cy="836.22" width="11.34" height="11.3386"/>
+			<path d="M0 836.22 A5.66929 5.66929 0 1 1 11.34 836.22 A5.66929 5.66929 0 0 1 0 836.22 Z" class="st26"/>
+			<text x="4" y="838.62" class="st8" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>4</text>		</g>
+	</g>
+</svg>

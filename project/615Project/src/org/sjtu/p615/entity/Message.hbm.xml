@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-9-29 15:04:58 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.Message" table="message" catalog="testdb">
+        <id name="messageId" type="java.lang.Integer">
+            <column name="MessageId" />
+            <generator class="identity" />
+        </id>
+        <property name="messageType" type="string">
+            <column name="MessageType" />
+        </property>
+        <property name="messageContent" type="string">
+            <column name="MessageContent" />
+        </property>
+        <property name="projectId" type="string">
+            <column name="ProjectId" />
+        </property>
+        <property name="prjShortName" type="string">
+            <column name="PrjShortName" />
+        </property>
+        <property name="planCode" type="string">
+            <column name="PlanCode" />
+        </property>
+        <property name="isPackageDir" type="java.lang.Boolean">
+            <column name="isPackageDir" />
+        </property>
+        <property name="actionId" type="string">
+            <column name="ActionId" />
+        </property>
+        <property name="isActionDir" type="java.lang.Boolean">
+            <column name="isActionDir" />
+        </property>
+        <property name="messageSource" type="string">
+            <column name="MessageSource" />
+        </property>
+        <property name="messageDate" type="date">
+            <column name="MessageDate" length="10" />
+        </property>
+        <property name="employeeId" type="string">
+            <column name="EmployeeId" />
+        </property>
+        <property name="noticeId" type="java.lang.Integer">
+            <column name="NoticeId" />
+        </property>
+        <property name="deleteMark" type="java.lang.Boolean">
+            <column name="DeleteMark" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+<constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" />
+<!-- 最大上传大小 -->
+<constant name="struts.multipart.maxSize" value="55000000"/>
+
+<package name="am" namespace="/am" extends="struts-default,json-default">
+		<!-- Group Selector -->
+		<action name="getAllGroup" class="org.sjtu.p615.am.action.GroupAction" method="getAllGroup">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+		<!-- PLan Statistics -->
+
+	<action name="getEmployeesByProject" class="org.sjtu.p615.am.action.EmployeeAction"
+			method="getEmployeesByProject">
+		<result type="json">
+			<param name="root">jsonary</param>
+		</result>
+	</action>
+	<action name="getAllProjectsInStatistics" class="org.sjtu.p615.am.action.ProjectAction"
+			method="getAllProjectsInStatistics">
+		<result type="json">
+			<param name="root">jsonary</param>
+		</result>
+	</action>
+	<action name="getProjectsCreatedByMe" class="org.sjtu.p615.am.action.ProjectAction"
+			method="getProjectsCreatedByMe">
+		<result type="json">
+			<param name="root">jsonary</param>
+		</result>
+	</action>
+	<!--计划统计统一查询-->
+	<action name="getStatisticsByCondition" class="org.sjtu.p615.am.action.PlanAction"
+			method="getStatisticsByCondition">
+		<result type="json">
+			<param name="root">jsonary</param>
+		</result>
+	</action>
+	<!--申请审核相关统一查询-->
+	<action name="getPlansWithApply" class="org.sjtu.p615.am.action.PlanAction"
+			method="getPlansWithApply">
+		<result type="json">
+			<param name="root">jsonary</param>
+		</result>
+	</action>
+	<!--以下废弃-->
+		<action name="getAllPlansByDateRange" class="org.sjtu.p615.am.action.PlanAction" method="getAllPlansByDateRange">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getAllPlansByEmployeeId" class="org.sjtu.p615.am.action.PlanAction" method="getAllPlansByEmployeeId">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getAllPlansByGroupId" class="org.sjtu.p615.am.action.PlanAction" method="getAllPlansByGroupId">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+	<action name="getAllPlansByDepartmentId" class="org.sjtu.p615.am.action.PlanAction"
+			method="getAllPlansByDepartmentId">
+		<result type="json">
+			<param name="root">jsonary</param>
+		</result>
+	</action>
+	<action name="getAllPlansByGroupId" class="org.sjtu.p615.am.action.PlanAction" method="getAllPlansByGroupId">
+		<result type="json">
+			<param name="root">jsonary</param>
+		</result>
+	</action>
+	<!-- .........................................................................................-->
+  		<action name="getAllPlansTasks" class="org.sjtu.p615.am.action.PlanAction" method="getAllPlansTasks">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="addTasks" class="org.sjtu.p615.am.action.PlanAction" method="addTasks">
+  		   <result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="deleteTasks" class="org.sjtu.p615.am.action.PlanAction" method="delTask">
+  		   <result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  	  		
+  		<!-- privilege part -->
+  		<action name="getAmPrivilegeByEmployeeId" class="org.sjtu.p615.am.action.AmPrivilegeAction" method="getAmPrivilegeByEmployeeId">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getRoleByEmployee" class="org.sjtu.p615.am.action.RoleAction" method="getRoleByEmployee">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		
+  		<!-- task part -->
+  		<action name="getTasks" class="org.sjtu.p615.am.action.PlanAction" method="getTasks">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		
+  		<!-- action part -->
+		<action name="getAction" class="org.sjtu.p615.am.action.ActionAction" method="getAction">
+			<result type = "json">
+				<param name = "root">jsonobj</param>
+			</result>
+		</action>
+		<action name="getUnreleasedActions" class="org.sjtu.p615.am.action.ActionAction" method="getUnreleasedActions">
+			<result type = "json">
+				<param name = "root">jsonary</param>
+			</result>
+		</action>
+		<action name="saveAction" class="org.sjtu.p615.am.action.ActionAction" method="saveAction">
+		</action>
+
+		<action name="delAction" class="org.sjtu.p615.am.action.ActionAction" method="delAction">
+		</action>
+  		<action name="deleteActions" class="org.sjtu.p615.am.action.ActionAction" method="delActions">
+  		   <result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="addAction" class="org.sjtu.p615.am.action.ActionAction" method="addAction">
+  		   <result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+
+
+  		<action name="getUsrActions" class="org.sjtu.p615.am.action.ActionAction" method="getUsrActions">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getUsrActionProjects" class="org.sjtu.p615.am.action.ActionAction" method="getUsrActionProjects">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="getUserProject" class="org.sjtu.p615.am.action.ActionAction" method="getUserProject">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="getProjectActions" class="org.sjtu.p615.am.action.ActionAction" method="getProjectActions">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getUsrActionWaitings" class="org.sjtu.p615.am.action.ActionAction" method="getUsrActionWaitings">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getUsrActionOpt" class="org.sjtu.p615.am.action.SystemAction" method="getUsrActionOpt">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<!-- homePage part -->
+  		<action name="getMessage" class="org.sjtu.p615.am.action.PlanAction" method="getMessage">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getRemind" class="org.sjtu.p615.am.action.SystemAction" method="getRemind">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getWaitingTasks" class="org.sjtu.p615.am.action.PlanAction" method="getWaitingTasks">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="deleteMessage" class="org.sjtu.p615.am.action.PlanAction" method="delMessage">
+  		   <result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="addMessages" class="org.sjtu.p615.am.action.PlanAction" method="addMessages">
+  		   <result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<!-- system set part -->
+  		<action name="saveUsrOpt" class="org.sjtu.p615.am.action.SystemAction" method="saveUsrOpt">
+  		   <result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="getUsrPlanOpt" class="org.sjtu.p615.am.action.SystemAction" method="getUsrPlanOpt">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		
+  		<!-- Doc Library -->
+  		<action name="addOneDoc" class="org.sjtu.p615.am.action.DocLibraryAction" method="addOneDoc">
+  		   <interceptor-ref name="fileUpload">
+                <param name="savePath">/DocLibrary</param>  
+                <param name="maximumSize">50000000</param> 
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>   
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="delOneDoc" class="org.sjtu.p615.am.action.DocLibraryAction" method="delOneDoc">
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="getAllDoc" class="org.sjtu.p615.am.action.DocLibraryAction" method="getAllDoc">
+  		   <result type = "json" name="success">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="downloadOneDoc" class="org.sjtu.p615.am.action.DocLibraryAction" method="downloadOneDoc">
+  		   <result name="success" type="stream">
+  		   		<param name="contentType">application/octet-stream</param>
+  		   		<param name="inputName">downFileStream</param>
+  		   		<param name="contentDisposition">attachment;filename=${downFilename}</param>
+  		   		<param name="bufferSize">4096</param>
+  		   </result>
+  		</action>
+  		
+		<!-- File upload/download -->
+		<action name="uploadOutput" class="org.sjtu.p615.am.action.PlanOutputAction" method="doUpload">
+  			<interceptor-ref name="fileUpload">
+                <param name="savePath">/upload</param>  
+                <param name="maximumSize">50000000</param> 
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>   
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="delOutput" class="org.sjtu.p615.am.action.PlanOutputAction" method="doDelete">
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="downloadOutput" class="org.sjtu.p615.am.action.PlanOutputAction" method="doDownload">
+  		   <result name="success" type="stream">
+  		   		<param name="contentType">application/octet-stream</param>
+  		   		<param name="inputName">downFileStream</param>
+  		   		<param name="contentDisposition">attachment;filename=${downFilename}</param>
+  		   		<param name="bufferSize">4096</param>
+  		   </result>
+  		</action>
+  		
+  		
+  		<!-- Plan add/update/change -->
+  		<action name="savePlan" class="org.sjtu.p615.am.action.PlanAction" method="savePlan">
+  			
+  		</action>
+  		<!-- Plan get -->
+  		<action name="get" class="org.sjtu.p615.am.action.PlanAction" method="getPlan">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="updatePlan" class="org.sjtu.p615.am.action.PlanAction" method="updatePlan">
+  		</action>
+  		<action name="getPlan" class="org.sjtu.p615.am.action.PlanAction" method="getPlanByPlanCodeProjectId">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<!-- Plan delete -->
+  		<action name="del" class="org.sjtu.p615.am.action.PlanAction" method="delPlan">
+    		
+  		</action>
+  		
+  		
+  		<!-- Plan Draft add/get/del -->
+  		<action name="savePlanScript" class="org.sjtu.p615.am.action.PlanAction" method="savePlanScript"></action>
+  		<action name="getPlanScripts" class="org.sjtu.p615.am.action.PlanAction" method="getPlanScripts">
+  			 <result name="success" type="json">
+    			<param name="root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="delPlanScript" class="org.sjtu.p615.am.action.PlanAction" method="delPlanScript">
+  		</action>
+  		
+  		
+  		<action name="add" class="org.sjtu.p615.am.action.PlanAction" method="addPlan"></action>
+  		<action name="addPAS" class="org.sjtu.p615.am.action.PlanAction" method="addPlanAction"></action>
+  		
+  		<action name="test" class="org.sjtu.p615.am.action.testaction" method="execute">
+  		</action>
+  		<!--<action name="file" class="org.sjtu.p615.am.action.PlanOutputAction" method="upload">
+  		</action>  -->
+  		<action name="login" class="org.sjtu.p615.am.action.LoginAction" method="login">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="importMainProject" class="org.sjtu.p615.am.action.importPlanAction" method="importMainProject">
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="getPlans" class="org.sjtu.p615.am.action.PlanAction" method="getallplan">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getUsrWPlans" class="org.sjtu.p615.am.action.PlanAction" method="getUserWPlans">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getProTree" class="org.sjtu.p615.am.action.PlanAction" method="getProjectTree">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="getAllProjects" class="org.sjtu.p615.am.action.PlanAction" method="getAllProjects">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="getUsrProjects" class="org.sjtu.p615.am.action.PlanAction" method="getUserProject">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="getUsrProjectsByProName" class="org.sjtu.p615.am.action.PlanAction" method="getUsrProjectsByProName">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="getChildPlansByPC" class="org.sjtu.p615.am.action.PlanAction" method="getChildPlansByPlanCode">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getUsrDrafts" class="org.sjtu.p615.am.action.PlanAction" method="getUserDraft">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getCAId" class="org.sjtu.p615.am.action.PlanAction" method="getCreatorAuditorId">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="getUsrPrivilege" class="org.sjtu.p615.am.action.RoleAction" method="getUserPrivilege">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="getCreatorLevel" class="org.sjtu.p615.am.action.PlanAction" method="getCreatorLevel">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="exportMainProject" class="org.sjtu.p615.am.action.importPlanAction" method="exportMainProject">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="getUsrIdByName" class="org.sjtu.p615.am.action.PlanAction" method="getUserIdByName">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="getNewest" class="org.sjtu.p615.am.action.PlanAction" method="getplancount">
+    		<result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="updatestate" class="org.sjtu.p615.am.action.PlanAction" method="updatestate"></action>
+  		<action name="getAllStates" class="org.sjtu.p615.am.action.PlanStateAction" method="getallstates">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="update" class="org.sjtu.p615.am.action.PlanAction" method="updateplan"></action>
+  		<action name="getCategory" class="org.sjtu.p615.am.action.PlanAction" method="getstructure">
+  		<result type = "json">
+    			<param name = "root">jsonary</param>
+    	</result></action>
+    	<action name="deletePlan" class="org.sjtu.p615.am.action.PlanAction" method="deleteplan"></action>
+    	<action name="search" class="org.sjtu.p615.am.action.PlanAction" method="search">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="delete" class="org.sjtu.p615.am.action.PlanOutputAction" method="delete"></action>
+  		<action name="getalluser" class="org.sjtu.p615.am.action.EmployeeAction" method="getall">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getOneEmployee" class="org.sjtu.p615.am.action.EmployeeAction" method="getOneEmployee">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="getEmpList" class="org.sjtu.p615.am.action.EmployeeAction" method="getEmpList">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getallManager" class="org.sjtu.p615.am.action.RoleAction" method="getallManager">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getUsersByProject" class="org.sjtu.p615.am.action.EmployeeAction" method="getUsersByProject">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getRoleList" class="org.sjtu.p615.am.action.EmployeeAction" method="getRoleList">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getScriptList" class="org.sjtu.p615.am.action.ScriptAction" method="getScriptList">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="addScript" class="org.sjtu.p615.am.action.ScriptAction" method="addScript">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="getPlansByEmployeeId" class="org.sjtu.p615.am.action.PlanAction" method="getPlansByEmployeeId">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getOneScript" class="org.sjtu.p615.am.action.ScriptAction" method="getOneScript">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="getChildPlans" class="org.sjtu.p615.am.action.PlanAction" method="getChildPlans">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="addOneProject" class="org.sjtu.p615.am.action.ProjectAction" method="addOneProject">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="getAllProject" class="org.sjtu.p615.am.action.ProjectAction" method="getAllProject">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="addOneGroup" class="org.sjtu.p615.am.action.GroupAction" method="addOneGroup">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="deleteOneGroup" class="org.sjtu.p615.am.action.GroupAction" method="deleteOneGroup">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="getGroupsByProject" class="org.sjtu.p615.am.action.GroupAction" method="getGroupsByProject">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getRoleByGroup" class="org.sjtu.p615.am.action.RoleAction" method="getRoleByGroup">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getAllRoleInfo" class="org.sjtu.p615.am.action.RoleInfoAction" method="getAllRoleInfo">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getRoleByProject" class="org.sjtu.p615.am.action.RoleAction" method="getRoleByProject">
+  		   <result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="getRolesForFracas" class="org.sjtu.p615.am.action.RoleAction" method="getRolesForFracas">
+  		   <result type = "json">
+    			<param name = "root">result</param>
+    		</result>
+  		</action>
+  		<action name="addRoles" class="org.sjtu.p615.am.action.RoleAction" method="addRoles">
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="changeOneRole" class="org.sjtu.p615.am.action.RoleAction" method="changeOneRole">
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="deleteOneRole" class="org.sjtu.p615.am.action.RoleAction" method="deleteOneRole">
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="deleteOneProject" class="org.sjtu.p615.am.action.ProjectAction" method="deleteOneProject">
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="addOneRole" class="org.sjtu.p615.am.action.RoleAction" method="addOneRole">
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="addGrpMember" class="org.sjtu.p615.am.action.RoleAction" method="addGrpMember">
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="getAllPrivileges" class="org.sjtu.p615.am.action.AmPrivilegeAction" method="getAllPrivileges">
+  		   <result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="getOnesAmPrivilege" class="org.sjtu.p615.am.action.AmPrivilegeAction" method="getOnesAmPrivilege">
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		
+  		<action name="addOrModifyEmp" class="org.sjtu.p615.am.action.EmployeeAction" method="addOrModifyEmp">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		
+  		<action name="delOneEmp" class="org.sjtu.p615.am.action.EmployeeAction" method="delOneEmp">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="authAssert" class="org.sjtu.p615.am.action.AmPrivilegeAction" method="authAssert">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="addOneNotice" class="org.sjtu.p615.am.action.NoticeAction" method="addOneNotice">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="getOnesNotice" class="org.sjtu.p615.am.action.NoticeAction" method="getOnesNotice">
+    		<result type = "json">
+    			<param name = "root">jsonary</param>
+    		</result>
+  		</action>
+  		<action name="publishNotice" class="org.sjtu.p615.am.action.NoticeAction" method="publishNotice">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="recallNotice" class="org.sjtu.p615.am.action.NoticeAction" method="recallNotice">
+    		<result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="addOneNoticeFile" class="org.sjtu.p615.am.action.NoticeAction" method="addOneDoc">
+    		<interceptor-ref name="fileUpload">
+                <param name="savePath">/Notice</param>  
+                <param name="maximumSize">50000000</param> 
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>   
+  		   <result type = "json">
+    			<param name = "root">jsonobj</param>
+    		</result>
+  		</action>
+  		<action name="downloadOneNotice" class="org.sjtu.p615.am.action.NoticeAction" method="downloadOneNotice">
+  		   <result name="success" type="stream">
+  		   		<param name="contentType">application/octet-stream</param>
+  		   		<param name="inputName">downFileStream</param>
+  		   		<param name="contentDisposition">attachment;filename=${downFilename}</param>
+  		   		<param name="bufferSize">4096</param>
+  		   </result>
+  		</action>
+  		
+        <action name="multiOpAuthAssert" class="org.sjtu.p615.am.action.AmPrivilegeAction" method="multiOpAuthAssert">
+            <result type = "json">
+                <param name = "root">jsonobj</param>
+            </result>
+        </action>
+        <action name="checkLogin" class="org.sjtu.p615.am.action.LoginAction" method="checkLogin">
+            <result type = "json">
+                <param name = "root">jsonobj</param>
+            </result>
+        </action>
+		<action name="assertRoleByEmployeeId" class="org.sjtu.p615.am.action.RoleAction" method="assertRoleByEmployeeId">
+			<result type = "json">
+				<param name = "root">jsonobj</param>
+			</result>
+		</action>
+		<action name="getAllDep" class="org.sjtu.p615.am.action.DepartmentAction" method="getAllDep">
+			<result type = "json">
+				<param name = "root">jsonary</param>
+			</result>
+		</action>
+		<action name="deleteOneDep" class="org.sjtu.p615.am.action.DepartmentAction" method="deleteOneDep">
+			<result type = "json">
+				<param name = "root">jsonobj</param>
+			</result>
+		</action>
+		<action name="addOrModifyDep" class="org.sjtu.p615.am.action.DepartmentAction" method="addOrModifyDep">
+			<result type = "json">
+				<param name = "root">jsonobj</param>
+			</result>
+		</action>
+    </package>
+
+
+
+    <!-- Add packages here -->
+
+</struts>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../js/avalon-1.3.6.js"></script>
+<script src="../js/base/jquery-1.11.1.js"></script>
+<script src="../js/base/bootstrap.js"></script>
+<script src="../js/globalConfig.js"></script>
+<link rel="stylesheet" href="../css/base/bootstrap.css">
+
+<form>
+    <legend>工作包统计</legend>
+
+    <table class="table table-bordered table-striped table-hover table-condensed" id="planSummaryTable"></table>
+</form>
+<div id="tablePoint"></div>
+
+<script>
+    require(['mmRequest', 'jquery', 'datatables.bootstrap', 'datatables.tabletools'], function (avalon, $) {
+        if (!$.fn.DataTable.isDataTable('#planSummaryTable')) {
+            summaryTableElement = document.getElementById("planSummaryTable");
+            //var summarydataTable = $(summaryTableElement).dataTable(vm.summaryTableMetaData[vm.type].dataTablesParameters);
+            table = $(summaryTableElement).dataTable(
+                    {
+                        columns: [
+                            {data: "ProjectName", title: "项目名称", class: "center"},
+                            {data: "PackageCount", title: "工作包数量", class: "center"},
+                            {data: "FinishedCount", title: "工作包已完成数量", class: "center"},
+                            {data: "UnfinishedCount", title: "工作包未完成数量", class: "center"},
+                            {data: "PackagePercent", title: "工作包完成率", class: "center"},
+                        ],
+                        columnDefs: [],
+                        "dom": 'Tlfrtip',
+                        "tableTools": {
+                            "aButtons": [
+                                {"sExtends": "copy", "sButtonText": "复制到剪贴板"},
+                                {"sExtends": "xls", "sButtonText": "导出XLS文件"}
+                            ],
+                            "sSwfPath": "/js/base/copy_csv_xls_pdf.swf"
+                        }
+                    }
+            )
+            //table.buttons().container().appendTo( $('#buttons', table.table().container() ) );
+        }
+    })
+</script>
+</body>
+</html>

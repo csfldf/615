@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>元数据管理</title>
+    <link rel="stylesheet" href="../css/base/bootstrap.css">
+</head>
+<body>
+<div id="btnDiv">
+    <!--<a role="button" class="btn btn-primary">创建</a>-->
+    <!--<a  role="button" class="btn btn-danger">删除</a>-->
+    <!--<a  role="button" class="btn btn-warning">修改</a>-->
+</div>
+</body>
+</html>

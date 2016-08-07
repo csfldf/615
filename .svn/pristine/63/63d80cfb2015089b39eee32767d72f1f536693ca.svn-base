@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="css/contractRegist.css"/>
+<title>Insert title here</title>
+</head>
+<body>
+<div ms-controller="contractRegist" style="max-width:90%;">
+	<button class="btn" data-dismiss="modal" aria-hidden="true" ms-click="onClick()">确定</button>
+
+	<table class="table" border="1px" cellspacing="0px" style="border-collapse:collapse">
+		<tbody>
+			<tr>
+				<td>合同编号</td>
+				<td><input ms-duplex="id" type="textbox"/></td>
+				<td>合同名称</td>
+				<td><input ms-duplex="name" type="textbox" ms-disabled="nameDisable"/></td>
+			</tr>
+			<tr>
+				<td>资金流向</td>
+				<td>
+					<select class="select" ms-duplex="moneyFlow" ms-change="onChangeMoneyFlow">
+		                <option label='收入' value='receive'></option>
+		                <option label='支出' value='pay'></option>
+		            </select>
+              	</td>
+				<td>是否为涉外合同</td>
+				<td>
+					<select class="select" ms-duplex="isOffShore">
+		                <option label='是' value='yes'></option>
+		                <option label='否' value='no'></option>
+		            </select>
+              	</td>
+			</tr>
+			<tr>
+				<td>合同描述</td>
+				<td colspan="3"><textarea class="text-500" ms-duplex="description" type="textbox" ms-disabled="descriptionDisable"></textarea></td>
+			</tr>
+			<tr>
+				<td>合同标的物品</td>
+				<td>
+					<ul>
+		               <li ms-repeat="contractContainOpts" ><input type="checkbox" ms-value="el.value" ms-duplex="contractContain" ms-disabled="contractContainDisable" />{{el.label}}</li>
+		            </ul>
+		            其他：<input class="other" ms-duplex="contractContainOther" />
+				</td>
+				<td>经费归集类别</td>
+				<td>
+					<select class="select" ms-duplex="moneyType">
+		                <option ms-repeat='moneyTypeOpts' ms-attr-value="el.value" ms-attr-label="el.label"></option>
+		            </select>
+				</td>
+			</tr>
+			<tr>
+				<td>合同承办部门</td>
+				<td>
+					<ul>
+		               <li ms-repeat="departmentOpts" ><input type="checkbox" ms-value="el.value" ms-duplex="department" ms-disabled="departmentDisable" />{{el.label}}</li>
+		            </ul>
+		            其他：<input class="other" ms-duplex="departmentOther" />
+				</td>
+				<td>合同经办人</td>
+				<td><input ms-duplex="operator" type="textbox" ms-disabled="operatorDisable"/></td>
+			</tr>
+			<tr>
+				<td>课题号</td>
+				<td><input ms-duplex="project" type="textbox" ms-disabled="projectDisable"/></td>
+				<td>预算代码</td>
+				<td><input ms-duplex="budgetCode" type="textbox" ms-disabled="budgetCodeDisable"/></td>
+			</tr>
+			<tr>
+				<td>合同总金额</td>
+				<td><input ms-duplex="totalMoney" type="textbox" ms-disabled="totalMoneyDisable"/></td>
+				<td>合同金额币种</td>
+				<td>
+					<select class="select" ms-duplex="currencyType">
+		                <option ms-repeat='currencyTypeOpts' ms-attr-value="el.value" ms-attr-label="el.label"></option>
+		            </select>
+				</td>
+			</tr>
+			<tr>
+				<td>履行期限（起）</td>
+				<td><input class="datepicker" ms-widget="datepicker" data-datepicker-allow-blank="false" ms-duplex="performStartDate"/></td>
+				<td>履行期限（终）</td>
+				<td><input class="datepicker" ms-widget="datepicker" data-datepicker-allow-blank="false" ms-duplex="performEndDate" /></td>
+			</tr>
+			<tr>
+				<td>对方单位名称</td>
+				<td colspan="3"><input ms-duplex="coorperation" ms-disabled="coorperationDisable"></td>
+			</tr>
+			<tr>
+				<td>合同签订归档材料</td>
+				<td colspan="3">
+					<ul>
+		               <li ms-repeat="contractArchiveOpts" ><input type="checkbox" ms-value="el.value" ms-duplex="contractArchive" ms-disabled="contractArchiveDisable" />{{el.label}}</li>
+		            </ul>
+		            其他：<input class="other" ms-duplex="contractArchiveOther" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div ms-repeat="nodeCount" ms-include-src="cm/{{moneyFlow}}Node.html" data-include-loaded="part1Render"></div>
+	<div><a class="label label-info" ms-click="onAddNode">＋添加一个新节点</a></div>
+	
+	<table class="table" border="1px" cellspacing="0px" style="border-collapse:collapse; margin:10px 0px 0px 0px">
+		<tbody>
+			<tr>
+				<td rowspan="2" width="15px">合同预登记审批记录</td>
+				<td width="30px">合同管理员</td>
+				<td><textarea class="text-500" ms-duplex="preregistRecordCm" type="textbox" /></td>
+			</tr>
+			<tr>
+				<td>项目分管领导</td>
+				<td><textarea class="text-500" ms-duplex="preregistRecordPm" type="textbox" ms-disabled="" /></td>
+			</tr>
+			
+			<tr>
+				<td rowspan="2" width="15px">合同正式登记审批记录</td>
+				<td width="30px">合同管理员</td>
+				<td><textarea class="text-500" ms-duplex="registRecordCm" type="textbox" /></td>
+			</tr>
+			<tr>
+				<td>项目分管领导</td>
+				<td><textarea class="text-500" ms-duplex="registRecordPm" type="textbox" ms-disabled="" /></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div ms-repeat="nodeCount" style="margin:-8px 0px 0px 0px" ms-include-src="cm/{{moneyFlow}}Node.html" data-include-loaded="part2Render"></div>
+</div>
+</body>
+</html>

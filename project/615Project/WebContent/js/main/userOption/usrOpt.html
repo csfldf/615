@@ -1,0 +1,70 @@
+<!--配置对话框-->
+<div class="modal fade fade text-center" ms-controller="UsrOpt" id="UsrOpt"
+     tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" style="" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    {{name}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="control-group" ms-repeat="title">
+                        <input type="checkbox" style="left:50%"
+                               ms-class="opt{{el.key}}" ms-click="setUsrOpt(el.value)"
+                               ms-duplex-radio="el.value"
+                               ms-disabled="!el.value && optNum==threshold">
+                        <span>{{el.name}}</span>
+                    </div>
+                </div>
+                <!--<table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <td>
+                            是否显示
+                        </td>
+                        <td>
+                            属性名称
+                        </td>
+                        <td>
+                            显示位置
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-repeat="title['actionTitle']" style="height: 30px">
+                        <td>
+                            <input type="checkbox" ms-class="opt{{el.key}}" ms-click="setUsrOpt('action',el.value)"
+                                   ms-duplex-radio="el.value"
+                                   ms-disabled="!el.value && optNum['actionOptNum']==threshold">
+                        </td>
+                        <td>
+                            {{el.name}}
+                        </td>
+                        <td>
+                            <select ms-class="select-opt-{{el.key}}"
+                                    ms-change="setActionPos('select-opt-'+el.key,el)"
+                                    ms-disabled="!el.value && optNum['actionOptNum']==threshold"
+                                    style="width: 60px">
+                                <option ms-repeat-iter="title['actionTitle']" ms-visible="iter.value"
+                                        ms-selected="iter.position==el.position">
+                                    {{iter.position+1}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>-->
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default"
+                data-dismiss="modal">关闭
+        </button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-default" ms-click="saveUsrOpt('action')"
+                data-dismiss="modal">保存
+        </button>
+    </div>
+</div>

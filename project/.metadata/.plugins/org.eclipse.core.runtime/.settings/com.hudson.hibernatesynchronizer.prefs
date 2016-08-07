@@ -1,0 +1,7 @@
+CompositeIdName=Id
+Extension=hbm.xml
+Generator=native
+KnownVersion=2.3.1
+LastWorkspace=F\:/svn/615_2014/project
+ProxyClassName=${className}Proxy
+eclipse.preferences.version=1

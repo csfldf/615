@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/contractRegist.css"/>
+</head>
+<body>
+<div ms-controller="receiveNode">
+	<table class="table" border="1px" cellspacing="0px" style="border-collapse:collapse" ms-visible="part1">
+		<tbody>
+			<tr>
+				<td rowspan="5">收款节点{{count}}</td>
+				<td>节点类型</td>
+				<td colspan="3">
+					<select class="select" ms-duplex="nodeType">
+		                <option ms-repeat='nodeTypeOpts' ms-attr-value="el.value" ms-attr-label="el.label"></option>
+		            </select>
+				</td>
+			</tr>
+			<tr>
+				<td>节点计划收款金额</td>
+				<td><input ms-duplex="planMoneyAmount" /></td>
+				<td>币种</td>
+				<td>
+					<select class="select" ms-duplex="planMoneyType">
+		                <option ms-repeat='planMoneyTypeOpts' ms-attr-value="el.value" ms-attr-label="el.label"></option>
+		            </select>
+				</td>
+			</tr>
+			<tr>
+				<td>收款条件</td>
+				<td><input ms-duplex="receiveCondition" /></td>
+				<td>计划收款日期</td>
+				<td><input class="datepicker" ms-widget="datepicker" data-datepicker-allow-blank="false" ms-duplex="planReceiveDate"/></td>
+			</tr>
+			<tr>
+				<td>实际收款金额</td>
+				<td><input ms-duplex="actualMoneyAmount" /></td>
+				<td>币种</td>
+				<td>
+					<select class="select" ms-duplex="actualMoneyType">
+		                <option ms-repeat='actualMoneyTypeOpts' ms-attr-value="el.value" ms-attr-label="el.label"></option>
+		            </select>
+				</td>
+			</tr>
+			<tr>
+				<td>发票状态</td>
+				<td>
+					<select class="select" ms-duplex="receiptState">
+		                <option label='已开' value='yes'></option>
+		                <option label='未开' value='no'></option>
+		            </select>
+				</td>
+				<td>开票申请日期</td>
+		        <td><input ms-duplex="receiptApplyDate" /></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<table class="table" border="1px" cellspacing="0px" style="border-collapse:collapse" ms-visible="part2">
+		<tbody>
+			<tr>
+				<td rowspan="2" width="15px">收款节点<br/>{{count}}<br/>审批记录</td>
+				<td width="30px">合同管理员</td>
+				<td><textarea class="text-500" ms-duplex="receiveNodeRecordCm" type="textbox" /></td>
+			</tr>
+			<tr>
+				<td>项目分管领导</td>
+				<td><textarea class="text-500" ms-duplex="receiveNodeRecordPm" type="textbox" ms-disabled="" /></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>

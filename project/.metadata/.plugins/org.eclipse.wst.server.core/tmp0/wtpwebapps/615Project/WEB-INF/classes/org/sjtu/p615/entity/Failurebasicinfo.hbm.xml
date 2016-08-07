@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.sjtu.p615.entity">
+	<class
+		name="FailureBasicInfo"
+		table="failurebasicinfo"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="integer"
+			column="FailureInfo_ID"
+		>
+			<generator class="sequence"/>
+		</id>
+
+		<property
+			name="failureReportNum"
+			column="FailureReportNum"
+			type="string"
+			not-null="true"
+			length="128"
+		/>
+		<property
+			name="failureModel"
+			column="FailureModel"
+			type="string"
+			not-null="true"
+			length="128"
+		/>
+		<property
+			name="failureSN"
+			column="FailureSN"
+			type="string"
+			not-null="true"
+			length="128"
+		/>
+		
+
+	</class>	
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+@charset "utf-8";
+@import "../chameleon/oniui-theme";
+
+$uiname: "ui-dropdown";
+
+.#{$uiname} {
+  .#{$uiname}-menu-inner {
+      //下拉项的样式
+      .#{$uiname}-item {
+        text-indent: 6px;
+      }
+  }
+}
+
+
+
+

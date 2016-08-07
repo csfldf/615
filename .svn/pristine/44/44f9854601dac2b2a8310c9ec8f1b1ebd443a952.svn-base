@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-9-29 15:21:03 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.Action" table="action" catalog="testdb">
+        <id name="actionKey" type="java.lang.Integer">
+            <column name="ActionKey" />
+            <generator class="identity" />
+        </id>
+        <property name="actionId" type="string">
+            <column name="ActionId" not-null="true" />
+        </property>
+        <property name="parentActionId" type="string">
+            <column name="parentActionId" />
+        </property>
+        <property name="actionType" type="string">
+            <column name="ActionType" />
+        </property>
+        <property name="actionName" type="string">
+            <column name="ActionName" />
+        </property>
+        <property name="actionStartDate" type="date">
+            <column name="ActionStartDate" length="10" />
+        </property>
+        <property name="actionDeadlineDate" type="date">
+            <column name="ActionDeadlineDate" length="10" />
+        </property>
+        <property name="actionFinishDate" type="date">
+            <column name="ActionFinishDate" length="10" />
+        </property>
+        <property name="actionState" type="java.lang.Integer">
+            <column name="ActionState" />
+        </property>
+        <property name="actionResource" type="string">
+            <column name="ActionResource" />
+        </property>
+        <property name="controllerDepartment" type="string">
+            <column name="ControllerDepartment" />
+        </property>
+        <property name="controllerDepartmentId" type="string">
+            <column name="ControllerDepartmentId" />
+        </property>
+        <property name="actionController" type="string">
+            <column name="ActionController" />
+        </property>
+        <property name="actionControllerId" type="string">
+            <column name="ActionControllerId" />
+        </property>
+        <property name="actionApprover" type="string">
+            <column name="ActionApprover" />
+        </property>
+        <property name="actionApproverId" type="string">
+            <column name="ActionApproverId" />
+        </property>
+        <property name="actionAuditor" type="string">
+            <column name="ActionAuditor" />
+        </property>
+        <property name="actionAuditorId" type="string">
+            <column name="ActionAuditorId" />
+        </property>
+        <property name="actionContent" type="string">
+            <column name="ActionContent" length="1024" />
+        </property>
+        <property name="actionOutput" type="string">
+            <column name="ActionOutput" length="1024" />
+        </property>
+        <property name="remark" type="string">
+            <column name="Remark" length="1024" />
+        </property>
+        <property name="employeeId" type="string">
+            <column name="EmployeeId" />
+        </property>
+        <property name="projectId" type="string">
+            <column name="ProjectId" />
+        </property>
+        <property name="projectName" type="string">
+            <column name="ProjectName" />
+        </property>
+        <property name="back" type="java.lang.Boolean">
+            <column name="back" />
+        </property>
+        <property name="leaf" type="java.lang.Byte">
+            <column name="leaf" />
+        </property>
+        <property name="level" type="java.lang.Integer">
+            <column name="level" />
+        </property>
+        <property name="deleteMark" type="java.lang.Boolean">
+            <column name="DeleteMark" />
+        </property>
+    </class>
+</hibernate-mapping>

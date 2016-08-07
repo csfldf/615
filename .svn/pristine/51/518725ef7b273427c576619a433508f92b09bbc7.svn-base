@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>C919综合管理平台</title>
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+  <link rel="stylesheet" type="text/css" href="./css/fracas_frame.css">
+  <link rel="stylesheet" type="text/css" href="./css/sdmenu.css" />
+
+  <script type="text/javascript" src="./js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="./js/zzsc.js"></script>
+  <script type="text/javascript" src="./js/sdmenu.js"></script>
+
+  <script charset="gb2312" type="text/javascript" src="main_frame.js"></script>
+
+</head>
+<body background="./images/bg.gif">
+    <div class="easyui-layout" style="width:1400px;height:1560px;margin-left:auto;margin-right:auto;background:#0B92D4">
+        <div data-options="region:'north'" style="height:170px;background:#0B92D4">
+      <embed src="./images/main_flash1.swf" quality="high" type="application/x-shockwave-flash" width="40%" height="99%">
+            </embed>
+      <div class="nav-box">
+        <ul>
+          <li class="cur"><a>首页</a></li>
+          <li>
+            <a href="javascript:void(0)" onclick="navFracas()">FRACAS管理</a>
+            <input id="fracas_alert_icon" class="alert_icon" value="0" readonly="readonly" display="none"/>
+          </li>
+          <li>
+            <a>合同管理</a>
+            <input class="alert_icon" value="0" readonly="readonly"/>
+          </li>
+          <li>
+            <a>部门运行数据管理</a>
+            <input class="alert_icon" value="0" readonly="readonly"/>
+          </li>
+          <li><a>关于</a></li>
+        </ul>
+        <div class="nav-line" style="left: 92px; width: 64px; "></div>
+      </div>
+      <div class="menu-bar">
+        <a id="user" href="javascript:void(0)" onclick="loginOnclick()" style="font-size:20px;color:black;">登录</a>
+      </div>
+    </div>
+        <div data-options="region:'south',split:true" style="height:45px;text-align:center;padding-top:10px;background:#0B92D4">
+      <font face="Verdana" size="4">Copyright &#9426; [2014]
+        [SJTU.School of Software Engineering]. All rights reserved </font>
+    </div>
+        <div data-options="region:'west'" title="操作" style="width:15%">
+      <iframe id="west-view" align="center" width="100%" height="100%" src="" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+    </div>
+        <div data-options="region:'center',title:'主窗口'">
+      <iframe id="main-view" align="center" width="100%" height="100%" src="" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+        </div>
+    </div>
+    <!--
+  <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save'" style="width:400px;height:200px;padding:10px">
+        The dialog content.
+    </div>
+    -->
+    <div id="dlg" class="easyui-dialog" title="Login to system" data-options="iconCls:'icon-save'" style="width:400px;padding:30px 70px 20px 70px">
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" id="userName" style="width:100%;height:40px;padding:12px" data-options="prompt:'Username',iconCls:'icon-man',iconWidth:38">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" id="password" type="password" style="width:100%;height:40px;padding:12px" data-options="prompt:'Password',iconCls:'icon-lock',iconWidth:38">
+        </div>
+        <div style="margin-bottom:20px">
+            <input type="checkbox" checked="checked">
+            <span>Remember me</span>
+        </div>
+        <div>
+            <a href="javascript:void(0)" onclick="login()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="padding:5px 0px;width:100%;">
+                <span style="font-size:14px;">Login</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

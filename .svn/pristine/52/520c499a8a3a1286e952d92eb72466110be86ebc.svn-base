@@ -1,0 +1,18 @@
+1406550724284	Encapsulate field 'failureBasicInfo'
+1406552670088	Encapsulate field 'test'
+1406553077341	Encapsulate field 'content'
+1406558167738	Encapsulate field 'result'
+1406560922367	Delete element
+1406561187531	Delete element
+1406561649316	Delete elements
+1406601220896	Move 1 resources to 'fracas'
+1406601249756	Move 1 resources to 'fracas'
+1406601252318	Move 1 resources to 'css'
+1406601303469	Rename resource 'a.html'
+1406601584759	Rename resource 'a.css'
+1406601777316	Rename resource 'b.html'
+1406612974686	Encapsulate field 'time'
+1406613108540	Encapsulate field 'timeStandin'
+1406625552942	Encapsulate field 'failureReportNum'
+1406635116615	Move 1 resources to 'WEB-INF'
+1406635151692	Move 1 resources to 'lib'

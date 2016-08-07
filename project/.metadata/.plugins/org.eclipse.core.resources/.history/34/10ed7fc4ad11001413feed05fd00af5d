@@ -1,0 +1,20 @@
+package org.sjtu.p615.dept_mgmt.service;
+
+import org.sjtu.p615.dept_mgmt.dao.CdnfileDao;
+import org.sjtu.p615.dept_mgmt.entity.Cdnfile;
+
+public class CdnfileService {
+	private CdnfileDao cdnfileDao;
+
+	public CdnfileDao getCdnfileDao() {
+		return cdnfileDao;
+	}
+
+	public void setCdnfileDao(CdnfileDao cdnfileDao) {
+		this.cdnfileDao = cdnfileDao;
+	}
+	
+	public void add(Cdnfile cdnfile) {
+		cdnfileDao.add(cdnfile);
+	}
+}

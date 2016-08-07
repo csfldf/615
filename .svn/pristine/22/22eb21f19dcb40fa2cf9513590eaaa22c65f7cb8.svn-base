@@ -1,0 +1,16 @@
+0000000000000000000000000000000000000000 3b0a671a40b8b1bcda21a1bb85fa20499a0b5714 jiadongy <jiadongy@163.com> 1415627839 +0800	commit (initial): a base version
+3b0a671a40b8b1bcda21a1bb85fa20499a0b5714 57f98ae134b512239bdb9c6d3441b647b9bd7e2b jiadongy <jiadongy@163.com> 1415628953 +0800	pull origin master: Merge made by the 'recursive' strategy.
+57f98ae134b512239bdb9c6d3441b647b9bd7e2b 575693e574f47d0fa2e36a33fae0e64ed2d1e07a jiadongy <jiadongy@163.com> 1415635301 +0800	commit: use_prototype_failed
+575693e574f47d0fa2e36a33fae0e64ed2d1e07a 2529240ce23b2695177f7ca33476cc36bb095242 jiadongy <jiadongy@163.com> 1415635389 +0800	pull origin master: Merge made by the 'recursive' strategy.
+2529240ce23b2695177f7ca33476cc36bb095242 3b5b6be08ae9faefe597a9773b0a9b1892bbd6cf jiadongy <jiadongy@163.com> 1415801882 +0800	pull origin master: Fast-forward
+3b5b6be08ae9faefe597a9773b0a9b1892bbd6cf 75188dd06ff15160a036881cf6acc7ea8b9bc907 jiadongy <jiadongy@163.com> 1415809074 +0800	commit: 2014.11.12
+75188dd06ff15160a036881cf6acc7ea8b9bc907 4905c18f74dc614e684007e098ddc862df4a77c9 jiadongy <jiadongy@163.com> 1415809158 +0800	pull origin master: Merge made by the 'recursive' strategy.
+4905c18f74dc614e684007e098ddc862df4a77c9 fd93afde3b17f9f7bc970d052406f673528200fe jiadongy <jiadongy@163.com> 1416053993 +0800	pull origin master: Fast-forward
+fd93afde3b17f9f7bc970d052406f673528200fe f42c99d4931cdc69ce323d87d8142cfc565e69cb jiadongy <jiadongy@163.com> 1416279802 +0800	commit: v0.12
+f42c99d4931cdc69ce323d87d8142cfc565e69cb f94ba5437bf02aed80612d2d94da9276a4d094db unknown <Feiyu@WAK-20140309KVI.(none)> 1416502421 +0800	pull origin master: Fast-forward
+f94ba5437bf02aed80612d2d94da9276a4d094db c63e6cc7761d30b6f995e8223d31213918e524ea jiadongy <jiadongy@163.com> 1416502834 +0800	commit: 2014.11.20
+c63e6cc7761d30b6f995e8223d31213918e524ea ac1b5e85fd2ca5ceb53661d41edad9b0710266e9 jiadongy <jiadongy@163.com> 1416504063 +0800	commit (amend): 2014.11.20
+ac1b5e85fd2ca5ceb53661d41edad9b0710266e9 06eef149f42a09c936b21cb9ebd3be8c15394e8a jiadongy <jiadongy@163.com> 1416504442 +0800	commit (amend): new unified event module,add edit API
+06eef149f42a09c936b21cb9ebd3be8c15394e8a 7d4f0fe93321e01fead2df9b7205deb37acbdb1a jiadongy <jiadongy@163.com> 1416504669 +0800	pull: Merge made by the 'recursive' strategy.
+7d4f0fe93321e01fead2df9b7205deb37acbdb1a 927888f4a518d32dd3284c29d716114a824fe22c jiadongy <jiadongy@163.com> 1417267482 +0800	commit: update v0.2 doc
+927888f4a518d32dd3284c29d716114a824fe22c 6749bc14e774d41a5a839821de883556d716b17e jiadongy <jiadongy@163.com> 1417267901 +0800	commit: update doc

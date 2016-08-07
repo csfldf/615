@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Custom css file -->
+    <link rel="stylesheet" href="css/failureReport.css"/>
+  </head>
+  <body>
+    <div ms-controller="failureAnalyse" style="max-width:90%;">
+      <div class="modal-header">
+          <button class="btn" data-dismiss="modal" aria-hidden="true" ms-click="checkFr()">故障报告</button>
+      </div>
+      <table class="table table-bordered" id="failure-report-table">
+        <tbody>
+          <tr>
+            <td>故障报告编号: (Failure Report NO)</td>
+            <td><input ms-widget="textbox" ms-duplex="frNumberRefer" type="textbox" ms-readonly="1 === 1" ms-disabled="frNumberReferDisabled"/></td>
+            <td>故障件型号: (Model)</td>
+            <td><input ms-widget="textbox" ms-duplex="frComponentModel" ms-disabled="frComponentModelDisabled"></select></td>
+          </tr>
+          
+          <tr>
+          	<td>创建日期: (Date)</td> 
+          	  <td colspan="3">
+          	   <input ms-widget="textbox" ms-duplex="farCreateDate" type="textbox" ms-disabled="farCreateDateDisable" /></td>
+          </tr>
+
+          <tr>
+            <td>故障件编号: (SRU S.N.)</td>
+            <td><input ms-widget="textbox" ms-duplex="frComponentCode" type="textbox" ms-readonly="tlMode" ms-disabled="frComponentCodeDisabled"/></td>
+            <td>故障件名称</td>
+            <td><input ms-widget="textbox" ms-duplex="frComponentName" type="textbox" ms-readonly="tlMode" ms-disabled="frComponentNameDisabled"/></td>
+          </tr>
+
+          <tr>
+            <td>故障原因:（Failure Cause）</td>
+            <td colspan="3">
+              <ul>
+                  <li ms-repeat="failureCauseOpts"><input type="checkbox" ms-value="el.value" ms-duplex="failureCause" data-duplex-changed="checkOne" ms-disabled="failureCauseDisabled"/>{{el.label}}</li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr>
+            <td>故障分类：（Failure Category）</td>
+            <td colspan="3">
+              <ul>
+                  <li ms-repeat="failureCategoryOpts" ><input type="checkbox" ms-value="el.value" ms-duplex="failureCategory" data-duplex-changed="checkOne" ms-disabled="failureCategoryDisabled"/>{{el.label}}</li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr>
+            <td>纠正措施建议：（Corrective Action Recommendation）</td>
+            <td colspan="3">
+              <ul>
+                  <li ms-repeat="correctSuggestionOpts" ><input type="checkbox" ms-value="el.value" ms-duplex="correctSuggestion" data-duplex-changed="checkOne" ms-disabled="correctSuggestionDisabled"/>{{el.label}}</li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr>
+            <td>故障原因分析</td>
+            <td colspan="3" id="description"><input ms-widget="textbox" ms-duplex="failureAnalysis" type="textbox" ms-disabled="failureAnalysisDisabled"/></td>
+          </tr>
+
+          <tr>
+            <td>采取：（Required Content in Response)</td>
+            <td colspan="3">
+              <ul>
+                  <li ms-repeat="responseOpts" ><input type="checkbox" ms-value="el.value" ms-duplex="response" data-duplex-changed="checkOne" ms-disabled="responseDisabled"/>{{el.label}}</li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr ms-visible="dlMode">
+            <td rowspan="2">故障责任组/部门: (Responsible Team/Department)</td>
+            <td colspan="3" id="description"><input ms-widget="textbox" ms-duplex="failureAnalysisResponsible" type="textbox" ms-disabled="failureAnalysisResponsibleDisabled"/></td>
+          </tr>
+
+          <tr ms-visible="dlMode">
+          <td colspan="3">
+              故障处理报告负责人:
+              <select id="fh-select" ms-duplex="failureHandler" ms-disabled="failureHandlerDisabled">
+                <option ms-repeat="failureHandlerOpts" ms-attr-value="el.value" ms-attr-label="el.label"></option>
+              </select>
+            </td>
+            </tr>
+
+          <tr ms-visible="tlMode">
+            <td>项目负责人/技术负责人: (Technical Leader)</td>
+            <td colspan="3" id="description"><input ms-widget="textbox" ms-duplex="failureAnalysisLeader" type="textbox" ms-disabled="failureAnalysisLeaderDisabled"/></td>
+          </tr>
+
+          <tr ms-visible="mrbMode">
+            <td>故障审查委员会意见: (MRB)</td>
+            <td colspan="3" id="description"><input ms-widget="textbox" ms-duplex="mrbSuggestions" type="textbox" ms-disabled="mrbSuggestionsDisabled"/></td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <div ms-visible="carMode">
+        <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal"  ms-click="doCar()">生成故障处理报告</a>
+      </div>
+
+      <div ms-visible="editMode">
+        <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal"  ms-click="commitFr()">提交</a>
+        <a href="#myModal" role="button" class="btn btn-success" data-toggle="modal"  ms-click="saveFr()">保存</a>
+      </div>
+      <a href="#myModal" role="button" class="btn btn-danger" data-toggle="modal"  ms-click="cancelFr()">取消</a>
+
+      <!-- Modal -->
+      <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Fracas</h3>
+        </div>
+        <div class="modal-body">
+          <p>您的操作已完成</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true" ms-click="confirm()">确定</button>
+           <button class="btn" data-dismiss="modal" aria-hidden="true" ms-click="">取消</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="./js/avalon.js"></script>
+    <script src="./js/globalConfig.js"></script>
+    <script src="./js/base/jquery-1.11.1.js"></script>
+
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        [ms-controller], [ms-important] {
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+<script>
+    require(['jquery', 'bootstrap', 'bootSideMenu', 'mmRequest', 'UIMainFrame', 'ready!'], function ($) {
+        avalon.scan()
+        $('#leftsidebar').BootSideMenu({side: "left", autoClose: true});
+    });
+</script>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <!--Avalon Sidebar 实现-->
+        <div id="leftsidebar" class="span2">
+            <!--<div id="leftsidebar" class="container sidebar sidebar-left" data-status="opened">
+                <div class="row">-->
+            <div class="bs-docs-sidebar">
+                <div ms-controller="testSimpleTree" style="position:fixed;top:100px;z-index:1">
+                    <div ms-widget="simpletree,tree,$simpletreeOpt">
+                    </div>
+                </div>
+                <ul id="sidebar1" class="nav nav-pills nav-stacked"
+                    ms-visible="showNormalSidebar"
+                    ms-repeat="currentSidebar"
+                    ms-visible="showOriginSidebar">
+                    <li class="nav-header"><b>{{el.header}}</b></li>
+                    <li ms-class="active:elem.active" ms-repeat-elem="el.submenu">
+                        <a ms-click="_sidebarActiveOne($outer.$index,$index)" ms-href="elem.href">{{elem.text}}</a>
+                    </li>
+                </ul>
+                <div id="sidebar2" ms-visible="!showNormalSidebar">{{currentSpecialSidebar|html}}</div>
+                <!--<div id="sidebar3" ms-visible="projectManagementBar">-->
+                <!--<div ms-controller="proMgr">-->
+                <!--<ul id="project" class="nav nav-list simpletree">-->
+                <!--<li ms-include="'simpletreetmpl'" ms-repeat="projects">-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--&lt;!&ndash;<a ms-href="#!/am/project/add">创建新项目</a>&ndash;&gt;-->
+                <!--<noscript id="simpletreetmpl">-->
+                <!--<i class="pull-left"-->
+                <!--ms-class-1="icon-plus:el.groups && !$opts.expandAllAtFirst"-->
+                <!--ms-class-2="icon-minus:el.groups && $opts.expandAllAtFirst"-->
+                <!--ms-class-3="icon-th:!el.groups"></i>-->
+                <!--<span ms-attr-id='"project"+el.projectId'>-->
+                <!--<a style="width:80px;height:30px;font-size:22px;" ms-click="selectProject(el.projectId)">{{el.projectName}}</a>-->
+                <!--</span><br>-->
+                <!--<ul class="nav nav-list" ms-if="el.groups" ms-class="hide:!$opts.expandAllAtFirst">-->
+                <!--<li ms-attr-id='"group"+el.groupId' ms-include="'simpletreetmp2'"-->
+                <!--ms-repeat="el.groups"></li>-->
+                <!--</ul>-->
+                <!--</noscript>-->
+                <!--<noscript id="simpletreetmp2">-->
+                <!--<i class="pull-left"-->
+                <!--ms-class-1="icon-plus:el.groups && !$opts.expandAllAtFirst"-->
+                <!--ms-class-2="icon-minus:el.groups && $opts.expandAllAtFirst"-->
+                <!--ms-class-3="icon-th:!el.groups"></i>-->
+                <!--<span>-->
+                <!--<a style="width:100px;height:30px;font-size:18px;" ms-click="pickGroup(el.groupId)">{{el.groupName}}</a>-->
+                <!--&lt;!&ndash;<a ms-href="#!/am/project/groupMember/{{el.id}}">新增</a>&ndash;&gt;-->
+                <!--</span>-->
+                <!--</noscript>-->
+                <!--&lt;!&ndash;<div id="btn-div" ms-controller="proMgr">&ndash;&gt;-->
+                <!--<div ms-controller="proMgr">-->
+                <!--<div>-->
+                <!--<a role="button" class="btn btn-primary" data-toggle="modal"-->
+                <!--data-target="#newProjectModal">创建项目 </a>-->
+                <!--<a ms-click="delOneProject()" role="button" class="btn btn-danger">删除项目</a>-->
+                <!--</div>-->
+                <!--<div>-->
+                <!--<a role="button" class="btn btn-primary" ms-click="showNewGroupModal()">新增小组</a>-->
+                <!--<a ms-click="delOneGroup()" role="button" class="btn btn-danger">删除小组</a>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<script>-->
+                <!--require('jquery', function ($) {-->
+                <!--$(".simpletree").click(function (e) {-->
+                <!--var $nodeI = $(e.target).parent().children("i"),-->
+                <!--$nodeUL = $(e.target).parent().children("ul");-->
+                <!--if (!$nodeI.hasClass("icon-th")) {-->
+                <!--if ($nodeUL.hasClass("hide")) {-->
+                <!--$nodeI.removeClass("icon-plus")-->
+                <!--$nodeI.addClass("icon-minus")-->
+                <!--}-->
+                <!--else {-->
+                <!--$nodeI.removeClass("icon-minus")-->
+                <!--$nodeI.addClass("icon-plus")-->
+                <!--}-->
+                <!--$nodeUL.toggleClass("hide");-->
+                <!--}-->
+                <!--})-->
+                <!--})-->
+                <!--</script>-->
+                <!--</div>-->
+                <div id="sidebar4" ms-visible="prjMaintainBar">
+                    <div ms-controller="prj_def">
+                        <div class="accordion-group" ms-repeat="data.projects.original_reports"
+                             style="position:relative;width:100%;">
+                            <div class="panel-heading">
+                                <a class="accordion-toggle" ms-click="selOnePrj(el.projectId)" contenteditable="false"
+                                   ms-attr-data-parent="#accordion-{{el.projectId}}{{el.projectName}}"
+                                   data-toggle="collapse" style="color: darkred"
+                                   ms-href="#accordion-prj{{el.projectId}}">{{el.projectName}}
+                                </a><img style="position: relative;left:15px" src="img/+1.png"
+                                         ms-click="addFirstGrp(el)">
+                            </div>
+                            <div class="accordion-body collapse" ms-attr-id="accordion-prj{{el.projectId}}"
+                                 style="position:relative;bottom:0px;left:0px;height:0px;">
+                                <div class="accordion-inner" contenteditable="false">
+                                    <div class="accordion-group" ms-repeat="el.groups"
+                                         style="position: relative;width: 80%;float: right">
+                                        <div class="panel-heading">
+                                            <a class="accordion-toggle" ms-click="selOneFirstGrp(el,el.groupId)"
+                                               contenteditable="false"
+                                               ms-attr-data-parent="#accordion-{{el.groupId}}{{el.groupName}}"
+                                               data-toggle="collapse" style="color: darkred"
+                                               ms-href="#accordion-grp{{el.groupId}}">{{el.groupName}}
+                                            </a><img style="position: relative;left:10px" src="img/+1.png"
+                                                     ms-click="addSecondGrp(el)">&nbsp;&nbsp;&nbsp;&nbsp;<img
+                                                style="position: relative;left:10px" src="img/delete.png"
+                                                ms-click="delFirstGrp(el)">
+
+
+                                            <!--<a style="position: relative;" class="icon-plus"></a><a style="position: relative;"class="icon-minus"></a>-->
+                                        </div>
+                                        <div class="accordion-body collapse" ms-attr-id="accordion-grp{{el.groupId}}"
+                                             style="position:relative;left:0px;height:0px;">
+                                            <div class="accordion-inner" contenteditable="false">
+                                                <div class="panel-heading" ms-repeat="el.subGroups">
+                                                    <a class="accordion-toggle"
+                                                       ms-click="selOneSecondGrp(el,el.groupId)" contenteditable="false"
+                                                       data-toggle="collapse"
+                                                       style="color: darkred">{{el.groupName}}</a><img
+                                                        src="img/delete.png" style="position: relative;left:15px"
+                                                        ms-click="delSecondGrp(el)">
+                                                </div>
+                                                <!--<div>-->
+                                                <!--<a role="button" class="btn btn-primary" ms-click="showNewGroupModal()">新增小组</a>-->
+                                                <!--<a ms-click="delOneGroup()" role="button" class="btn btn-danger">删除小组</a>-->
+                                                <!--</div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div>-->
+                                    <!--<a role="button" class="btn btn-primary" ms-click="showNewGroupModal()">新增专业组</a>-->
+                                    <!--<a ms-click="delOneGroup()" role="button" class="btn btn-danger">删除专业组</a>-->
+                                    <!--</div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="sidebar5" ms-visible="fastAccessBar">
+                    <ul class="nav nav-pills nav-stacked" ms-controller="prj_def">
+                        <li class="nav-header"><b>{{fastAccessConfig.header}}</b></li>
+                        <li ms-repeat="fastAccessConfig.submenu">
+                            <a ms-href="el.href">{{el.text}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--<div id="sidebar6" ms-visible="commBar">-->
+                <!--<ul class="nav nav-pills nav-stacked" ms-controller="commMgr">-->
+                <!--<li class="nav-header"><b>{{commSideBar.header}}</b></li>-->
+                <!--<li ms-repeat="commSideBar.submenu">-->
+                <!--<a ms-href="el.href">{{el.text}}</a>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+                <div id="sidebar6" ms-visible="planMgrBar">
+                    <ul class="nav nav-pills nav-stacked" ms-controller="planSummary">
+                        <li class="nav-header"><b>计划操作</b></li>
+                        <li ms-visible="importView">
+                            <a href="#importPro" role="button" ms-click="initImportProject"
+                               data-toggle="modal" data-target="#importPro">
+                                <!--<div class="qq-upload-button-selector qq-upload-button" style="height: 17px;float:right;background: darkred">-->
+                                主计划导入
+                                <!--</div>-->
+                            </a>
+                        </li>
+                        <li ms-visible="importView">
+                            <a href="#exportPro" ms-click="initExportProject" role="button"
+                               data-toggle="modal" data-target="#exportPro">
+                                <!--<div class="qq-upload-button-selector qq-upload-button" style="height: 17px;float:right;background: black">-->
+                                主计划导出
+                                <!--</div>-->
+                            </a>
+                        </li>
+                        <li>
+                            <a role="button" data-toggle="modal" href="#!/am/planStatistics">
+                                <!--<div class="qq-upload-button-selector qq-upload-button" style="height: 17px;float:right;background: black">-->
+                                计划统计
+                                <!--</div>-->
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="sidebar7" ms-visible="actionMgrBar">
+                    <ul class="nav nav-pills nav-stacked" ms-controller="actionSummary">
+                        <li class="nav-header"><b>{{actionSideBarConfig.header}}</b></li>
+                        <li ms-repeat="actionSideBarConfig.subMenu">
+                            <a role="button" data-toggle="modal" ms-click="newActionDir">{{el.text}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--</div>-->
+            <div class="toggler">
+                <span class="glyphicon glyphicon-chevron-right" style="display:none;"></span>
+                <span class="glyphicon glyphicon-chevron-left" style="display:block;"></span>
+            </div>
+        </div>
+        <!--Tab + Content-->
+        <div class="span10" id="simpleTab">
+
+        </div>
+    </div>
+</div>
+<script>
+
+</script>
+</body>
+</html>

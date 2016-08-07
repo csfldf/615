@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.sjtu.p615.dept_mgmt.entity">
+	<class name="Cdnfile" table="cdnfile">
+		<id 
+			name="partName" 
+			column="partName"
+			type="string"
+			length="50"
+		></id>
+	
+	<!--  
+		<property
+			column="partName"
+			length="50"
+			name="partName"
+			not-null="true"
+			type="string"
+		 />
+		 -->
+		<property
+			column="cdnNode"
+			length="255"
+			name="cdnNode"
+			not-null="false"
+			type="string"
+		 />
+	</class>
+</hibernate-mapping>

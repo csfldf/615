@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+	
+	"classpath://org/hibernate/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.sjtu.p615.entity">
+	<class
+		name="User"
+		table="user"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="integer"
+			column="UserId"
+		>
+			<generator class="native"/>
+		</id>
+
+		<property
+			name="userName"
+			column="UserName"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="password"
+			column="Password"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="email"
+			column="Email"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="role"
+			column="Role"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-9-27 21:50:52 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.Project" table="project" catalog="testdb">
+        <id name="projectId" type="string">
+            <column name="ProjectId" />
+            <generator class="assigned" />
+        </id>
+        <property name="projectName" type="string">
+            <column name="ProjectName" />
+        </property>
+        <property name="deleteMark" type="java.lang.Boolean">
+            <column name="DeleteMark" />
+        </property>
+        <property name="prjShortName" type="string">
+            <column name="PrjShortName" />
+        </property>
+        <property name="prjTypeId" type="int">
+            <column name="PrjTypeId" />
+        </property>
+        <property name="prjType" type="string">
+            <column name="PrjType" />
+        </property>
+        <property name="prjSubId" type="string">
+            <column name="PrjSubId" />
+        </property>
+        <property name="contractId" type="string">
+            <column name="ContractId" />
+        </property>
+        <property name="inBudget" type="string">
+            <column name="InBudget" />
+        </property>
+        <property name="outBudget" type="string">
+            <column name="OutBudget" />
+        </property>
+        <property name="startDate" type="date">
+            <column name="StartDate" length="10" />
+        </property>
+        <property name="endDate" type="date">
+            <column name="EndDate" length="10" />
+        </property>
+        <property name="creatorID" type="string">
+            <column name="CreatorID" />
+        </property>
+    </class>
+</hibernate-mapping>

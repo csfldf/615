@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>故障分析报告</title>
+
+  <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/demo.css">
+    <link rel="stylesheet" type="text/css" href="../css/mystyle.css">
+    <link rel="stylesheet" type="text/css" href="far.css">
+
+
+    <script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
+
+    <script type="text/javascript" src="../js/js615.js"></script>
+    <script type="text/javascript" src="fracas_util.js"></script>
+    <script type="text/javascript" src="far.js"></script>
+</head>
+<body>
+  <div id="data">
+    <div style="width:1020px;height:auto">
+      <table border="0" style="width:100%" cellpadding="10px">
+        <tr>
+          <td style="width:200px"><label>故障报告编号(Failure Report N.O.)</label></td>
+          <td><input class="easyui-textbox" type="text" id="frNumberRefer" data-options="required:true" /></td>
+          <td style="width:200px"><label>故障件型号(Model)</label></td>
+          <td><input class="easyui-textbox" type="text" id="frComponentModel" data-options="required:true" /></td>
+        </tr>
+        <tr>
+          <td><label>故障件编号(SRU S.N.)</label></td>
+          <td><input class="easyui-textbox" type="text" id="frComponentCode" data-options="required:true" /></td>
+          <td><label>故障件名称(Model Name)</label></td>
+          <td><input class="easyui-textbox" type="text" id="frComponentName" data-options="required:true" /></td>
+        </tr>
+
+        <tr>
+          <td><label>故障原因(Failure Cause)</label></td>
+          <td colspan="3"><input class="easyui-combobox" id="failureCause" valueField="id" textField="name"  panelHeight="auto" style="width:700px;height:180px" data-options="required:true"/></td>
+        </tr>
+        <tr>
+          <td><label>故障分类(Failure Category)</label></td>
+          <td colspan="3"><input class="easyui-combobox" id="failureCategory" valueField="id" textField="name"  panelHeight="auto" style="width:700px;height:180px" data-options="required:true"/></td>
+        </tr>
+
+        <tr>
+          <td><label>纠正措施建议(Corrective Action Suggestion)</label></td>
+          <td colspan="3"><input class="easyui-combobox" id="correctSuggestion" valueField="id" textField="name"  panelHeight="auto" style="width:700px;height:180px" data-options="required:true"/></td>
+        </tr>
+
+        <tr>
+          <td><label>故障原因分析(Failure Cause Analysis)</label></td>
+          <td colspan="3"><input class="easyui-textbox multiline-textbox" id="failureAnalysis" data-options="required:true,multiline:true" style="width:700px;height:180px"/></td>
+        </tr>
+
+        <tr>
+          <td><label>采取(Required Content in Response)</label></td>
+          <td colspan="3"><input class="easyui-textbox multiline-textbox" id="correctAction" data-options="required:true,multiline:true" style="width:700px;height:180px"/></td>
+        </tr>
+        <tr>
+          <td><label>故障责任组/部门(Responsible Team/Department)</label></td>
+          <td colspan="3"><input class="easyui-textbox multiline-textbox" id="departmentOpinion" data-options="required:true,multiline:true" style="width:700px;height:180px"/></td>
+        </tr>
+        <tr>
+          <td><label>项目负责人/技术负责人(Technical Leader)</label></td>
+          <td colspan="3"><input class="easyui-textbox multiline-textbox" id="farLeaderOpinion" data-options="required:true,multiline:true" style="width:700px;height:180px"/></td>
+        </tr>
+        <tr>
+          <td><label>故障审查委员会意见(MRB)</label></td>
+          <td colspan="3"><input class="easyui-textbox multiline-textbox" id="mrbSuggestions" data-options="required:true,multiline:true" style="width:700px;height:180px"/></td>
+        </tr>
+        <tr>
+          <td style="padding-left:50px" ><label>mrb签名(mrb sign)</label></td>
+          <td><input class="easyui-textbox" type="text" id="farMrbLeader" data-options="required:true" style="width:150px"/></td>
+          <td style="padding-left:100px" ><label>日期(date)</label></td>
+          <td><input class="easyui-textbox" type="text" id="farMrbDate" data-options="required:true" style="width:150px"/></td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+</body>
+</html>

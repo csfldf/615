@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="css/panel.css"/>
+    <link rel="stylesheet" href="css/eventSummary.css"/>
+  </head>
+  <body>
+    <div ms-controller="eventSummary">
+      <div class="well information"></div>
+      <div class="panel panel-default">
+        <div class="panel-heading">故障报告列表<button class="btn-right" ms-click="topOnGoing(frReports)">待办</button></div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>故障报告编号
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up" ms-click="orderByDict(frReports, 'frNumber', 1)"></i>
+                <i class="icon-chevron-down" ms-click="orderByDict(frReports, 'frNumber', 0)"></i>
+                </span>
+              </th>
+              <th>项目名称
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up" ms-click="orderByRound(frReports, 'project', 1)"></i>
+                <i class="icon-chevron-down" ms-click="orderByRound(frReports, 'project', 0)"></i>
+                </span>
+              </th>
+              <th>创建人
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up" ms-click="orderByDict(frReports, 'frCreater', 1)"></i>
+                <i class="icon-chevron-down" ms-click="orderByDict(frReports, 'frCreater', 0)"></i>
+                </span>
+              </th>
+              <th>创建日期
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up" ms-click="orderByDict(frReports, 'frCreateDate', 1)"></i>
+                <i class="icon-chevron-down" ms-click="orderByDict(frReports, 'frCreateDate', 0)"></i>
+                </span>
+              </th>
+              <th>故障发现人
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up" ms-click="orderByDict(frReports, 'reporter', 1)"></i>
+                <i class="icon-chevron-down" ms-click="orderByDict(frReports, 'reporter', 0)"></i>
+                </span>
+              </th>
+              <th>发现日期
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up" ms-click="orderByDict(frReports, 'happenTime', 1)"></i>
+                <i class="icon-chevron-down" ms-click="orderByDict(frReports, 'happenTime', 0)"></i>
+                </span>
+              </th>
+              <th>状态
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up" ms-click="orderByRound(frReports, 'status', 1)"></i>
+                <i class="icon-chevron-down" ms-click="orderByRound(frReports, 'status', 0)"></i>
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ms-class="one-row {{el.mark}}2" ms-repeat="curFrReports" ms-click="loadReport(el)">
+              <td>{{el.frNumber}}</td>
+              <td>{{el.project}}</td>
+              <td>{{el.frCreater}}</td>
+              <td>{{el.frCreateDate}}</td>
+              <td>{{el.reporter}}</td>
+              <td>{{el.happenTime}}</td>
+              <td>{{el.status}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pager">
+          <button><i class="icon-chevron-left" ms-click="preFrPage"></i></button>
+          第 {{indexFrReports+1}} 页，共 {{pagesFrReports}} 页
+          <button><i class="icon-chevron-right" ms-click="nextFrPage"></i></button>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">分析报告列表</div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>分析报告编号
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up"></i>
+                <i class="icon-chevron-down"></i>
+                </span>
+              </th>
+              <th>项目名称
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up"></i>
+                <i class="icon-chevron-down"></i>
+                </span>
+              </th>
+              <th>故障报告编号
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up"></i>
+                <i class="icon-chevron-down"></i>
+                </span>
+              </th>
+              <th>分析工程师
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up"></i>
+                <i class="icon-chevron-down"></i>
+                </span>
+              </th>
+              <th>创建日期
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up"></i>
+                <i class="icon-chevron-down"></i>
+                </span>
+              </th>
+              <th>状态
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up"></i>
+                <i class="icon-chevron-down"></i>
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ms-class="one-row {{el.mark}}2" ms-repeat="curFarReports" ms-click="loadFar(el)">
+              <td>{{el.farNumber}}</td>
+              <td>{{el.project}}</td>
+              <td>{{el.frNumberRefer}}</td>
+              <td>{{el.farAnalyst}}</td>
+              <td>{{el.farCreateDate}}</td>
+              <td>{{el.status}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pager">
+          <button><i class="icon-chevron-left" ms-click="preFarPage"></i></button>
+          第 {{indexFarReports+1}} 页，共 {{pagesFarReports}} 页
+          <button><i class="icon-chevron-right" ms-click="nextFarPage"></i></button>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">CAR报告列表</div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>CAR报告编号
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up"></i>
+                <i class="icon-chevron-down"></i>
+                </span>
+              </th>
+              <th>项目名称
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up"></i>
+                <i class="icon-chevron-down"></i>
+                </span>
+              </th>
+              <th>故障报告编号
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up"></i>
+                <i class="icon-chevron-down"></i>
+                </span>
+              </th>
+              <th>创建日期
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up"></i>
+                <i class="icon-chevron-down"></i>
+                </span>
+              </th>
+              <th>状态
+                <span class="sort-icons" style="position:relative">
+                <i class="icon-chevron-up"></i>
+                <i class="icon-chevron-down"></i>
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ms-class="one-row {{el.mark}}2" ms-repeat="carReports" ms-click="loadCar(el)">
+              <td>{{el.carNumber}}</td>
+              <td>{{el.project}}</td>
+              <td>{{el.frNumber}}</td>
+              <td>{{el.carCreateDate}}</td>
+              <td>{{el.status}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pager">
+          <button><i class="icon-chevron-left" ms-click="preCarPage"></i></button>
+          第 {{indexCarReports+1}} 页，共 {{pagesCarReports}} 页
+          <button><i class="icon-chevron-right" ms-click="nextCarPage"></i></button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

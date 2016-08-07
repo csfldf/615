@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" charset="utf-8" name="create_project" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<!--<table class="table" id="groupTable">-->
+    <!--<caption>项目现有的组</caption>-->
+    <!--<thead>-->
+    <!--<tr>-->
+        <!--<th>组号</th>-->
+        <!--<th>组名</th>-->
+        <!--<th>组长</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--</tbody>-->
+<!--</table>-->
+<table class="table" id='groupTable'ms-controller="createGroup">
+<caption>项目现有的组</caption>
+<thead>
+<tr>
+    <th>组号</th>
+    <th>组名</th>
+    <th>组长</th>
+</tr>
+</thead>
+<tbody>
+<tr ms-duplex="group" ms-repeat="groups" ms-value="el" ms-click="selectOne(el.groupId)">
+    <td>{{el.groupId}}</td>
+    <td>{{el.groupName}}</td>
+    <td>{{el.leader}}</td>
+</tr>
+</tbody>
+</table>
+<button class="btn btn-primary btn-lg" data-toggle="modal"
+        data-target="#groupModal">
+    创建专业组
+</button>
+<br/>
+<div class="modal fade" id="groupModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" ms-controller="createGroup">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="groupModalLabel">
+                    创建专业组
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid" >
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">组名</label>
+
+                                <div class="controls">
+                                    <input ms-duplex="newGroup.groupName" name="projectName" type="text"
+                                           class="input-xlarge" autofocus required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group"><!-- Text input-->
+                                <label class="control-label">组长</label>
+                                <select ms-duplex="newGroup.leader" name="leader" class="input-xlarge" required>
+                                    <option ms-repeat="$employeeTmpl" ms-value="el.value">{{el.text}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        id="group_close_btn" data-dismiss="modal">关闭
+                </button>
+                <button type="button" ms-click="new" class="btn btn-primary">
+                    创建
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+</body>
+</html>
+
+
+<script src="../js/avalon.js"></script>
+<link rel="stylesheet" href="../css/base/bootstrap.css">
+<script src="../js/globalConfig.js"></script>
+<script>
+        require(['am.groupManager','jquery','bootstrap','datatables.bootstrap'], function (data,$) {
+            avalon.scan()
+            $(document).ready( function () {
+//            $('#groupTable').DataTable({
+//            });
+        });
+            $('#groupModal').on('hidden.bs.modal', function () {
+                $('#group_close_btn').click();
+            })
+    } );
+
+</script>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/panel.css"/>
+    <link href="css/base/fineuploader-5.0.7.min.css" rel="stylesheet">
+</head>
+<body>
+<div ms-controller="actionSummary">
+<div class="accordion-group">
+    <div class="accordion-heading"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgProject')"
+                                      data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                      href="#accordion-element-projectSum">我的项目<img id="imgProject" src="img/expand.png" /></a></div>
+    <div class="accordion-body collapse" id="accordion-element-projectSum" style="position:relative;bottom:0px;left:0px;height: 0px;">
+        <div class="accordion-inner" id="xxx" contenteditable="false">
+            <div>
+                <table class="table table-hover" id="prol">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <td>编号</td>
+                        <td>项目名称
+                            <span class="sort-icons" style="position:relative">
+                                <i class="icon-chevron-up" ms-click="orderByDict('wproject',proDGrid, 'projectName', 1)"></i>
+                                <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectName', 0)"></i>
+                            </span>
+                        </td>
+                        <td>项目开始时间
+                            <span class="sort-icons" style="position:relative">
+                                <i class="icon-chevron-up" ms-click="orderByDict('wproject,'proDGrid, 'projectStartingDate', 1)"></i>
+                                <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectStartingDate', 0)"></i>
+                            </span>
+                        </td>
+                        <td>项目截止时间
+                            <span class="sort-icons" style="position:relative">
+                                <i class="icon-chevron-up" ms-click="orderByDict('wproject',proDGrid, 'projectDeadlineDate', 1)"></i>
+                                <i class="icon-chevron-down" ms-click="orderByDict('wproject',proDGrid, 'projectDeadlineDate', 0)"></i>
+                            </span>
+                        </td>
+                        <td>待办事务数
+                            <span class="sort-icons" style="position:relative">
+                                <i class="icon-chevron-up" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 1)"></i>
+                                <i class="icon-chevron-down" ms-click="orderByNumber('wproject',proDGrid, 'projectWaitingTrans', 0)"></i>
+                            </span>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ms-hover="hover" ms-repeat="curProjectReports">
+                        <th><input type="radio" ms-duplex="el.text" ms-click="loadATree(el)" /></th>
+                        <td>{{$index+(indexProjectReports)*5+1}}</td>
+                        <td>{{el.projectName}}</td>
+                        <td>{{el.projectStartingDate}}</td>
+                        <td>{{el.projectDeadlineDate}}</td>
+                        <td>{{el.projectWaitingTrans}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pager">
+                    <button ms-click="preProjectPage"><i class="icon-chevron-left"></i></button>
+                    第 {{indexProjectReports+1}} 页，共 {{pagesProjectReports}} 页
+                    <button ms-click="nextProjectPage"><i class="icon-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br>
+
+<div class="accordion-group">
+    <div class="accordion-heading"><a class="accordion-toggle" contenteditable="false" ms-click="changeShrinkExpandImg('imgTaskList')"
+                                      data-parent="#accordion-988086" data-toggle="collapse" style="color: darkred"
+                                      href="#accordion-element-taskList">行动项列表<img id="imgTaskList" src="img/expand.png" /></a></div>
+    <div class="accordion-body collapse" id="accordion-element-taskList" style="position:relative;bottom:0px;left:0px;height: 0px;">
+        <div class="accordion-inner" contenteditable="false">
+            <table class="table table-hover" id="pl">
+                <thead>
+                <tr>
+                    <td style="width:9px"></td>
+                    <td>编号</td>
+                    <!--<td>综合任务编号-->
+                    <!--<span class="sort-icons" style="position:relative">-->
+                    <!--<i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planSerialNumber', 1)"></i>-->
+                    <!--<i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planSerialNumber', 0)"></i>-->
+                    <!--</span>-->
+                    <!--</td>-->
+                    <td>综合任务代码
+                        <span class="sort-icons" style="position:relative">
+                            <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planCode', 1)"></i>
+                            <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planCode', 0)"></i>
+                        </span>
+                    </td>
+                    <!--<td>工作名称-->
+                    <!--<span class="sort-icons" style="position:relative">-->
+                    <!--<i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planName', 1)"></i>-->
+                    <!--<i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planName', 0)"></i>-->
+                    <!--</span>-->
+                    <!--</td>-->
+                    <td>工作截止日期
+                        <span class="sort-icons" style="position:relative">
+                            <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planDeadlineDate', 1)"></i>
+                            <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planDeadlineDate', 0)"></i>
+                        </span>
+                    </td>
+                    <td>离完成日期
+                        <span class="sort-icons" style="position:relative">
+                            <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planRemainingDate', 1)"></i>
+                            <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planRemainingDate', 0)"></i>
+                        </span>
+                    </td>
+                    <td>工作来源
+                        <span class="sort-icons" style="position:relative">
+                            <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planSource', 1)"></i>
+                            <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planSource', 0)"></i>
+                        </span>
+                    </td>
+                    <td>工作责任人
+                        <span class="sort-icons" style="position:relative">
+                            <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'employeeName', 1)"></i>
+                            <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'employeeName', 0)"></i>
+                        </span>
+                    </td>
+                    <td>工作状态
+                        <span class="sort-icons" style="position:relative">
+                            <i class="icon-chevron-up" ms-click="orderByDict('plan',planDGrid, 'planStateCode', 1)"></i>
+                            <i class="icon-chevron-down" ms-click="orderByDict('plan',planDGrid, 'planStateCode', 0)"></i>
+                        </span>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ms-class="one-row" ms-repeat="curPListReports"
+                    ms-click="loadPlan(el)" ms-visible="el.visible">
+                    <!--<th><input type="checkbox" ms-duplex-radio="el.text" /></th>-->
+                    <td style="width:9px" ms-css-background-color="el.bg"></td>
+                    <td>{{el.wbs}}</td>
+                    <!--<td>{{el.planSerialNumber}}</td>-->
+                    <td><span ms-html="el.space"></span>{{el.planCode}}</td>
+                    <!--<td>{{el.planName}}</td>-->
+                    <td>{{el.planDeadlineDate}}</td>
+                    <td>{{el.planRemainingDate}}</td>
+                    <td>{{el.planSource}}</td>
+                    <td>{{el.employeeName}}</td>
+                    <td>{{el.planStateCode}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="height: 50px"></div>
+        </div>
+        <span style="position:absolute;bottom: 20px;left: 20px">每页显示</span>
+        <select id="select-plan" ms-change="setPagesPlan"
+                style="position: absolute;bottom: 5px;left: 80px;width: 60px">
+            <option id="selected-five" value ="5"  selected="selected">5</option>
+            <option value ="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+        <div class="pager" style="position: absolute;bottom: 0px;left: 40%">
+            <button ms-click="prePListPage"><i class="icon-chevron-left"></i></button>
+            第 {{indexPListReports+1}} 页，共 {{pagesPListReports}} 页
+            <button ms-click="nextPListPage"><i class="icon-chevron-right"></i></button>
+        </div>
+    </div>
+</div><br><br><br>
+
+</div>
+</body>
+</html>

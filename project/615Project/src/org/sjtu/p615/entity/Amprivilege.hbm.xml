@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-6-1 14:18:11 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.sjtu.p615.entity.Amprivilege" table="amprivilege" catalog="testdb">
+        <id name="roleId" type="int">
+            <column name="roleId" />
+            <generator class="assigned" />
+        </id>
+        <property name="roleName" type="string">
+            <column name="roleName" />
+        </property>
+        <property name="index" type="java.lang.Integer">
+            <column name="index" />
+        </property>
+        <property name="prjOverview" type="java.lang.Integer">
+            <column name="prjOverview" />
+        </property>
+        <property name="createPrj" type="java.lang.Integer">
+            <column name="createPrj" />
+        </property>
+        <property name="grpMaintain" type="java.lang.Integer">
+            <column name="grpMaintain" />
+        </property>
+        <property name="addPlan" type="java.lang.Integer">
+            <column name="addPlan" />
+        </property>
+        <property name="publishPlan" type="java.lang.Integer">
+            <column name="publishPlan" />
+        </property>
+        <property name="changePlan" type="java.lang.Integer">
+            <column name="changePlan" />
+        </property>
+        <property name="auditPlanChange" type="java.lang.Integer">
+            <column name="auditPlanChange" />
+        </property>
+        <property name="planChangeImplement" type="java.lang.Integer">
+            <column name="planChangeImplement" />
+        </property>
+        <property name="resolveTask" type="java.lang.Integer">
+            <column name="resolveTask" />
+        </property>
+        <property name="publishTask" type="java.lang.Integer">
+            <column name="publishTask" />
+        </property>
+        <property name="feedBackTask" type="java.lang.Integer">
+            <column name="feedBackTask" />
+        </property>
+        <property name="readPlan" type="java.lang.Integer">
+            <column name="readPlan" />
+        </property>
+        <property name="statistics" type="java.lang.Integer">
+            <column name="statistics" />
+        </property>
+        <property name="addActionDir" type="java.lang.Integer">
+            <column name="addActionDir" />
+        </property>
+        <property name="publishActionDir" type="java.lang.Integer">
+            <column name="publishActionDir" />
+        </property>
+        <property name="addAction" type="java.lang.Integer">
+            <column name="addAction" />
+        </property>
+        <property name="publishAction" type="java.lang.Integer">
+            <column name="publishAction" />
+        </property>
+        <property name="feedBackAction" type="java.lang.Integer">
+            <column name="feedBackAction" />
+        </property>
+        <property name="auditAction" type="java.lang.Integer">
+            <column name="auditAction" />
+        </property>
+        <property name="readAction" type="java.lang.Integer">
+            <column name="readAction" />
+        </property>
+        <property name="commMgm" type="java.lang.Integer">
+            <column name="commMgm" />
+        </property>
+        <property name="templateMaintain" type="java.lang.Integer">
+            <column name="templateMaintain" />
+        </property>
+        <property name="downloadTemplate" type="java.lang.Integer">
+            <column name="downloadTemplate" />
+        </property>
+        <property name="importPlan" type="java.lang.Integer">
+            <column name="importPlan" />
+        </property>
+        <property name="exportPlan" type="java.lang.Integer">
+            <column name="exportPlan" />
+        </property>
+        <property name="addProject" type="java.lang.Integer">
+            <column name="addProject" />
+        </property>
+        <property name="addGroup" type="java.lang.Integer">
+            <column name="addGroup" />
+        </property>
+        <property name="addGroupMember" type="java.lang.Integer">
+            <column name="addGroupMember" />
+        </property>
+        <property name="deleteMark" type="java.lang.Boolean">
+            <column name="deleteMark" />
+        </property>
+    </class>
+</hibernate-mapping>

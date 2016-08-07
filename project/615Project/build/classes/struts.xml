@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!--修改struts过滤器信息-->
+<!--      <constant name="struts.multipart.parser" value="jakarta" />   -->
+<!-- 	<bean type="org.apache.struts2.dispatcher.multipart.MultiPartRequest" -->
+<!-- 	name="myRequestParser" class="org.sjtu.p615.am.action.RequestParseWrapper" -->
+<!-- 	scope="default" optional="true" /> -->
+<!-- 	<constant name="struts.multipart.parser" value="myRequestParser" /> -->
+    <!--<constant name="struts.i18n.encoding" value="GBK"/>-->
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.multipart.saveDir" value="/tmp"/>
+    <constant name="struts.devMode" value="false" />
+<!-- 	<constant name="struts.multipart.saveDir" value="/uploads"></constant> -->
+    <include file="struts_dept_mgmt.xml"/>
+	<include file="struts_fracas.xml"/>
+     <include file="struts_am.xml"/>
+     <include file="struts_util.xml"/>
+
+</struts>

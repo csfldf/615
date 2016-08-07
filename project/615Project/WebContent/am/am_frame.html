@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>C919综合管理平台</title>
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+	<link rel="stylesheet" type="text/css" href="../css/fracas_frame.css">
+	<link rel="stylesheet" type="text/css" href="../css/sdmenu.css" />
+
+	<script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/zzsc.js"></script> 
+	<script type="text/javascript" src="../js/sdmenu.js"></script>
+	
+	<script type="text/javascript">
+
+		function importPlan() {
+			$("#report-view").attr("src", "uploadmultfile.html?type=new");
+		}
+		function newPlan() {
+			$("#report-view").attr("src", "plan_report.html?type=new");
+		}
+		function searchPlan() {
+			$("#report-view").attr("src", "plan_report.html?type=search");
+		}
+		function listPlans() {
+			$("#report-view").attr("src", "plan_list.html");
+		}
+		
+	</script>
+	<script type="text/javascript">
+		var myMenu;
+		window.onload = function() {
+			myMenu = new SDMenu("my_menu");
+			myMenu.init();
+		};
+	</script>
+</head>
+<body background="../images/bg.gif">
+    <div class="easyui-layout" style="width:80%;height:900px;margin-left:auto;margin-right:auto;background:#0B92D4">
+        <div data-options="region:'north'" style="height:170px;background:#0B92D4">
+			<embed src="main_flash1.swf" quality="high" type="application/x-shockwave-flash" width="47%" height="99%">	
+            </embed> 
+			<div class="nav-box">
+				<ul>
+					<li class="cur"><a>首页</a></li>
+					<li><a href="../fracas/fracas_frame.html">FRACAS管理</a></li>
+					<li><a>合同管理</a></li>
+					<li><a href="../am/am_frame.html">部门运行数据管理</a></li>
+					<li><a>关于</a></li>
+				</ul>	
+				<div class="nav-line" style="left: 92px; width: 64px; "></div>
+				</div>
+		</div>
+        <div data-options="region:'south',split:true" style="height:45px;text-align:center;padding-top:10px;background:#0B92D4">
+			<font face="Verdana" size="4">Copyright &#9426; [2014] 
+				[SJTU.School of Software Engineering]. All rights reserved </font>
+		</div>
+        <div data-options="region:'west'" title="操作" style="width: 20%; font: 20px 微软雅黑">
+		<div id="my_menu" class="sdmenu">
+			<div class="collapsed">
+				<span>部门运行数据管理</span>
+				<a href="javascript:void(0)" onclick="importPlan()">计划导入</a>
+				<a href="javascript:void(0)" onclick="newPlan()">新计划制订</a>
+				<a href="javascript:void(0)" onclick="searchPlan()">计划查询</a>
+				<a href="javascript:void(0)" onclick="listPlans()">计划下达</a>
+				<a>计划变更 1</a>
+				<a>计划变更 2</a>
+				<a>计划取消</a>
+			</div>
+			<!--
+			  <div class="collapsed">
+				<span>故障分析</span>
+				<a>查看</a>
+				<a>处理</a>
+			</div>
+			<div class="collapsed">
+				<span>故障纠正</span>
+				<a>查看</a>
+				<a>追踪</a>
+				<a>统计</a>
+			</div>
+			-->
+		</div>
+		<!--
+			<div class="easyui-accordion">
+				<div title="故障报告" data-options="selected:true" style="padding:10px;">
+					<ul class="function-list">
+						<li><a href="javascript:void(0)" onclick="newFailureReport()">录入</a></li>
+						<li><a href="javascript:void(0)" onclick="listFailureReport()">查看</a></li>
+						<li><a>处理</a></li>
+						<li><a>追踪</a></li>
+						<li><a>统计</a></li>
+					</ul>
+				</div>
+				<div title="故障分析" style="padding:10px">
+					<ul class="function-list">
+						<li><a>查看</a></li>
+						<li><a>处理</a></li>
+					</ul>
+				</div>
+				<div title="故障纠正" style="padding:10px">
+					<ul class="function-list">
+						<li><a>查看</a></li>
+						<li><a>追踪</a></li>
+						<li><a>统计</a></li>
+					</ul>
+				</div>
+			</div>
+			-->
+		</div>
+        <div data-options="region:'center',title:'部门运行数据管理'">
+		  <iframe id="report-view" align="center" width="100%" height="100%" src="" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+        </div>
+    </div>
+ 
+</body>
+</html>

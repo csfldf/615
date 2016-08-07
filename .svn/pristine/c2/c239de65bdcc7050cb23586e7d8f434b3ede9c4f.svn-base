@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="../js/avalon.js"></script>
+<link rel="stylesheet" href="../css/base/bootstrap.css">
+<script src="../js/globalConfig.js"></script> 
+<title>615项目</title>
+
+
+</head>
+<body>
+	<div ms-controller="hello">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th ms-repeat="projectInfo">{{el}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ms-repeat="projectArray" ms-click="selectOneProject(el)">
+					<td>{{el.projectName}}</th>
+					<td>{{el.roleName}}</th>
+					<td>{{el.count}}</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

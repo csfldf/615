@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<div class="container-fluid" ms-important="planReport" id="planReportContainer">
+    <form ms-attr-id="$formId" class="form-horizontal">
+        <legend style="text-align: center;vertical-align: 50%">{{(report.isActionItem?'行动项':'计划')+'ID : '+$reportId}}</legend>
+        <div class="row-fluid">
+            <div class="row-fluid">
+                <div class="span12" ms-visible="uiDisplay.parentPlanCode">
+                    <div class="control-group"><!-- Select Basic -->
+                        <label class="control-label">父级任务代码: </label>
+
+                        <div class="controls">
+                            <input ms-duplex="report.parentPlanCode" ms-enabled="uiEnable.parentPlanCode"
+                                   name="parentPlanCode" type="text"
+                                   class="input-xlarge span11">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span6" ms-visible="uiDisplay.planSerialNumber">
+                    <div class="control-group"><!-- Text input-->
+                        <label class="control-label">综合任务编号:</label>
+
+                        <div class="controls">
+                            <input ms-duplex="report.planSerialNumber" ms-enabled="uiEnable.planSerialNumber"
+                                   name="planSerialNumber" type="text"
+                                   class="input-xlarge span11" autofocus required>
+                        </div>
+                    </div>
+                </div>
+                <div class="span6" ms-visible="uiDisplay.planCode">
+                    <div class="control-group"><!-- Text input-->
+                        <label class="control-label ">综合任务代码:</label>
+
+                        <div class="controls">
+                            <input ms-duplex="report.planCode" ms-enabled="uiEnable.planCode" name="planCode"
+                                   type="text" class="input-xlarge span11" autofocus
+                                   required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12" ms-visible="uiDisplay.planName">
+                    <div class="control-group"><!-- Text input-->
+                        <label class="control-label ">工作名称: </label>
+
+                        <div class="controls">
+                            <input ms-duplex="report.planName" ms-enabled="uiEnable.planName" name="planName"
+                                   type="text" class="input-xxlarge span11"
+                                   required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span6" ms-visible="uiDisplay.planIssuedDate">
+                    <div class="control-group"><!-- Text input-->
+                        <label class="control-label ">工作下达日期:</label>
+
+                        <div class="controls">
+                            <input ms-duplex="report.planIssuedDate" ms-enabled="uiEnable.planIssuedDate"
+                                   name="planIssuedDate" type="date"
+                                   class="input-xlarge span11">
+                        </div>
+                    </div>
+                </div>
+                <div class="span6" ms-visible="uiDisplay.planDeadlineDate">
+                    <div class="control-group"><!-- Text input-->
+                        <label class="control-label ">工作要求完成日期:</label>
+
+                        <div class="controls">
+                            <input ms-duplex="report.planDeadlineDate" ms-enabled="uiEnable.planDeadlineDate"
+                                   name="planDeadlineDate" type="date"
+                                   class="input-xlarge span11" required>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row-fluid">
+                <div class="span6" ms-visible="uiDisplay.planStartDate">
+                    <div class="control-group"><!-- Text input-->
+                        <label class="control-label ">工作启动日期:</label>
+
+                        <div class="controls">
+                            <input ms-duplex="report.planStartDate" ms-enabled="uiEnable.planStartDate"
+                                   name="planStartDate" type="date"
+                                   class="input-xlarge span11" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="span6" ms-visible="uiDisplay.planFinishDate">
+                    <div class="control-group"><!-- Text input-->
+                        <label class="control-label ">工作实际完成日期:</label>
+
+                        <div class="controls">
+                            <input ms-duplex="report.planFinishDate" ms-enabled="uiEnable.planFinishDate"
+                                   name="planFinishDate" type="date"
+                                   class="input-xlarge span11" >
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row-fluid">
+                <div class="span6" ms-visible="uiDisplay.planSource">
+                    <div class="control-group"><!-- Text input-->
+                        <label class="control-label ">工作来源:</label>
+                        <div class="controls">
+                            <input ms-duplex="report.planSource" ms-enabled="uiEnable.planSource" name="planSource"
+                                   type="text" class="input-xlarge span11"
+                                   required>
+                        </div>
+                    </div>
+                </div>
+                <div class="span6" ms-visible="uiDisplay.areaPlanRemainingDate">
+                    <div class="control-group"><!-- Prepended text-->
+                        <label class="control-label">距离完成日期:</label>
+
+                        <div class="controls">
+                            <div class="input-prepend input-append"><span class="add-on">{{planRemainingDate>=0?'还剩余':'已超期'}}</span>
+                                <span class="uneditable-input span2">{{planRemainingDate>=0?planRemainingDate:planRemainingDate*(-1)}}</span>
+                                <span class="add-on">天</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid" ms-if="report.isActionItem" ms-visible="uiDisplay.areaPlanOutput">
+                <div class="span12">
+                    <div class="control-group"><!-- Text input-->
+                        <label class="control-label ">工作输出物:</label>
+                        <div class="controls">
+                            <!-- 已有工作输出物 -->
+                            <div class="span6">
+                                <ul class="qq-upload-list"
+                                    ms-if="report.planOutputExisited.length"
+                                    style="text-align: center;">
+                                    <li ms-repeat="report.planOutputExisited">
+                                        <span class="qq-upload-file"
+                                              ms-attr-title="el.name">{{el.name|truncate(25,"...")}}</span>
+                                        <span class="qq-upload-cancel"> 上传于:{{el.uploadDate}} </span>
+                                        <a class="qq-upload-cancel" target="_blank" ms-href="el.downloadHref">下载</a>
+                                        <a class="qq-upload-cancel" href="javascript:void(0)"
+                                           ms-visible="uiEnable.areaPlanOutput"
+                                           ms-click="deleteOutput(el.deleteHref,$remove)"
+                                           >删除</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Fine Uploader DOM Element-->
+                            <div class="span4" id="bootstrapped-fine-uploader"
+                                 ms-visible="uiDisplay.areaUploader"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span6" ms-visible="uiDisplay.planController">
+                    <div class="control-group" ms-visible="uiDisplay.planController"><!-- Text input-->
+                        <label class="control-label ">工作责任人:</label>
+
+                        <div class="controls">
+                            <div class="input-append">
+                                <input onfocus="this.blur()"
+                                       ms-duplex="report.planController" ms-enabled="uiEnable.planController"
+                                       name="planController" type="text" required>
+                                <a class="inline btn"
+                                   ms-enabled="uiEnable.buttonControllerSelect"
+                                   ms-visible="uiDisplay.buttonControllerSelect"
+                                   ms-click="initEmployeeSelector('#selector')">选择员工</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span6" ms-visible="uiDisplay.planState">
+                    <div class="control-group"><!-- Select Basic -->
+                        <label class="control-label ">工作状态:<span class="label label-warning" ms-if="report.back">被回退</span></label>
+
+                        <div class="controls">
+
+                            <select ms-duplex="report.planState" ms-enabled="uiEnable.planState" name="planState"
+                                    class="input-xlarge span11" required>
+                                <option ms-repeat="$planStateTmpl" ms-value="el.value">{{el.text}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12" ms-visible="uiDisplay.planUpdateDescription">
+                    <div class="control-group"><!-- Textarea -->
+                        <label class="control-label ">更新说明:</label>
+
+                        <div class="controls">
+                            <textarea ms-duplex="report.planUpdateDescription"
+                                      ms-enabled="uiEnable.planUpdateDescription" name="planUpdateDescription"
+                                      type="text" required
+                                      rows="5" class="span8"> </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="controls-row form-actions"><!-- Button -->
+                    <input class="btn btn-success" value="已阅" type="button"
+                           ms-click="submit('submit',$event)"
+                           ms-visible="report.planState==4 && report.employeeId.length > 0"
+                           ms-enabled="uiDisplay.buttonSubmit">
+                    <input class="btn btn-primary" ms-value="report.planState==1?'审核':'提交'" type="submit"
+                           ms-click="submit('submit',$event)"
+                           ms-visible="uiDisplay.buttonSubmit"
+                           ms-enabled="uiEnable.buttonSubmit">
+                    <input class="btn btn-primary" value="回退" type="submit"
+                           ms-click="submit('back',$event)"
+                           ms-visible="uiDisplay.buttonBack"
+                           ms-enabled="uiEnable.buttonBack">
+                    <input class="btn btn-primary" value="编辑" type="button"
+                           ms-click="edit($event)"
+                           ms-visible="uiDisplay.buttonBack && (report.planState==2 || report.planState==4)">
+                    <input class="btn btn-danger" value="终止" type="button"
+                           ms-click="deleteSelf()"
+                           ms-enabled="uiEnable.buttonDelete"
+                           ms-visible="uiDisplay.buttonDelete">
+                    <input class="btn btn-info" value="保存草稿" type="submit"
+                           ms-click="submit('save',$event)"
+                           ms-visible="uiDisplay.buttonSubmitDraft"
+                           ms-enabled="uiEnable.buttonSubmitDraft" >
+                    <input class="btn btn-danger" value="删除草稿" type="button"
+                           ms-click="deleteDraftSelf()"
+                           ms-enabled="uiEnable.buttonDeleteDraft"
+                           ms-visible="uiDisplay.buttonDeleteDraft">
+
+                    <input class="btn btn-warning" value="退出" type="button"
+                           ms-click="closeReportTab($event)">
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-danger alert-dismissable" style="visibility: hidden">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>注意!</strong> 请参照操作说明使用
+        </div>
+    </form>
+</div>
+<!-- Fine Uploader template====================================================================== -->
+<script type="text/template" id="qq-template-bootstrap">
+    <div class="qq-uploader-selector qq-uploader span12">
+        <div class="qq-upload-drop-area-selector qq-upload-drop-area span12" qq-hide-dropzone>
+            <span>Drop files here to upload</span>
+        </div>
+        <div class="qq-upload-button-selector qq-upload-button btn btn-inverse btn-small" style="width: auto;">
+            <div><i class="icon-upload icon-white"></i> 添加新文件</div>
+        </div>
+        <div id="triggerUpload" class="btn btn-inverse btn-small">
+            <i class="icon-upload icon-white"></i> 现在上传
+        </div>
+
+    <span class="qq-drop-processing-selector qq-drop-processing">
+      <span>Processing dropped files...</span>
+      <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+    </span>
+        <ul class="qq-upload-list-selector qq-upload-list" style="margin-top: 10px; text-align: center;">
+            <li>
+                <div class="qq-progress-bar-container-selector">
+                    <div class="qq-progress-bar-selector qq-progress-bar"></div>
+                </div>
+                <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                <span class="qq-edit-filename-icon-selector qq-edit-filename-icon"></span>
+                <span class="qq-upload-file-selector qq-upload-file"></span>
+                <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
+                <span class="qq-upload-size-selector qq-upload-size"></span>
+                <a class="qq-upload-cancel-selector qq-upload-cancel" href="#">Cancel</a>
+                <a class="qq-upload-retry-selector qq-upload-retry" href="#">Retry</a>
+                <a class="qq-upload-delete-selector qq-upload-delete" href="#">Delete</a>
+                <span class="qq-upload-status-text-selector qq-upload-status-text"></span>
+            </li>
+        </ul>
+    </div>
+</script>
+<script src="../js/avalon.js"></script>
+<link rel="stylesheet" href="../css/base/bootstrap.css">
+<script src="../js/globalConfig.js"></script>
+
+<script justfordebug="true">
+    require(['jquery', 'am.planReportMgr','bootstrap','datepicker_ZH_CN'], function($,prM) {
+        var report = prM._newVm('1234');
+        prM._newVm('2345')
+
+        $('[ms-important]').attr('ms-important', 'planReport' + report.$reportId);
+        avalon.scan()
+        $("[name=planIssuedDate]")
+    })
+</script>
+<script>
+    if((!!window.ActiveXObject || "ActiveXObject" in window)){//全系列判断IE，支持IE10
+        require(['jquery','datepicker_zh_CN'],function($){
+            $("[name=planIssuedDate],[name=planStartDate],[name=planFinishDate],[name=planDeadlineDate]").datepicker({
+                format: "yyyy-mm-dd",
+                todayBtn: true,
+                clearBtn: true,
+                language: "zh-CN",
+                calendarWeeks: true,
+                autoclose: true,
+                todayHighlight: true
+            });
+        })
+    }
+</script>
+<script>
+    require(['fineuploader'], function ($) {
+        /**
+         * 保证id在MainFrame上的唯一性
+         */
+        var random = (new Date()).getTime() + '';
+        $("#bootstrapped-fine-uploader").attr('id', "bootstrapped-fine-uploader" + random);//fineuploader
+        $("#qq-template-bootstrap").html($("#qq-template-bootstrap").text().replace('triggerUpload', 'triggerUpload' + random));//fineuploader-tmpl
+        $("#qq-template-bootstrap").attr('id', "qq-template-bootstrap" + random);
+        $("#personModal").attr('id', "personModal" + random);//personModal
+        $("[href=#personModal]").attr('href', "#personModal" + random);
+        $("#planReportContainer").attr('id',"planReportContainer"+random);
+
+        var uploader = $("#bootstrapped-fine-uploader" + random).fineUploader({
+            element: $('#bootstrapped-fine-uploader' + random),
+            request: {
+                endpoint: 'am/uploadOutput.action',
+                filenameParam:'filename',
+                inputName:'file',
+                uuidName:'uuid',
+                totalFileSizeName:'totalfilesize'
+            },
+            deleteFile: {
+                enabled: true, // defaults to false
+                endpoint: 'am/delOutput.action',
+                method: 'POST',
+                forceConfirm: true
+
+            },
+            autoUpload: false,
+            template: $('#qq-template-bootstrap' + random),
+            classes: {
+                success: 'alert alert-success',
+                fail: 'alert alert-error'
+            },
+            validation: {
+                //allowedExtensions: ['jpeg', 'jpg', 'txt'],
+                itemLimit: 50,
+                sizeLimit: 50 * 1024 * 1024 // 50 kB = 50 * 1024 bytes
+            },
+            showMessage: function (message) {
+                // Using Bootstrap's classes
+                $('#bootstrapped-fine-uploader' + random).append('<div class="alert alert-error">' + message + '</div>');
+            },
+            debug: true,
+            editFilename: {                                            //编辑名字
+                enable: true
+            }
+
+        }).on('delete',function(id){
+            uploader.fineUploader('setDeleteFileParams',{planCode:$("#planReportContainer"+random+" [name=planCode]").val()})
+        })/*.on('complete', function (event, id, fileName, responseJSON) {
+            if (responseJSON.success) {
+                $(this).append('<img src="img/success.jpg" alt="' + fileName + '">');
+            }
+        });*/
+
+
+        $('#triggerUpload' + random).click(function () {
+            //传递planCode
+            uploader.fineUploader('setParams',{planCode:$("#planReportContainer"+random+" [name=planCode]").val()});
+            uploader.fineUploader('uploadStoredFiles');
+        })
+
+    })
+
+</script>
+</body>
+</html>
+<!--
+2014.10.12:fix:点击button ms-click未绑定。<button标签会自动提交，使用type="buton"
+2014.10.13:fix:mainFrame.html中载入模板两次，第一次id被修改了，第二次id未被修改，（坚果版本210）
+                现象为：$("#qq-template-bootstrap")为空，$("#personModal")为空
+                解决方法：将上述两个模板移动到修改id的语句之前，就能找到模板的id了
+                ？问题？：为什么第一次可以通过id选择到元素，第二次就不行
+2014.10.14:add:UI显示和使能
+2014.12.26:add:解决IE下没有日期选择界面，
+                1.用浏览器行为检测if(!!(window.attachEvent && navigator.userAgent.indexOf('Opera') === -1) ){//全系列判断IE，支持IE10
+                2.条件注释<!–[if IE]>  <![endif]–>  //但是不支持IE10以上
+           fix:IE不支持hidden：hidden隐藏，使用css属性style="visibility: hidden"代替
+2015.01.19:fix:解决IE10可以判断但是IE11不行：由 (!!(window.attachEvent && navigator.userAgent.indexOf('Opera') === -1) )
+                改为(!!window.ActiveXObject || "ActiveXObject" in window)
+-->
